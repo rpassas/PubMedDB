@@ -5,8 +5,304 @@ output: html_notebook
 
 ##PubMedDB
 
+---
+title: "Practicum 2"
+output: html_notebook
+---
+
 ```{r}
-#basic R comment
+# 1. Library
+library(sqldf)
+library(RMySQL)
+```
+
+```{r}
+# 2. Settings
+db_user <- 'cs5200practicum2'
+db_password <- 'tctvuje8'
+db_name <- 'dbpracticum2'
+db_host <- 'practicum2.cb9tzbdsyfxk.us-east-2.rds.amazonaws.com'
+db_port <- 3306
+
+# 3. Read data from db
+mydb <-  dbConnect(MySQL(), user = db_user, password = db_password,
+                 dbname = db_name, host = db_host, port = db_port)
+```
+
+```{r}
+library(XML)
+library(DBI)
+library(knitr)
+```
+
+```{r}
+path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
+fn <- "pubmed_sample.xml"
+fpn = paste0(path, fn)
+#dbfn <- "assignment10.sql"
+#dbfpn = paste0(path, dbfn)
+```
+
+```{r}
+# Reading the XML file and parse into DOM
+xmlDOM <- xmlParse(file = fpn)
+
+# get the root node of the DOM tree
+r <- xmlRoot(xmlDOM)
+```
+
+```{sql createTableAuthor, connection=mydb}
+CREATE TABLE IF NOT EXISTS Author (
+  author_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL
+);
+```
+
+```{r}
+Author.df <- data.frame (author_id = integer(),
+                          first_name = character(),
+                          last_name = character(),
+                          stringsAsFactors = F)
+```
+
+```{sql createTableHistory, connection=mydb}
+CREATE TABLE IF NOT EXISTS History (
+  history_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  article_id INT NOT NULL,
+  pub_status TEXT NOT NULL,
+  year INT,
+  month INT,
+  day INT
+);
+```
+
+```{r}
+History.df <- data.frame (history_id = integer(),
+                          article_id = integer(),
+                          pub_status = character(),
+                          year = integer(),
+                          month = integer(),
+                          day = integer(),
+                          stringsAsFactors = F)
+```
+
+```{sql createTableJournal, connection=mydb}
+CREATE TABLE IF NOT EXISTS Journal (
+  journal_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  cited_medium TEXT NOT NULL,
+  volume INT NOT NULL,
+  issue INT NOT NULL,
+  pub_date DATE NOT NULL,
+  journal_title TEXT NOT NULL
+);
+```
+
+```{r}
+Journal.df <- data.frame (journal_id = integer(),
+                          cited_medium = character(),
+                          volume = integer(),
+                          issue = integer(),
+                          pub_date_year = integer(),
+                          pub_date_month = character(),
+                          journal_title = character(),
+                          stringsAsFactors = F)
+```
+
+```{sql createTableArticle, connection=mydb}
+CREATE TABLE IF NOT EXISTS Article (
+  article_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  journal_id INT NOT NULL,
+  article_title TEXT NOT NULL
+);
+```
+
+```{r}
+numArticles <- xmlSize(r) 
+
+Article.df <- data.frame (article_id = integer(),
+                          journal_id = integer(),
+                          article_title = character(),
+                          stringsAsFactors = F)
+```
+
+```{sql createTableAuthorJoin, connection=mydb}
+CREATE TABLE IF NOT EXISTS AuthorJoin (
+  author_id INT NOT NULL,
+  article_id INT NOT NULL,
+  FOREIGN KEY (author_id) REFERENCES Author(author_id)
+  ON DELETE CASCADE,
+  FOREIGN KEY (article_id) REFERENCES Article(article_id)
+  ON DELETE CASCADE,
+  PRIMARY KEY (author_id, article_id)
+);
+```
+
+```{r}
+AuthorJoin.df <- data.frame (author_id = integer(),
+                          article_id = integer(),
+                          stringsAsFactors = F)
+```
+
+```{r ParseAuthors}
+parseAuthors <- function (anAuthorListNode)
+{
+  newAuthor.df <- data.frame (author_id = integer(),
+                          first_name = character(),
+                          last_name = character(),
+                          stringsAsFactors = F)
+  n <- xmlSize(anAuthorListNode)
+  
+  for (m in 1:n)
+  {
+    anAuthor <- anAuthorListNode[[m]]
+    first_name <- xmlValue(anAuthor[[2]])
+    last_name <- xmlValue(anAuthor[[1]])
+
+    newAuthor.df[m,2] <- first_name
+    newAuthor.df[m,3] <- last_name
+
+  }
+
+  return(newAuthor.df)
+}
+```
+
+
+
+```{r ParseJournals}
+parseJournals <- function (anArticle)
+{
+  newJournal.df <- Journal.df <- data.frame (journal_id = integer(),
+                          cited_medium = character(),
+                          volume = integer(),
+                          issue = integer(),
+                          pub_date_year = integer(),
+                          pub_date_month = character(),
+                          journal_title = character(),
+                          stringsAsFactors = F)
+  
+
+  #Getting Cited Medium
+  CMexp <-"string(./MedlineCitation/Article/Journal/JournalIssue/@CitedMedium)"
+  tempCM <- xpathSApply(anArticle,CMexp)
+  cited_medium <- tempCM
+
+  #Getting Volume
+  volexp <-"./MedlineCitation/Article/Journal/JournalIssue/Volume"
+  tempVolume <- xpathSApply(anArticle,volexp)
+  volume <- xmlValue(tempVolume)
+  
+  #Getting Issue
+  issueexp <-"./MedlineCitation/Article/Journal/JournalIssue/Issue"
+  tempIssue <- xpathSApply(anArticle,issueexp)
+  issue <- xmlValue(tempIssue)
+  
+  
+  #####working
+  #Getting PubDate information
+  pubdateexp <- "./MedlineCitation/Article/Journal/JournalIssue/PubDate"
+  tempPubDate <- xpathSApply(anArticle,pubdateexp)
+  firstChild <- tempPubDate[[1]]
+  print(firstChild)
+  Year <- xmlElementsByTagName(test, "Year")
+  MedlineDate <- xmlElementsByTagName(test, "MedlineDate")
+  
+  print(Year[1])
+  print(length(Year))
+  print(length(MedlineDate))
+  
+  if(length(Year) != 0) {
+    print("its year")
+  }
+  if(length(MedlineDate) != 0){
+    print("its medline")
+  }
+  #### to here
+
+  #Getting Title
+  titleeexp <-"./MedlineCitation/Article/Journal/Title"
+  tempTitle <- xpathSApply(anArticle,titleeexp)
+  title <- xmlValue(tempTitle)
+
+  newJournal.df[1,2] <- cited_medium
+  newJournal.df[1,3] <- volume
+  newJournal.df[1,4] <- issue
+  
+  newJournal.df[1,7] <- title
+  
+  return(newJournal.df)
+}
+```
+
+```{r Q1}
+xpathexpression <-"//PubmedArticle/MedlineCitation/Article/Journal/JournalIssue/PubDate"
+x <- xpathSApply(xmlDOM,xpathexpression)
+test <- x[[1]]
+te <- xmlElementsByTagName(test, "Me")
+print(length(te))
+if(length(te)!=0) {
+  print("it works")
+}
+
+print(te)
+```
+
+```{r}
+#Iterate through the number of articles
+for (i in 1:2) #should be numArticles not 3
+{
+  #Get the next article node
+  anArticle <- r[[i]]
+  
+  #Parse Author information, returns a data frame of the authors of an individual article
+  authorNode <-"./MedlineCitation/Article/AuthorList/Author"
+  xauth <- xpathSApply(anArticle,authorNode)
+  newAuthor.df <- parseAuthors(xauth)
+  
+  #Adding the Authors to the Author.df
+  tempAuthors <- Author.df
+  Author.df <- rbind(tempAuthors, newAuthor.df)
+  
+  #Parse the journal node
+  journalNode <-"./MedlineCitation/Article/Journal"
+  xjourn <- xpathSApply(anArticle,journalNode)
+  newJournal.df <- parseJournals(anArticle)
+  
+  #Adding the journals to the journal.df
+  tempJournal <-Journal.df
+  Journal.df <- rbind(tempJournal,newJournal.df)
+}
+#In medline citation pull all but the hisotry
+duplicateJournals <- Journal.df
+Journal.df <- duplicateJournals[!duplicated(duplicateJournals),]
+print(Journal.df)
+
+#Delete Duplicates
+duplicateAuthors <- Author.df
+Author.df <- duplicateAuthors[!duplicated(duplicateAuthors),]
+```
+
+
+```{r Remove Author Duplicates}
+duplicates <- Author.df
+Author.df <- duplicates[!duplicated(duplicates),]
+print(Author.df)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+dbDisconnect(mydb)
 ```
 
 
