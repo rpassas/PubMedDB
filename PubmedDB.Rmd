@@ -169,7 +169,6 @@ parseAuthors <- function (anAuthorListNode)
 ```
 
 
-
 ```{r ParseJournals}
 parseJournals <- function (anArticle)
 {
@@ -181,7 +180,6 @@ parseJournals <- function (anArticle)
                           pub_date_month = character(),
                           journal_title = character(),
                           stringsAsFactors = F)
-  
 
   #Getting Cited Medium
   CMexp <-"string(./MedlineCitation/Article/Journal/JournalIssue/@CitedMedium)"
@@ -223,17 +221,48 @@ parseJournals <- function (anArticle)
 }
 ```
 
-```{r Q1}
-xpathexpression <-"//PubmedArticle/MedlineCitation/Article/Journal/JournalIssue/PubDate"
-x <- xpathSApply(xmlDOM,xpathexpression)
-test <- x[[1]]
-te <- xmlElementsByTagName(test, "Me")
-print(length(te))
-if(length(te)!=0) {
-  print("it works")
-}
+```{r ParseHistory}
+parseHistory <- function (aHistoryNode)
+{
+  newHistory.df <- History.df <- data.frame (history_id = integer(),
+                          article_id = integer(),
+                          pub_status = character(),
+                          year = integer(),
+                          month = integer(),
+                          day = integer(),
+                          stringsAsFactors = F)
+  n <- xmlSize(aHistoryNode)
+  
+  for (m in 1:n)
+  {
+    
+    aDateNode <- aHistoryNode[[m]]
+    
+    dateNodeAttributes <- xmlAttrs(aDateNode)
+    pub_status <- as.character(dateNodeAttributes[1])
+    print(pub_status)
+    
+    hisYear <- xmlValue(aDateNode[[1]])
+    hisMonth <- xmlValue(aDateNode[[2]])
+    hisDay <- xmlValue(aDateNode[[3]])
+    
+    newHistory.df[m,3] <- pub_status
+    newHistory.df[m,4] <- hisYear
+    newHistory.df[m,5] <- hisMonth
+    newHistory.df[m,6] <- hisDay
 
-print(te)
+  }
+
+  return(newHistory.df)
+}
+```
+
+```{r Q1}
+xpathexpression <-"//PubmedArticle/PubmedData/History/PubMedPubDate"
+xpathexpression2 <-"//MedlineCitation/Article/AuthorList/Author"
+x <- xpathSApply(xmlDOM,xpathexpression2)
+
+print(x)
 ```
 
 ```{r}
@@ -260,15 +289,29 @@ for (i in 1:2) #should be numArticles not 3
   #Adding the journals to the journal.df
   tempJournal <-Journal.df
   Journal.df <- rbind(tempJournal,newJournal.df)
+  
+  #Parse History information, returns a data frame of the history dates of an individual article
+  historyNode <-"./PubmedData/History/PubMedPubDate"
+  xhistory <- xpathSApply(anArticle,historyNode)
+  newHistory.df <- parseHistory(xhistory)
+  
+  #Adding the journals to the journal.df
+  tempHistory <-History.df
+  History.df <- rbind(tempHistory,newHistory.df)
 }
-#In medline citation pull all but the hisotry
+#Delete History Duplicates
 duplicateJournals <- Journal.df
 Journal.df <- duplicateJournals[!duplicated(duplicateJournals),]
-print(Journal.df)
 
-#Delete Duplicates
+#Delete Author Duplicates
 duplicateAuthors <- Author.df
 Author.df <- duplicateAuthors[!duplicated(duplicateAuthors),]
+
+#Delete History Duplicates
+duplicateHistory <- History.df
+History.df <- duplicateHistory[!duplicated(duplicateHistory),]
+
+print(History.df)
 ```
 
 
@@ -289,15 +332,5 @@ print(Author.df)
 
 
 
-```{r}
-<<<<<<< HEAD
-#basic R comment
-
-#Can you see my writing
-#Testing
-=======
-dbDisconnect(mydb)
->>>>>>> 3eb570d26615da8a7ba4211f06543a3bc0118653
-```
 
 
