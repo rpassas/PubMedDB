@@ -198,27 +198,14 @@ parseJournals <- function (anArticle)
   tempIssue <- xpathSApply(anArticle,issueexp)
   issue <- xmlValue(tempIssue)
   
-  
-  #####working
   #Getting PubDate information
   pubdateexp <- "./MedlineCitation/Article/Journal/JournalIssue/PubDate"
   tempPubDate <- xpathSApply(anArticle,pubdateexp)
-  firstChild <- tempPubDate[[1]]
-  print(firstChild)
-  Year <- xmlElementsByTagName(test, "Year")
-  MedlineDate <- xmlElementsByTagName(test, "MedlineDate")
+  singlenode <- tempPubDate[[1]]
+  childnodes <- xmlChildren(singlenode)
   
-  print(Year[1])
-  print(length(Year))
-  print(length(MedlineDate))
-  
-  if(length(Year) != 0) {
-    print("its year")
-  }
-  if(length(MedlineDate) != 0){
-    print("its medline")
-  }
-  #### to here
+  year <- xmlValue(childnodes[1])
+  month <- xmlValue(childnodes[2])
 
   #Getting Title
   titleeexp <-"./MedlineCitation/Article/Journal/Title"
@@ -228,7 +215,8 @@ parseJournals <- function (anArticle)
   newJournal.df[1,2] <- cited_medium
   newJournal.df[1,3] <- volume
   newJournal.df[1,4] <- issue
-  
+  newJournal.df[1,5] <- year
+  newJournal.df[1,6] <- month
   newJournal.df[1,7] <- title
   
   return(newJournal.df)
