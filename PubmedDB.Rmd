@@ -55,11 +55,9 @@ fpn = paste0(path, fn)
 ```
 
 ```{r bobs path}
-if (FALSE) {
 path <-"/Users/robert/Documents/CS5200/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
-}
 ```
 
 ```{r}
@@ -466,41 +464,82 @@ for (r in 1:num.issue){
 print(Issue.df)
 ```
 
-```{r Link Journals}
-print(num.journals)
-r <- xmlRoot(xmlDOM)
 
-for (i in 1:numArticles) {
-  anArticle <- r[[i]]
-  
-  #Getting the journal title to compare to
-  titleeexp <-"./MedlineCitation/Article/Journal/Title"
-  tempTitle <- xpathSApply(anArticle,titleeexp)
-  journaltitle <- xmlValue(tempTitle)
-
-  volexp <-"./MedlineCitation/Article/Journal/JournalIssue/Volume"
-  tempVolume <- xpathSApply(anArticle,volexp)
-  volume <- xmlValue(tempVolume)
-  
-  #Getting Issue
-  issueexp <-"./MedlineCitation/Article/Journal/JournalIssue/Issue"
-  tempIssue <- xpathSApply(anArticle,issueexp)
-  issue <- xmlValue(tempIssue)
-  
-  print(Journal.df$journal_title[j])
-  print(journaltitle)
-  
-  for(j in 1:num.journals){
-    if(Journal.df$journal_title[j] == journaltitle && Journal.df$volume[j] == volume && Journal.df$issue == issue){
-
-        a <- j
-        Article.df$journal_id[i] <- a
-        print(a)
-    }
-  }
+```{r consolidating dates}
+# years vector
+year <- c()
+for (r in 1:num.issue){
+  year <- c(year, substr(Issue.df$pub_date_year[r],1,4))
 }
-print(Article.df)
+
+#mont vector
+month <- c()
+for (r in 1:num.issue){
+  if(is.na(Issue.df$pub_date_month[r])){
+    m <- substr(Issue.df$pub_date_year[r],6,8)
+  }else{
+    m <- Issue.df$pub_date_month[r]
+  }
+  # month to numbers
+  if(m == 'Jan'){
+    m <- "1"
+  }else if( m == 'Feb'){
+    m <- "2"
+  }else if( m == 'Mar'){
+    m <- "3"
+  }else if( m == 'Apr'){
+    m <- "4"
+  }else if( m == 'May'){
+    m <- "5"
+  }else if( m == 'Jun'){
+    m <- "6"
+  }else if( m == 'Jul'){
+    m <- "7"
+  }else if( m == 'Aug'){
+    m <- "8"
+  }else if( m == 'Sep'){
+    m <- "9"
+  }else if( m == 'Oct'){
+    m <- "10"
+  }else if( m == 'Nov'){
+    m <- "11"
+  }else if( m == 'Dec'){
+    m <- "12"
+  }else{
+    m <- "6"
+  }
+  month <- c(month, m)
+}
+
+
+
+Issue.df$pub_date <- NA
+
+for(i in 1:num.issue){
+  d <- paste(year[i], month[i], sep="-")
+  d <- paste(d, "-01", sep="")
+  #d <- as.Date(d, "%Y-%m-%d")
+  Issue.df$pub_date[i] <- d
+  #print(d)
+}
+
+Issue.df$pub_date <- as.Date(Issue.df$pub_date,
+                               format = "%Y-%m-%d")
+print(Issue.df)
+
+
+#pub_date <- transform(df, x = as.Date(as.character(x), "%Y%m"))
+
 ```
+
+```{r delete old columns}
+Issue.df$pub_date_month <- NULL
+Issue.df$pub_date_year <- NULL
+print(Issue.df)
+```
+
+
+
 
 ```{r Make AuthorJoin}
 #New root
@@ -548,6 +587,11 @@ print(HistoryStatus.df)
 ```
 
 
+<<<<<<< HEAD
+```{r}
+dbDisconnect(mydb)
+```
+=======
 ```{r Make History (join)}
 #New root
 root <- xmlRoot(xmlDOM)
@@ -595,6 +639,7 @@ for ( i in 1:numArticles){
 print(History.df)
 ```
 
+>>>>>>> fb2d92bbc4770ab6cb314b7a8db675a2462cd6c5
 
 
 
