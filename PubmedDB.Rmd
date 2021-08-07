@@ -465,7 +465,7 @@ print(Issue.df)
 ```
 
 
-```{r consolidating dates}
+```{r consolidating issue dates}
 # years vector
 year <- c()
 for (r in 1:num.issue){
@@ -518,9 +518,7 @@ Issue.df$pub_date <- NA
 for(i in 1:num.issue){
   d <- paste(year[i], month[i], sep="-")
   d <- paste(d, "-01", sep="")
-  #d <- as.Date(d, "%Y-%m-%d")
   Issue.df$pub_date[i] <- d
-  #print(d)
 }
 
 Issue.df$pub_date <- as.Date(Issue.df$pub_date,
@@ -528,11 +526,10 @@ Issue.df$pub_date <- as.Date(Issue.df$pub_date,
 print(Issue.df)
 
 
-#pub_date <- transform(df, x = as.Date(as.character(x), "%Y%m"))
 
 ```
 
-```{r delete old columns}
+```{r delete old issue columns}
 Issue.df$pub_date_month <- NULL
 Issue.df$pub_date_year <- NULL
 print(Issue.df)
