@@ -34,15 +34,15 @@ mydb <-  dbConnect(MySQL(), user = db_user, password = db_password,
 
 ```{r}
 # 2. Settings (Bob's db)
-db_user <- 'CS5200'
-db_password <- 'db2password'
-db_name <- 'dbpracticum2'
-db_host <- 'cs5200-practicum2.chwzgwg0nlr5.us-east-1.rds.amazonaws.com'
-db_port <- 3306
+db_user2 <- 'CS5200'
+db_password2 <- 'db2password'
+db_name2 <- 'dbpracticum2'
+db_host2 <- 'cs5200-practicum2.chwzgwg0nlr5.us-east-1.rds.amazonaws.com'
+db_port2 <- 3306
 
 # 3. Read data from db
-mydb <-  dbConnect(MySQL(), user = db_user, password = db_password,
-                 dbname = db_name, host = db_host, port = db_port)
+mydb <-  dbConnect(MySQL(), user = db_user2, password = db_password2,
+                 dbname = db_name2, host = db_host2, port = db_port2)
 ```
 
 
@@ -52,14 +52,14 @@ library(DBI)
 library(knitr)
 ```
 
-```{r jordan's path}
+```{r jordans path}
 path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
 ```
 
-```{r bob's path}
-path <-"/Users/robert/Documents/CS5200/Practicum2"
+```{r bobs path}
+path <-"/Users/robert/Documents/CS5200/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
 ```
