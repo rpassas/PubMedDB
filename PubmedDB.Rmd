@@ -302,8 +302,6 @@ for (i in 1:numArticles) #should be numArticles not 3
   Author.df <- rbind(tempAuthors, newAuthor.df)
   
   #Parse the journal node
-  journalNode <-"./MedlineCitation/Article/Journal"
-  xjourn <- xpathSApply(anArticle,journalNode)
   newJournal.df <- parseJournals(anArticle)
   
   #Adding the journals to the journal.df
@@ -376,9 +374,19 @@ print(History.df)
 
 ```{r Link Journals}
 
-for (r in 1:numArticles) {
-  a <- Journal.df$journal_id[which(Journal.df$journal_id == Article.df$journal_id[r])]
-  Article.df$journal_id[r] <- a
+for (i in 1:numArticles) {
+  anArticle <- r[[i]]
+  
+  #Getting the journal title to compare to
+  titleeexp <-"./MedlineCitation/Article/Journal/Title"
+  tempTitle <- xpathSApply(anArticle,titleeexp)
+  journaltitle <- xmlValue(tempTitle)
+  print(journaltitle)
+  print(Journal.df$journal_title)
+  
+  
+  #a <- Journal.df$journal_id[which(Journal.df$journal_title == journaltitle)]
+  #Article.df$journal_id[i] <- a
 }
 ```
 
