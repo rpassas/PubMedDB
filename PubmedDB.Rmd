@@ -12,8 +12,10 @@ output: html_notebook
 
 ```{r}
 # 1. Library
-library(sqldf)
 library(RMySQL)
+library(XML)
+library(DBI)
+library(knitr)
 ```
 
 ```{r}
@@ -31,6 +33,7 @@ mydb <-  dbConnect(MySQL(), user = db_user, password = db_password,
                  dbname = db_name, host = db_host, port = db_port)
 ```
 
+<<<<<<< HEAD
 
 ```{r}
 # 2. Settings (Bob's db)
@@ -51,14 +54,14 @@ library(XML)
 library(DBI)
 library(knitr)
 ```
+=======
+>>>>>>> 1d9a6f06cdfe6fd3fe5c848f63ad133381f4c3ef
 
 ```{r}
 #path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
 path <-"/Users/robert/Documents/CS5200/Practicum2"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
-#dbfn <- "assignment10.sql"
-#dbfpn = paste0(path, dbfn)
 ```
 
 ```{r}
@@ -258,8 +261,7 @@ parseHistory <- function (aHistoryNode)
     
     dateNodeAttributes <- xmlAttrs(aDateNode)
     pub_status <- as.character(dateNodeAttributes[1])
-    print(pub_status)
-    
+
     hisYear <- xmlValue(aDateNode[[1]])
     hisMonth <- xmlValue(aDateNode[[2]])
     hisDay <- xmlValue(aDateNode[[3]])
@@ -276,16 +278,16 @@ parseHistory <- function (aHistoryNode)
 ```
 
 ```{r Q1}
-xpathexpression <-"//PubmedArticle/PubmedData/History/PubMedPubDate"
+xpathexpression <-"//PubmedArticle/MedlineCitation/Article/ArticleTitle"
 xpathexpression2 <-"//MedlineCitation/Article/AuthorList/Author"
-x <- xpathSApply(xmlDOM,xpathexpression2)
+x <- xpathSApply(xmlDOM,xpathexpression)
 
 print(x)
 ```
 
 ```{r}
 #Iterate through the number of articles
-for (i in 1:2) #should be numArticles not 3
+for (i in 1:numArticles) #should be numArticles not 3
 {
   #Get the next article node
   anArticle <- r[[i]]
@@ -331,6 +333,8 @@ History.df <- duplicateHistory[!duplicated(duplicateHistory),]
 
 print(History.df)
 print(Author.df)
+print(Journal.df)
+print(Article.df)
 ```
 
 ```{r Adding author_id}
@@ -361,11 +365,19 @@ for (r in 1:num.history){
 print(History.df)
 ```
 
-```{r Remove Author Duplicates}
-duplicates <- Author.df
-Author.df <- duplicates[!duplicated(duplicates),]
-print(Author.df)
+```{r Link Journals}
+
+for (r in 1:numArticles) {
+  a <- Journal.df$journal_id[which(Journal.df$journal_id == Article.df$journal_id[r])]
+  Article.df$journal_id[r] <- a
+}
 ```
+
+```{r Link History}
+
+```
+
+
 
 
 
