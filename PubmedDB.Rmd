@@ -97,7 +97,6 @@ CREATE TABLE IF NOT EXISTS History (
 ```{r}
 History.df <- data.frame (history_id = integer(),
                           article_id = integer(),
-                          pub_status = character(),
                           stringsAsFactors = F)
 ```
 
@@ -286,6 +285,17 @@ parseHistory <- function (aHistoryNode, i)
   newHistory.df <- History.df <- data.frame (history_id = integer(),
                           article_id = integer(),
                           stringsAsFactors = F)
+  newHistory.df[m,2] <- i
+  
+  n <- xmlSize(aHistoryNode)
+  
+  return(newHistory.df)
+}
+```
+
+```{r ParseHistoryStatus}
+parseHistoryStatus <- function (aHistoryNode, i)
+{
   #newHistory.df[m,2] <- i
   
   n <- xmlSize(aHistoryNode)
@@ -310,58 +320,12 @@ parseHistory <- function (aHistoryNode, i)
     hisDate <- paste(hisDay, hisMonth, hisYear, sep = "-")
     historystatusrow <- nrow(HistoryStatus.df) + 1
     
-    HistoryStatus.df[historystatusrow,3] <- pub_status
-    HistoryStatus.df[historystatusrow,4] <- hisDate
+    newHistoryStatus.df[m,3] <- pub_status
+    newHistoryStatus.df[m,4] <- hisDate
     
   }
-  
-
-  return(newHistory.df)
+  return(newHistoryStatus.df)
 }
-```
-
-```{r ParseHistoryStatus}
-parseHistory2 <- function (aHistoryNode, i)
-{
-  newHistory.df <- History.df <- data.frame (history_id = integer(),
-                          article_id = integer(),
-                          pub_status = character(),
-                          year = integer(),
-                          month = integer(),
-                          day = integer(),
-                          stringsAsFactors = F)
-  n <- xmlSize(aHistoryNode)
-  
-  for (m in 1:n)
-  {
-    
-    aDateNode <- aHistoryNode[[m]]
-    
-    dateNodeAttributes <- xmlAttrs(aDateNode)
-    pub_status <- as.character(dateNodeAttributes[1])
-
-    hisYear <- xmlValue(aDateNode[[1]])
-    hisMonth <- xmlValue(aDateNode[[2]])
-    hisDay <- xmlValue(aDateNode[[3]])
-    
-    newHistory.df[m,2] <- i
-    newHistory.df[m,3] <- pub_status
-    newHistory.df[m,4] <- hisYear
-    newHistory.df[m,5] <- hisMonth
-    newHistory.df[m,6] <- hisDay
-
-  }
-
-  return(newHistory.df)
-}
-```
-
-```{r Test}
-xpathexpression <-"//PubmedArticle/MedlineCitation/Article/ArticleTitle"
-xpathexpression2 <-"//MedlineCitation/Article/AuthorList/Author"
-x <- xpathSApply(xmlDOM,xpathexpression)
-
-print(x)
 ```
 
 ```{r}
@@ -402,13 +366,22 @@ for (i in 1:numArticles) #should be numArticles not 3
   Issue.df <- rbind(tempIssue,newIssue.df)
   
   #Parse History information, returns a data frame of the history dates of an individual article
-  historyNode <-"./PubmedData/History/PubMedPubDate"
-  xhistory <- xpathSApply(anArticle,historyNode)
-  newHistory.df <- parseHistory(xhistory, i)
+  #historyNode <-"./PubmedData/History/PubMedPubDate"
+  #xhistory <- xpathSApply(anArticle,historyNode)
+  #newHistory.df <- parseHistory(xhistory, i)
   
-  #Adding the journals to the journal.df
-  tempHistory <-History.df
-  History.df <- rbind(tempHistory,newHistory.df)
+  #Adding the History to the History.df
+  #tempHistory <-History.df
+  #History.df <- rbind(tempHistory,newHistory.df)
+  
+  #Parse History Status
+  historyStatusNode <-"./PubmedData/History/PubMedPubDate"
+  xhistorystatus <- xpathSApply(anArticle,historyStatusNode)
+  newHistoryStatus.df <- parseHistoryStatus(xhistorystatus, i)
+  
+  #Adding the Hisotry Status to the historystatus.df
+  tempHistoryStatus <-HistoryStatus.df
+  HistoryStatus.df <- rbind(tempHistoryStatus,newHistoryStatus.df)
   
   #Getting article title Node
   titleNode <-"./MedlineCitation/Article/ArticleTitle"
@@ -438,6 +411,10 @@ Author.df <- duplicateAuthors[!duplicated(duplicateAuthors),]
 #Delete History Duplicates
 duplicateHistory <- History.df
 History.df <- duplicateHistory[!duplicated(duplicateHistory),]
+
+#Delete HistoryStatus Duplicates
+duplicateHistoryStatus <- HistoryStatus.df
+HistoryStatus.df <- duplicateHistoryStatus[!duplicated(duplicateHistoryStatus),]
 
 print(History.df)
 print(HistoryStatus.df)
@@ -469,15 +446,13 @@ print(Journal.df)
 }
 ```
 
+```{r Adding status_id}
+num.historystatus <- nrow(HistoryStatus.df)
 
-
-```{r Adding history_id}
-num.history <- nrow(History.df)
-
-for (r in 1:num.history){
-  History.df$history_id[r] <- r
+for (r in 1:num.historystatus){
+  HistoryStatus.df$status_id[r] <- r
 }
-print(History.df)
+print(HistoryStatus.df)
 ```
 
 ```{r Adding issue_id}
@@ -490,47 +465,81 @@ print(Issue.df)
 ```
 
 
-
-
-
-
-
-
-```{r Link Journals}
-print(num.journals)
-
-for (i in 1:numArticles) {
-  anArticle <- r[[i]]
-  
-  #Getting the journal title to compare to
-  titleeexp <-"./MedlineCitation/Article/Journal/Title"
-  tempTitle <- xpathSApply(anArticle,titleeexp)
-  journaltitle <- xmlValue(tempTitle)
-
-  volexp <-"./MedlineCitation/Article/Journal/JournalIssue/Volume"
-  tempVolume <- xpathSApply(anArticle,volexp)
-  volume <- xmlValue(tempVolume)
-  
-  #Getting Issue
-  issueexp <-"./MedlineCitation/Article/Journal/JournalIssue/Issue"
-  tempIssue <- xpathSApply(anArticle,issueexp)
-  issue <- xmlValue(tempIssue)
-  
-  print(Journal.df$journal_title[j])
-  print(journaltitle)
-  
-  for(j in 1:num.journals){
-    if(Journal.df$journal_title[j] == journaltitle && Journal.df$volume[j] == volume && Journal.df$issue == issue){
-
-        a <- j
-        Article.df$journal_id[i] <- a
-        print(a)
-    }
-  }
-  
+```{r consolidating dates}
+# years vector
+year <- c()
+for (r in 1:num.issue){
+  year <- c(year, substr(Issue.df$pub_date_year[r],1,4))
 }
-print(Article.df)
+
+#mont vector
+month <- c()
+for (r in 1:num.issue){
+  if(is.na(Issue.df$pub_date_month[r])){
+    m <- substr(Issue.df$pub_date_year[r],6,8)
+  }else{
+    m <- Issue.df$pub_date_month[r]
+  }
+  # month to numbers
+  if(m == 'Jan'){
+    m <- "1"
+  }else if( m == 'Feb'){
+    m <- "2"
+  }else if( m == 'Mar'){
+    m <- "3"
+  }else if( m == 'Apr'){
+    m <- "4"
+  }else if( m == 'May'){
+    m <- "5"
+  }else if( m == 'Jun'){
+    m <- "6"
+  }else if( m == 'Jul'){
+    m <- "7"
+  }else if( m == 'Aug'){
+    m <- "8"
+  }else if( m == 'Sep'){
+    m <- "9"
+  }else if( m == 'Oct'){
+    m <- "10"
+  }else if( m == 'Nov'){
+    m <- "11"
+  }else if( m == 'Dec'){
+    m <- "12"
+  }else{
+    m <- "6"
+  }
+  month <- c(month, m)
+}
+
+
+
+Issue.df$pub_date <- NA
+
+for(i in 1:num.issue){
+  d <- paste(year[i], month[i], sep="-")
+  d <- paste(d, "-01", sep="")
+  #d <- as.Date(d, "%Y-%m-%d")
+  Issue.df$pub_date[i] <- d
+  #print(d)
+}
+
+Issue.df$pub_date <- as.Date(Issue.df$pub_date,
+                               format = "%Y-%m-%d")
+print(Issue.df)
+
+
+#pub_date <- transform(df, x = as.Date(as.character(x), "%Y%m"))
+
 ```
+
+```{r delete old columns}
+Issue.df$pub_date_month <- NULL
+Issue.df$pub_date_year <- NULL
+print(Issue.df)
+```
+
+
+
 
 ```{r Make AuthorJoin}
 #New root
@@ -541,8 +550,7 @@ for ( i in 1:numArticles){
   
   #Gets an article
   anArticle <- root[[i]]
-  print(anArticle)
-  
+
   #Parse Author list node
   authorNode <-"./MedlineCitation/Article/AuthorList/Author"
   xauth <- xpathApply(anArticle,authorNode)
@@ -569,23 +577,83 @@ for ( i in 1:numArticles){
     }
   }
 }
-
+print(AuthorJoin.df)
 ```
+
+```{r}
+print(Article.df)
+print(History.df)
+print(HistoryStatus.df)
+```
+
+
+<<<<<<< HEAD
+```{r}
+dbDisconnect(mydb)
+```
+=======
+```{r Make History (join)}
+#New root
+root <- xmlRoot(xmlDOM)
+
+#go through each article
+for ( i in 1:numArticles){
+  
+  #Gets an article
+  anArticle <- root[[i]]
+  
+  #Parse History information, returns a data frame of the history dates of an individual article
+  historyNode <-"./PubmedData/History/PubMedPubDate"
+  xhistory <- xpathSApply(anArticle,historyNode)
+
+  #size of historyStatus
+  n <- xmlSize(xhistory)
+  
+  #finds the first name/last name of each author
+  for (m in 1:n)
+  {
+    aDateNode <- xhistory[[m]]
+    
+    dateNodeAttributes <- xmlAttrs(aDateNode)
+    pub_status <- as.character(dateNodeAttributes[1])
+
+    hisYear <- as.character(xmlValue(aDateNode[[1]]))
+    hisMonth <- as.character(xmlValue(aDateNode[[2]]))
+    hisDay <- as.character(xmlValue(aDateNode[[3]]))
+    
+    hisDate <- paste(hisDay, hisMonth, hisYear, sep = "-")
+
+    #if the first name and last name match whats in the Author.df it adds the author_id and article_id to the table
+    for( j in 1:num.historystatus) {
+      if (HistoryStatus.df$pub_status[j] == pub_status && HistoryStatus.df$status_date[j] == hisDate) {
+        val <- HistoryStatus.df$status_id[j]
+        
+        historystatusjoinrow <- nrow(History.df) + 1
+        History.df[historystatusjoinrow,1] <- val
+        History.df[historystatusjoinrow,2] <- i
+      }
+    }
+  }
+}
+
+print(History.df)
+```
+
+>>>>>>> fb2d92bbc4770ab6cb314b7a8db675a2462cd6c5
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ```{r}
 dbDisconnect(mydb)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
