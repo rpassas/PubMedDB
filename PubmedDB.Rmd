@@ -21,9 +21,7 @@ library(knitr)
 ```{r}
 # 2. Settings (Jordan's db)
 db_user <- 'cs5200practicum2'
-db_user <- 'robert'
 db_password <- 'tctvuje8'
-db_password <- 'passas'
 db_name <- 'dbpracticum2'
 db_host <- 'practicum2.cb9tzbdsyfxk.us-east-2.rds.amazonaws.com'
 db_port <- 3306
@@ -33,7 +31,6 @@ mydb <-  dbConnect(MySQL(), user = db_user, password = db_password,
                  dbname = db_name, host = db_host, port = db_port)
 ```
 
-<<<<<<< HEAD
 
 ```{r}
 # 2. Settings (Bob's db)
@@ -54,11 +51,14 @@ library(XML)
 library(DBI)
 library(knitr)
 ```
-=======
->>>>>>> 1d9a6f06cdfe6fd3fe5c848f63ad133381f4c3ef
 
-```{r}
-#path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
+```{r jordan's path}
+path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
+fn <- "pubmed_sample.xml"
+fpn = paste0(path, fn)
+```
+
+```{r bob's path}
 path <-"/Users/robert/Documents/CS5200/Practicum2"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
@@ -318,6 +318,15 @@ for (i in 1:numArticles) #should be numArticles not 3
   #Adding the journals to the journal.df
   tempHistory <-History.df
   History.df <- rbind(tempHistory,newHistory.df)
+  
+  #Getting article title Node
+  titleNode <-"./MedlineCitation/Article/ArticleTitle"
+  xtitle <- xpathSApply(anArticle,titleNode)
+  artTitle <- as.character(xmlValue(xtitle[1]))
+  
+  #Adding article title and article_id to data frame
+  Article.df[i,3] <- artTitle
+  Article.df[i,1] <- i
 }
 #Delete History Duplicates
 duplicateJournals <- Journal.df
