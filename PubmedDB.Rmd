@@ -613,8 +613,47 @@ print(Journal.df)
 print(Issue.df)
 ```
 
+```{r}
+dbWriteTable(mydb, "Article", Article.df, overwrite = T, row.names = F)
+dbWriteTable(mydb, "AuthorJoin", AuthorJoin.df, overwrite = T, row.names = F)
+dbWriteTable(mydb, "Author", Author.df, overwrite = T, row.names = F)
+dbWriteTable(mydb, "History", History.df, overwrite = T, row.names = F)
+dbWriteTable(mydb, "HistoryStatus", HistoryStatus.df, overwrite = T, row.names = F)
+dbWriteTable(mydb, "Journal", Journal.df, overwrite = T, row.names = F)
+dbWriteTable(mydb, "JournalIssue", Issue.df, overwrite = T, row.names = F)
+```
 
+```{sql connection=mydb}
+SELECT * FROM Article LIMIT 5;
+```
 
+```{sql connection=mydb}
+SELECT * FROM AuthorJoin LIMIT 5;
+```
+
+```{sql connection=mydb}
+SELECT * FROM Author LIMIT 5;
+```
+
+```{sql connection=mydb}
+SELECT * FROM History LIMIT 5;
+```
+
+```{sql connection=mydb}
+SELECT * FROM HistoryStatus LIMIT 5;
+```
+
+```{sql connection=mydb}
+SELECT * FROM Journal LIMIT 5;
+```
+
+```{sql connection=mydb}
+SELECT * FROM JournalIssue LIMIT 5;
+```
+
+```{sql connection=mydb}
+CREATE SCHEMA IF NOT EXISTS starschema;
+```
 
 
 
