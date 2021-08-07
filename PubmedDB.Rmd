@@ -33,6 +33,7 @@ mydb <-  dbConnect(MySQL(), user = db_user, password = db_password,
 
 
 ```{r}
+if (FALSE) {
 # 2. Settings (Bob's db)
 db_user2 <- 'CS5200'
 db_password2 <- 'db2password'
@@ -43,14 +44,9 @@ db_port2 <- 3306
 # 3. Read data from db
 mydb <-  dbConnect(MySQL(), user = db_user2, password = db_password2,
                  dbname = db_name2, host = db_host2, port = db_port2)
+}
 ```
 
-
-```{r}
-library(XML)
-library(DBI)
-library(knitr)
-```
 
 ```{r jordans path}
 path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
@@ -59,9 +55,11 @@ fpn = paste0(path, fn)
 ```
 
 ```{r bobs path}
+if (FALSE){
 path <-"/Users/robert/Documents/CS5200/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
+}
 ```
 
 ```{r}
@@ -212,7 +210,7 @@ parseJournals <- function (anArticle)
   tempVolume <- xpathSApply(anArticle,volexp)
   volume <- xmlValue(tempVolume)
   
-  #Getting Issue
+  # #Getting Issue
   issueexp <-"./MedlineCitation/Article/Journal/JournalIssue/Issue"
   tempIssue <- xpathSApply(anArticle,issueexp)
   issue <- xmlValue(tempIssue)
@@ -243,7 +241,7 @@ parseJournals <- function (anArticle)
 ```
 
 ```{r ParseHistory}
-parseHistory <- function (aHistoryNode)
+parseHistory <- function (aHistoryNode, i)
 {
   newHistory.df <- History.df <- data.frame (history_id = integer(),
                           article_id = integer(),
@@ -266,6 +264,7 @@ parseHistory <- function (aHistoryNode)
     hisMonth <- xmlValue(aDateNode[[2]])
     hisDay <- xmlValue(aDateNode[[3]])
     
+    newHistory.df[m,2] <- i
     newHistory.df[m,3] <- pub_status
     newHistory.df[m,4] <- hisYear
     newHistory.df[m,5] <- hisMonth
@@ -303,6 +302,8 @@ for (i in 1:numArticles) #should be numArticles not 3
   
   #Parse the journal node
   newJournal.df <- parseJournals(anArticle)
+  journalNode <-"./MedlineCitation/Article/Journal"
+  xjourn <- xpathSApply(anArticle,journalNode)
   
   #Adding the journals to the journal.df
   tempJournal <-Journal.df
@@ -311,7 +312,7 @@ for (i in 1:numArticles) #should be numArticles not 3
   #Parse History information, returns a data frame of the history dates of an individual article
   historyNode <-"./PubmedData/History/PubMedPubDate"
   xhistory <- xpathSApply(anArticle,historyNode)
-  newHistory.df <- parseHistory(xhistory)
+  newHistory.df <- parseHistory(xhistory, i)
   
   #Adding the journals to the journal.df
   tempHistory <-History.df
@@ -408,7 +409,43 @@ for (i in 1:numArticles) {
 print(Article.df)
 ```
 
-```{r Link History}
+```{r Make AuthorJoin}
+#New root
+root <- xmlRoot(xmlDOM)
+
+#go through each article
+for ( i in 1:numArticles){
+  
+  #Gets an article
+  anArticle <- root[[i]]
+  print(anArticle)
+  
+  #Parse Author list node
+  authorNode <-"./MedlineCitation/Article/AuthorList/Author"
+  xauth <- xpathApply(anArticle,authorNode)
+
+  #size of authorlist
+  n <- xmlSize(xauth)
+  
+  #finds the first name/last name of each author
+  for (m in 1:n)
+  {
+    anAuthor <- xauth[[m]]
+    first_name <- xmlValue(anAuthor[[2]])
+    last_name <- xmlValue(anAuthor[[1]])
+
+    #if the first name and last name match whats in the Author.df it adds the author_id and article_id to the table
+    for( j in 1:num.authors) {
+      if (Author.df$first_name[j] == first_name && Author.df$last_name[j] == last_name) {
+        val <- Author.df$author_id[j]
+        
+        authorjoinrow <- nrow(AuthorJoin.df) + 1
+        AuthorJoin.df[authorjoinrow,2] <- i
+        AuthorJoin.df[authorjoinrow,1] <- val
+      }
+    }
+  }
+}
 
 ```
 
