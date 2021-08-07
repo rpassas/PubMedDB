@@ -373,6 +373,7 @@ print(History.df)
 ```
 
 ```{r Link Journals}
+print(num.journals)
 
 for (i in 1:numArticles) {
   anArticle <- r[[i]]
@@ -381,13 +382,30 @@ for (i in 1:numArticles) {
   titleeexp <-"./MedlineCitation/Article/Journal/Title"
   tempTitle <- xpathSApply(anArticle,titleeexp)
   journaltitle <- xmlValue(tempTitle)
+
+  volexp <-"./MedlineCitation/Article/Journal/JournalIssue/Volume"
+  tempVolume <- xpathSApply(anArticle,volexp)
+  volume <- xmlValue(tempVolume)
+  
+  #Getting Issue
+  issueexp <-"./MedlineCitation/Article/Journal/JournalIssue/Issue"
+  tempIssue <- xpathSApply(anArticle,issueexp)
+  issue <- xmlValue(tempIssue)
+  
+  print(Journal.df$journal_title[j])
   print(journaltitle)
-  print(Journal.df$journal_title)
   
+  for(j in 1:num.journals){
+    if(Journal.df$journal_title[j] == journaltitle && Journal.df$volume[j] == volume && Journal.df$issue == issue){
+
+        a <- j
+        Article.df$journal_id[i] <- a
+        print(a)
+    }
+  }
   
-  #a <- Journal.df$journal_id[which(Journal.df$journal_title == journaltitle)]
-  #Article.df$journal_id[i] <- a
 }
+print(Article.df)
 ```
 
 ```{r Link History}
