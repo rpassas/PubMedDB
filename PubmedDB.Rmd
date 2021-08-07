@@ -489,6 +489,13 @@ for (r in 1:num.issue){
 print(Issue.df)
 ```
 
+
+
+
+
+
+
+
 ```{r Link Journals}
 print(num.journals)
 
@@ -566,7 +573,9 @@ for ( i in 1:numArticles){
 ```
 
 
-
+```{r}
+dbDisconnect(mydb)
+```
 
 
 
