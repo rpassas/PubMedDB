@@ -36,7 +36,8 @@ library(knitr)
 ```
 
 ```{r}
-path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
+#path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
+path <-"/Users/robert/Documents/CS5200/Practicum2"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
 #dbfn <- "assignment10.sql"
