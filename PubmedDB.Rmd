@@ -55,11 +55,9 @@ fpn = paste0(path, fn)
 ```
 
 ```{r bobs path}
-if (FALSE){
 path <-"/Users/robert/Documents/CS5200/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
-}
 ```
 
 ```{r}
@@ -433,6 +431,15 @@ for (r in 1:num.history){
   History.df$history_id[r] <- r
 }
 print(History.df)
+```
+
+```{r Adding issue_id}
+num.issue <- nrow(Issue.df)
+
+for (r in 1:num.issue){
+  Issue.df$issue_id[r] <- r
+}
+print(Issue.df)
 ```
 
 ```{r Link Journals}
