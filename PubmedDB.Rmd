@@ -19,7 +19,7 @@ library(knitr)
 ```
 
 ```{r}
-# 2. Settings
+# 2. Settings (Jordan's db)
 db_user <- 'cs5200practicum2'
 db_password <- 'tctvuje8'
 db_name <- 'dbpracticum2'
@@ -33,7 +33,32 @@ mydb <-  dbConnect(MySQL(), user = db_user, password = db_password,
 
 
 ```{r}
-#path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
+# 2. Settings (Bob's db)
+db_user <- 'CS5200'
+db_password <- 'db2password'
+db_name <- 'dbpracticum2'
+db_host <- 'cs5200-practicum2.chwzgwg0nlr5.us-east-1.rds.amazonaws.com'
+db_port <- 3306
+
+# 3. Read data from db
+mydb <-  dbConnect(MySQL(), user = db_user, password = db_password,
+                 dbname = db_name, host = db_host, port = db_port)
+```
+
+
+```{r}
+library(XML)
+library(DBI)
+library(knitr)
+```
+
+```{r jordan's path}
+path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
+fn <- "pubmed_sample.xml"
+fpn = paste0(path, fn)
+```
+
+```{r bob's path}
 path <-"/Users/robert/Documents/CS5200/Practicum2"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
