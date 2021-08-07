@@ -18,8 +18,10 @@ library(RMySQL)
 
 ```{r}
 # 2. Settings
-db_user <- 'cs5200practicum2'
-db_password <- 'tctvuje8'
+#db_user <- 'cs5200practicum2'
+db_user <- 'robert'
+#db_password <- 'tctvuje8'
+db_password <- 'passas'
 db_name <- 'dbpracticum2'
 db_host <- 'practicum2.cb9tzbdsyfxk.us-east-2.rds.amazonaws.com'
 db_port <- 3306
@@ -28,6 +30,8 @@ db_port <- 3306
 mydb <-  dbConnect(MySQL(), user = db_user, password = db_password,
                  dbname = db_name, host = db_host, port = db_port)
 ```
+
+
 
 ```{r}
 library(XML)
