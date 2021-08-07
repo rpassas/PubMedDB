@@ -55,11 +55,10 @@ fpn = paste0(path, fn)
 ```
 
 ```{r bobs path}
-if (FALSE) {
 path <-"/Users/robert/Documents/CS5200/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
-}
+
 ```
 
 ```{r}
@@ -254,11 +253,13 @@ parseIssues <- function (anArticle)
   volexp <-"./MedlineCitation/Article/Journal/JournalIssue/Volume"
   tempVolume <- xpathSApply(anArticle,volexp)
   volume <- xmlValue(tempVolume)
+  volume <- strtoi(volume)
   
   # #Getting Issue
   issueexp <-"./MedlineCitation/Article/Journal/JournalIssue/Issue"
   tempIssue <- xpathSApply(anArticle,issueexp)
   issue <- xmlValue(tempIssue)
+  issue <- strtoi(issue)
   
   #Getting PubDate information
   pubdateexp <- "./MedlineCitation/Article/Journal/JournalIssue/PubDate"
@@ -280,7 +281,6 @@ parseIssues <- function (anArticle)
   newIssue.df[1,5] <- issue
   newIssue.df[1,6] <- year
   newIssue.df[1,7] <- month
-  
   
   return(newIssue.df)
 }
@@ -356,7 +356,8 @@ for (i in 1:numArticles) #should be numArticles not 3
   
   #Adding the issues to the issue.df
   tempIssue <-Issue.df
-  Issue.df <- rbind(tempIssue,newIssue.df)
+  Issue.df <- rbind.data.frame(tempIssue,newIssue.df)
+  print(Issue.df)
   
   #Parse History Status
   historyStatusNode <-"./PubmedData/History/PubMedPubDate"
@@ -434,6 +435,10 @@ num.issue <- nrow(Issue.df)
 for (r in 1:num.issue){
   Issue.df$issue_id[r] <- r
 }
+# make columns int
+cols.num <- c("volume","issue")
+Issue.df[cols.num] <- sapply(Issue.df[cols.num],as.integer)
+sapply(Issue.df, class)
 print(Issue.df)
 ```
 
