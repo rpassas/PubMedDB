@@ -55,9 +55,11 @@ fpn = paste0(path, fn)
 ```
 
 ```{r bobs path}
+if (FALSE) {
 path <-"/Users/robert/Documents/CS5200/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
+}
 ```
 
 ```{r}
@@ -70,7 +72,7 @@ r <- xmlRoot(xmlDOM)
 
 ```{sql createTableAuthor, connection=mydb}
 CREATE TABLE IF NOT EXISTS Author (
-  author_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  author_id INT NOT NULL PRIMARY KEY,
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL
 );
@@ -83,26 +85,16 @@ Author.df <- data.frame (author_id = integer(),
                           stringsAsFactors = F)
 ```
 
-```{sql createTableHistory, connection=mydb}
-CREATE TABLE IF NOT EXISTS History (
-  history_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  article_id INT NOT NULL,
+```{sql createTableHistoryStatus, connection=mydb}
+CREATE TABLE IF NOT EXISTS HistoryStatus (
+  status_id INT NOT NULL PRIMARY KEY,
   pub_status TEXT NOT NULL,
-  year INT,
-  month INT,
-  day INT
+  status_date DATE NOT NULL
 );
 ```
 
 ```{r}
-History.df <- data.frame (history_id = integer(),
-                          article_id = integer(),
-                          stringsAsFactors = F)
-```
-
-```{r}
 HistoryStatus.df <- data.frame (status_id = integer(),
-                          history_id = integer(),
                           pub_status = character(),
                           status_date = character(),
                           stringsAsFactors = F)
@@ -128,7 +120,7 @@ CREATE TABLE IF NOT EXISTS JournalIssue (
   issue INT NOT NULL,
   pub_date DATE NOT NULL,
   FOREIGN KEY (journal_title) REFERENCES Journal(journal_title)
-  ON DELETE CASCADE,
+  ON DELETE CASCADE
 );
 ```
 
@@ -146,11 +138,11 @@ Issue.df <- data.frame (issue_id = integer(),
 
 ```{sql createTableArticle, connection=mydb}
 CREATE TABLE IF NOT EXISTS Article (
-  article_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  article_id INT NOT NULL PRIMARY KEY,
   journal_title TEXT NOT NULL,
   article_title TEXT NOT NULL,
   FOREIGN KEY (journal_title) REFERENCES Journal(journal_title)
-  ON DELETE CASCADE,
+  ON DELETE CASCADE
 );
 ```
 
@@ -177,6 +169,24 @@ CREATE TABLE IF NOT EXISTS AuthorJoin (
 
 ```{r}
 AuthorJoin.df <- data.frame (author_id = integer(),
+                          article_id = integer(),
+                          stringsAsFactors = F)
+```
+
+```{sql createTableHistory, connection=mydb}
+CREATE TABLE IF NOT EXISTS History (
+  status_id INT NOT NULL,
+  article_id INT NOT NULL,
+  FOREIGN KEY (status_id) REFERENCES HistoryStatus(status_id)
+  ON DELETE CASCADE,
+  FOREIGN KEY (article_id) REFERENCES Article(article_id)
+  ON DELETE CASCADE,
+  PRIMARY KEY (status_id, article_id)
+);
+```
+
+```{r}
+History.df <- data.frame (status_id = integer(),
                           article_id = integer(),
                           stringsAsFactors = F)
 ```
@@ -277,22 +287,6 @@ parseIssues <- function (anArticle)
 
 ```
 
-
-
-```{r ParseHistory}
-parseHistory <- function (aHistoryNode, i)
-{
-  newHistory.df <- History.df <- data.frame (history_id = integer(),
-                          article_id = integer(),
-                          stringsAsFactors = F)
-  newHistory.df[m,2] <- i
-  
-  n <- xmlSize(aHistoryNode)
-  
-  return(newHistory.df)
-}
-```
-
 ```{r ParseHistoryStatus}
 parseHistoryStatus <- function (aHistoryNode, i)
 {
@@ -301,7 +295,6 @@ parseHistoryStatus <- function (aHistoryNode, i)
   n <- xmlSize(aHistoryNode)
   
   newHistoryStatus.df <- data.frame (status_id = integer(),
-                      history_id = integer(),
                       pub_status = character(),
                       status_date = character(),
                       stringsAsFactors = F)
@@ -320,8 +313,8 @@ parseHistoryStatus <- function (aHistoryNode, i)
     hisDate <- paste(hisDay, hisMonth, hisYear, sep = "-")
     historystatusrow <- nrow(HistoryStatus.df) + 1
     
-    newHistoryStatus.df[m,3] <- pub_status
-    newHistoryStatus.df[m,4] <- hisDate
+    newHistoryStatus.df[m,2] <- pub_status
+    newHistoryStatus.df[m,3] <- hisDate
     
   }
   return(newHistoryStatus.df)
@@ -365,15 +358,6 @@ for (i in 1:numArticles) #should be numArticles not 3
   tempIssue <-Issue.df
   Issue.df <- rbind(tempIssue,newIssue.df)
   
-  #Parse History information, returns a data frame of the history dates of an individual article
-  #historyNode <-"./PubmedData/History/PubMedPubDate"
-  #xhistory <- xpathSApply(anArticle,historyNode)
-  #newHistory.df <- parseHistory(xhistory, i)
-  
-  #Adding the History to the History.df
-  #tempHistory <-History.df
-  #History.df <- rbind(tempHistory,newHistory.df)
-  
   #Parse History Status
   historyStatusNode <-"./PubmedData/History/PubMedPubDate"
   xhistorystatus <- xpathSApply(anArticle,historyStatusNode)
@@ -415,14 +399,6 @@ History.df <- duplicateHistory[!duplicated(duplicateHistory),]
 #Delete HistoryStatus Duplicates
 duplicateHistoryStatus <- HistoryStatus.df
 HistoryStatus.df <- duplicateHistoryStatus[!duplicated(duplicateHistoryStatus),]
-
-print(History.df)
-print(HistoryStatus.df)
-print(Author.df)
-print(Journal.df)
-print(Issue.df)
-print(Article.df)
-
 ```
 
 ```{r Adding author_id}
@@ -431,8 +407,6 @@ num.authors <- nrow(Author.df)
 for (r in 1:num.authors){
   Author.df$author_id[r] <- r
 }
-
-print(Author.df)
 ```
 
 ```{r Adding journal_id}
@@ -452,7 +426,6 @@ num.historystatus <- nrow(HistoryStatus.df)
 for (r in 1:num.historystatus){
   HistoryStatus.df$status_id[r] <- r
 }
-print(HistoryStatus.df)
 ```
 
 ```{r Adding issue_id}
@@ -574,7 +547,6 @@ for ( i in 1:numArticles){
     }
   }
 }
-print(AuthorJoin.df)
 ```
 
 ```{r}
@@ -583,12 +555,6 @@ print(History.df)
 print(HistoryStatus.df)
 ```
 
-
-<<<<<<< HEAD
-```{r}
-dbDisconnect(mydb)
-```
-=======
 ```{r Make History (join)}
 #New root
 root <- xmlRoot(xmlDOM)
@@ -632,12 +598,17 @@ for ( i in 1:numArticles){
     }
   }
 }
-
-print(History.df)
-print(HistoryStatus.df)
 ```
 
->>>>>>> fb2d92bbc4770ab6cb314b7a8db675a2462cd6c5
+```{r}
+print(Article.df)
+print(AuthorJoin.df)
+print(Author.df)
+print(History.df)
+print(HistoryStatus.df)
+print(Journal.df)
+print(Issue.df)
+```
 
 
 
