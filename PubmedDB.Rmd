@@ -108,25 +108,39 @@ History.df <- data.frame (history_id = integer(),
 
 ```{sql createTableJournal, connection=mydb}
 CREATE TABLE IF NOT EXISTS Journal (
-  journal_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  cited_medium TEXT NOT NULL,
-  volume INT NOT NULL,
-  issue INT NOT NULL,
-  pub_date DATE NOT NULL,
-  journal_title TEXT NOT NULL
+  journal_title TEXT PRIMARY KEY
 );
 ```
 
 ```{r}
-Journal.df <- data.frame (journal_id = integer(),
+Journal.df <- data.frame (journal_title = character(),
+                          stringsAsFactors = F)
+```
+
+```{sql createTableIssue, connection=mydb}
+CREATE TABLE IF NOT EXISTS JournalIssue (
+  issue_id INT PRIMARY KEY,
+  journal_title TEXT NOT NULL,
+  cited_medium TEXT NOT NULL,
+  volume INT NOT NULL,
+  issue INT NOT NULL,
+  pub_date DATE NOT NULL,
+  FOREIGN KEY (journal_title) REFERENCES Journal(journal_title)
+  ON DELETE CASCADE,
+);
+```
+
+```{r}
+Issue.df <- data.frame (issue_id = integer(),
+                        journal_title = character(),
                           cited_medium = character(),
                           volume = integer(),
                           issue = integer(),
                           pub_date_year = integer(),
                           pub_date_month = character(),
-                          journal_title = character(),
                           stringsAsFactors = F)
 ```
+
 
 ```{sql createTableArticle, connection=mydb}
 CREATE TABLE IF NOT EXISTS Article (
@@ -140,7 +154,7 @@ CREATE TABLE IF NOT EXISTS Article (
 numArticles <- xmlSize(r) 
 
 Article.df <- data.frame (article_id = integer(),
-                          journal_id = integer(),
+                          journal_text = character(),
                           article_title = character(),
                           stringsAsFactors = F)
 ```
@@ -191,13 +205,30 @@ parseAuthors <- function (anAuthorListNode)
 ```{r ParseJournals}
 parseJournals <- function (anArticle)
 {
-  newJournal.df <- Journal.df <- data.frame (journal_id = integer(),
+  newJournal.df <- Journal.df <- data.frame (journal_title = character(),
+                          stringsAsFactors = F)
+
+  #Getting Title
+  titleeexp <-"./MedlineCitation/Article/Journal/Title"
+  tempTitle <- xpathSApply(anArticle,titleeexp)
+  title <- xmlValue(tempTitle)
+
+  newJournal.df[1,1] <- title
+  
+  return(newJournal.df)
+}
+```
+
+```{r Parse JournalIssue}
+parseIssues <- function (anArticle)
+{
+  newIssue.df <- Issue.df <- data.frame (issue_id = integer(),
+                        journal_title = character(),
                           cited_medium = character(),
                           volume = integer(),
                           issue = integer(),
                           pub_date_year = integer(),
                           pub_date_month = character(),
-                          journal_title = character(),
                           stringsAsFactors = F)
 
   #Getting Cited Medium
@@ -229,16 +260,20 @@ parseJournals <- function (anArticle)
   tempTitle <- xpathSApply(anArticle,titleeexp)
   title <- xmlValue(tempTitle)
 
-  newJournal.df[1,2] <- cited_medium
-  newJournal.df[1,3] <- volume
-  newJournal.df[1,4] <- issue
-  newJournal.df[1,5] <- year
-  newJournal.df[1,6] <- month
-  newJournal.df[1,7] <- title
+  newIssue.df[1,2] <- title
+  newIssue.df[1,3] <- cited_medium
+  newIssue.df[1,4] <- volume
+  newIssue.df[1,5] <- issue
+  newIssue.df[1,6] <- year
+  newIssue.df[1,7] <- month
   
-  return(newJournal.df)
+  
+  return(newIssue.df)
 }
+
 ```
+
+
 
 ```{r ParseHistory}
 parseHistory <- function (aHistoryNode, i)
@@ -276,7 +311,7 @@ parseHistory <- function (aHistoryNode, i)
 }
 ```
 
-```{r Q1}
+```{r Test}
 xpathexpression <-"//PubmedArticle/MedlineCitation/Article/ArticleTitle"
 xpathexpression2 <-"//MedlineCitation/Article/AuthorList/Author"
 x <- xpathSApply(xmlDOM,xpathexpression)
@@ -309,6 +344,13 @@ for (i in 1:numArticles) #should be numArticles not 3
   tempJournal <-Journal.df
   Journal.df <- rbind(tempJournal,newJournal.df)
   
+  #Parse the issue node
+  newIssue.df <- parseIssues(anArticle)
+  
+  #Adding the issues to the issue.df
+  tempIssue <-JournalIssue.df
+  JournalIssue.df <- rbind(tempIssue,newIssue.df)
+  
   #Parse History information, returns a data frame of the history dates of an individual article
   historyNode <-"./PubmedData/History/PubMedPubDate"
   xhistory <- xpathSApply(anArticle,historyNode)
@@ -327,9 +369,16 @@ for (i in 1:numArticles) #should be numArticles not 3
   Article.df[i,3] <- artTitle
   Article.df[i,1] <- i
 }
-#Delete History Duplicates
+
+
+
+#Delete Journal Duplicates
 duplicateJournals <- Journal.df
 Journal.df <- duplicateJournals[!duplicated(duplicateJournals),]
+
+#Delete Issue Duplicates
+duplicateIssues <- Issue.df
+Issue.df <- duplicateIssues[!duplicated(duplicateIssues),]
 
 #Delete Author Duplicates
 duplicateAuthors <- Author.df
@@ -342,7 +391,9 @@ History.df <- duplicateHistory[!duplicated(duplicateHistory),]
 print(History.df)
 print(Author.df)
 print(Journal.df)
+print(Issue.df)
 print(Article.df)
+
 ```
 
 ```{r Adding author_id}
@@ -363,6 +414,8 @@ for (r in 1:num.journals){
 }
 print(Journal.df)
 ```
+
+
 
 ```{r Adding history_id}
 num.history <- nrow(History.df)
