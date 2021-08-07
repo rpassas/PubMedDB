@@ -145,8 +145,10 @@ Issue.df <- data.frame (issue_id = integer(),
 ```{sql createTableArticle, connection=mydb}
 CREATE TABLE IF NOT EXISTS Article (
   article_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  journal_id INT NOT NULL,
-  article_title TEXT NOT NULL
+  journal_title TEXT NOT NULL,
+  article_title TEXT NOT NULL,
+  FOREIGN KEY (journal_title) REFERENCES Journal(journal_title)
+  ON DELETE CASCADE,
 );
 ```
 
@@ -154,7 +156,7 @@ CREATE TABLE IF NOT EXISTS Article (
 numArticles <- xmlSize(r) 
 
 Article.df <- data.frame (article_id = integer(),
-                          journal_text = character(),
+                          journal_title = character(),
                           article_title = character(),
                           stringsAsFactors = F)
 ```
@@ -340,6 +342,10 @@ for (i in 1:numArticles) #should be numArticles not 3
   journalNode <-"./MedlineCitation/Article/Journal"
   xjourn <- xpathSApply(anArticle,journalNode)
   
+  journalTitleNode <-"./MedlineCitation/Article/Journal/Title"
+  tempTitle <- xpathSApply(anArticle,journalTitleNode)
+  journal_title <- xmlValue(tempTitle)
+  
   #Adding the journals to the journal.df
   tempJournal <-Journal.df
   Journal.df <- rbind(tempJournal,newJournal.df)
@@ -348,8 +354,8 @@ for (i in 1:numArticles) #should be numArticles not 3
   newIssue.df <- parseIssues(anArticle)
   
   #Adding the issues to the issue.df
-  tempIssue <-JournalIssue.df
-  JournalIssue.df <- rbind(tempIssue,newIssue.df)
+  tempIssue <-Issue.df
+  Issue.df <- rbind(tempIssue,newIssue.df)
   
   #Parse History information, returns a data frame of the history dates of an individual article
   historyNode <-"./PubmedData/History/PubMedPubDate"
@@ -367,6 +373,7 @@ for (i in 1:numArticles) #should be numArticles not 3
   
   #Adding article title and article_id to data frame
   Article.df[i,3] <- artTitle
+  Article.df[i,2] <- journal_title
   Article.df[i,1] <- i
 }
 
@@ -407,12 +414,14 @@ print(Author.df)
 ```
 
 ```{r Adding journal_id}
+if(FALSE){
 num.journals <- nrow(Journal.df)
 
 for (r in 1:num.journals){
   Journal.df$journal_id[r] <- r
 }
 print(Journal.df)
+}
 ```
 
 
