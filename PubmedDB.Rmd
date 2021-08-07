@@ -312,8 +312,36 @@ duplicateHistory <- History.df
 History.df <- duplicateHistory[!duplicated(duplicateHistory),]
 
 print(History.df)
+print(Author.df)
 ```
 
+```{r Adding author_id}
+num.authors <- nrow(Author.df)
+
+for (r in 1:num.authors){
+  Author.df$author_id[r] <- r
+}
+
+print(Author.df)
+```
+
+```{r Adding journal_id}
+num.journals <- nrow(Journal.df)
+
+for (r in 1:num.journals){
+  Journal.df$journal_id[r] <- r
+}
+print(Journal.df)
+```
+
+```{r Adding history_id}
+num.history <- nrow(History.df)
+
+for (r in 1:num.history){
+  History.df$history_id[r] <- r
+}
+print(History.df)
+```
 
 ```{r Remove Author Duplicates}
 duplicates <- Author.df
