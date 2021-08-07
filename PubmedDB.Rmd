@@ -634,6 +634,7 @@ for ( i in 1:numArticles){
 }
 
 print(History.df)
+print(HistoryStatus.df)
 ```
 
 >>>>>>> fb2d92bbc4770ab6cb314b7a8db675a2462cd6c5
