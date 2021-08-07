@@ -100,9 +100,14 @@ CREATE TABLE IF NOT EXISTS History (
 History.df <- data.frame (history_id = integer(),
                           article_id = integer(),
                           pub_status = character(),
-                          year = integer(),
-                          month = integer(),
-                          day = integer(),
+                          stringsAsFactors = F)
+```
+
+```{r}
+HistoryStatus.df <- data.frame (status_id = integer(),
+                          history_id = integer(),
+                          pub_status = character(),
+                          status_date = character(),
                           stringsAsFactors = F)
 ```
 
@@ -280,6 +285,46 @@ parseHistory <- function (aHistoryNode, i)
 {
   newHistory.df <- History.df <- data.frame (history_id = integer(),
                           article_id = integer(),
+                          stringsAsFactors = F)
+  #newHistory.df[m,2] <- i
+  
+  n <- xmlSize(aHistoryNode)
+  
+  newHistoryStatus.df <- data.frame (status_id = integer(),
+                      history_id = integer(),
+                      pub_status = character(),
+                      status_date = character(),
+                      stringsAsFactors = F)
+  
+  for (m in 1:n)
+  {
+    aDateNode <- aHistoryNode[[m]]
+    
+    dateNodeAttributes <- xmlAttrs(aDateNode)
+    pub_status <- as.character(dateNodeAttributes[1])
+
+    hisYear <- as.character(xmlValue(aDateNode[[1]]))
+    hisMonth <- as.character(xmlValue(aDateNode[[2]]))
+    hisDay <- as.character(xmlValue(aDateNode[[3]]))
+    
+    hisDate <- paste(hisDay, hisMonth, hisYear, sep = "-")
+    historystatusrow <- nrow(HistoryStatus.df) + 1
+    
+    HistoryStatus.df[historystatusrow,3] <- pub_status
+    HistoryStatus.df[historystatusrow,4] <- hisDate
+    
+  }
+  
+
+  return(newHistory.df)
+}
+```
+
+```{r ParseHistoryStatus}
+parseHistory2 <- function (aHistoryNode, i)
+{
+  newHistory.df <- History.df <- data.frame (history_id = integer(),
+                          article_id = integer(),
                           pub_status = character(),
                           year = integer(),
                           month = integer(),
@@ -320,6 +365,7 @@ print(x)
 ```
 
 ```{r}
+r <- xmlRoot(xmlDOM)
 #Iterate through the number of articles
 for (i in 1:numArticles) #should be numArticles not 3
 {
@@ -389,6 +435,7 @@ duplicateHistory <- History.df
 History.df <- duplicateHistory[!duplicated(duplicateHistory),]
 
 print(History.df)
+print(HistoryStatus.df)
 print(Author.df)
 print(Journal.df)
 print(Issue.df)
