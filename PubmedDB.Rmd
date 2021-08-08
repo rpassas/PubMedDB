@@ -723,6 +723,7 @@ SELECT Article.article_id, Article.article_title, Journal.journal_title
 ```{sql connection=mydb}
 CREATE TABLE starschema.TimeDimension (
   time_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  charDate TEXT NOT NULL,
   year INT NOT NULL,
   month INT NOT NULL,
   quarter INT NOT NULL
@@ -730,8 +731,9 @@ CREATE TABLE starschema.TimeDimension (
 ```
 
 ```{sql connection=mydb}
-INSERT INTO starschema.TimeDimension (year, month, quarter)
-  SELECT CAST(SUBSTRING(pub_date, 1,4) AS UNSIGNED) as year, 
+INSERT INTO starschema.TimeDimension (charDate, year, month, quarter)
+  SELECT DISTINCT pub_date as charDate,
+  CAST(SUBSTRING(pub_date, 1,4) AS UNSIGNED) as year, 
   CAST(SUBSTRING(pub_date, 6,2) AS UNSIGNED) as month,
   0 as quarter
   from starschema.JournalDimension;
@@ -747,6 +749,27 @@ UPDATE starschema.TimeDimension SET quarter =
   END
 WHERE quarter = 0;
 ```
+
+```{sql connection=mydb}
+ALTER TABLE starschema.JournalDimension
+  ADD time_id INT;
+```
+
+```{sql connection=mydb}
+UPDATE starschema.JournalDimension
+  SET time_id = (Select time_id from starschema.TimeDimension WHERE JournalDimension.pub_date = TimeDimension.charDate)
+```
+
+```{sql connection=mydb}
+ALTER TABLE starschema.JournalDimension
+  DROP COLUMN pub_date;
+```
+
+```{sql connection=mydb}
+SELECT * FROM starschema.JournalDimension
+```
+
+
 
 
 
