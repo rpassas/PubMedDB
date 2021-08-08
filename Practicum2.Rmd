@@ -814,7 +814,7 @@ ALTER TABLE starschema.JournalDimension
   ADD time_id INT;
 ```
 
-#sets the time_id from journal dimension to the time dimension equivilent 
+#sets the time_id from journal dimension to the time dimension equivalent 
 ```{sql connection=mydb}
 UPDATE starschema.JournalDimension
   SET time_id = (Select time_id from starschema.TimeDimension WHERE JournalDimension.pub_date = TimeDimension.charDate)
@@ -828,6 +828,10 @@ ALTER TABLE starschema.JournalDimension
 
 ```{sql connection=mydb}
 SELECT * FROM starschema.JournalDimension
+```
+
+```{sql connection=mydb}
+SELECT * FROM starschema.ArticleFactTable
 ```
 
 
