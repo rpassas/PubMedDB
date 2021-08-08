@@ -661,9 +661,51 @@ SELECT * FROM Journal LIMIT 5;
 ```{sql connection=mydb}
 SELECT * FROM JournalIssue LIMIT 5;
 ```
+
+```{sql connection=mydb}
+DROP SCHEMA IF EXISTS starschema
+```
+
+```{sql connection=mydb}
+DROP TABLE IF EXISTS starschema.AuthorDimension
+```
+
+```{sql connection=mydb}
+DROP TABLE IF EXISTS starschema.JournalDimension
+```
+
+```{sql connection=mydb}
+DROP TABLE IF EXISTS starschema.TimeDimension
+```
+
+```{sql connection=mydb}
+DROP TABLE IF EXISTS starschema.HistoryDimension
+```
+
+```{sql connection=mydb}
+DROP TABLE IF EXISTS starschema.ArticleFactTable
+```
+
+```{sql connection=mydb}
+DROP TABLE IF EXISTS starschema.ArticleSummary
+```
+
+```{sql connection=mydb}
+DROP TABLE IF EXISTS starschema.ByTime
+```
+
+```{sql connection=mydb}
+DROP TABLE IF EXISTS starschema.ByJournal
+```
+
+```{sql connection=mydb}
+DROP TABLE IF EXISTS starschema.ByAuthor
+```
+
+
 #creates a new schema to use
 ```{sql connection=mydb}
-CREATE SCHEMA IF NOT EXISTS starschema;
+CREATE SCHEMA IF NOT EXISTS starschema
 ```
 
 #Creates the Author dimension table
@@ -854,6 +896,21 @@ TimeDimension.month AS month,
 TimeDimension.quarter AS quarter
   FROM starschema.TimeDimension;
 ```
+
+```{sql connection=mydb}
+INSERT INTO starschema.ArticlesSummary(num_articles, time_id, journal_id, author_id)
+SELECT COUNT(*) AS num_articles, TimeDimension.time_id as time_id, 
+  JournalDimension.journal_id, AuthorDimension.author_id
+FROM starschema.TimeDimension
+JOIN starschema.JournalDimension USING(time_id)
+JOIN starschema.ArticleFactTable USING(journal_id)
+JOIN starschema.AuthorDimension USING(article_id)
+GROUP BY journal_id, author_id;
+
+```
+
+
+
 
 
 ```{r}
