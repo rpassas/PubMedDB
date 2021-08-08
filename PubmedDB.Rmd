@@ -685,8 +685,20 @@ CREATE TABLE IF NOT EXISTS starschema.AuthorDimension
 
 #Creates the Journal dimension table
 ```{sql connection=mydb}
-CREATE TABLE IF NOT EXISTS starschema.JournalDimension 
-  AS SELECT Journal.journal_title,
+CREATE TABLE IF NOT EXISTS starschema.JournalDimension (
+    journal_id INT AUTO_INCREMENT PRIMARY KEY,
+    journal_title TEXT NOT NULL,
+    issue INT NOT NULL,
+    volume INT NOT NULL,
+    pub_date TEXT NOT NULL,
+    cited_medium TEXT NOT NULL,
+    article_id INT NOT NULL
+);
+```
+
+```{sql connection=mydb}
+INSERT INTO starschema.JournalDimension (journal_title, issue, volume, pub_date, cited_medium, article_id)
+SELECT Journal.journal_title,
             JournalIssue.issue,
             JournalIssue.volume,
             JournalIssue.pub_date,
@@ -726,6 +738,7 @@ SELECT Article.article_id, Article.article_title, Journal.journal_title
   JOIN dbpracticum2.Article USING(journal_title);
 ```
 
+#Creates the time dimension table
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.TimeDimension (
   time_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -736,6 +749,7 @@ CREATE TABLE IF NOT EXISTS starschema.TimeDimension (
 );
 ```
 
+#Inserts into time dimension table
 ```{sql connection=mydb}
 INSERT INTO starschema.TimeDimension (charDate, year, month, quarter)
   SELECT DISTINCT pub_date as charDate,
@@ -745,6 +759,7 @@ INSERT INTO starschema.TimeDimension (charDate, year, month, quarter)
   from starschema.JournalDimension;
 ```
 
+#Updates quarter values for time dimension table
 ```{sql connection=mydb}
 UPDATE starschema.TimeDimension SET quarter = 
   CASE
@@ -756,16 +771,19 @@ UPDATE starschema.TimeDimension SET quarter =
 WHERE quarter = 0;
 ```
 
+#Adds time_id to journal dimension table
 ```{sql connection=mydb}
 ALTER TABLE starschema.JournalDimension
   ADD time_id INT;
 ```
 
+#sets the time_id from journal dimension to the time dimension equivilent 
 ```{sql connection=mydb}
 UPDATE starschema.JournalDimension
   SET time_id = (Select time_id from starschema.TimeDimension WHERE JournalDimension.pub_date = TimeDimension.charDate)
 ```
 
+#Drops old pub_date column
 ```{sql connection=mydb}
 ALTER TABLE starschema.JournalDimension
   DROP COLUMN pub_date;
@@ -788,6 +806,7 @@ CREATE TABLE IF NOT EXISTS starschema.ArticlesSummary(
 );
 ```
 
+#Creates the byAuthor Table
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.byAuthor(
   author_id INT PRIMARY KEY,
@@ -796,6 +815,7 @@ CREATE TABLE IF NOT EXISTS starschema.byAuthor(
 );
 ```
 
+#Creates the byTime table
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.byTime(
   time_id INT PRIMARY KEY,
@@ -805,13 +825,15 @@ CREATE TABLE IF NOT EXISTS starschema.byTime(
 );
 ```
 
+#Creates the byJournal table
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.byJournal(
   journal_id INT PRIMARY KEY,
-  journtal_title TEXT NOT NULL
+  journal_title TEXT NOT NULL
 );
 ```
 
+#inserts into the byJournal table
 ```{sql connection=mydb}
 INSERT INTO starschema.byJournal(journal_id, journal_title)
 SELECT JournalDimension.journal_id AS journal_id,
@@ -819,20 +841,22 @@ JournalDimension.journal_title
   FROM starschema.JournalDimension;
 ```
 
+#Inserts into the byAuthor table
 ```{sql connection=mydb}
-INSERT INTO starschema.byAuthor(author_id, author_first, author_last)
-SELECT AuthorDimension.author_id AS author_id,
+INSERT INTO starschema.byAuthor(author_id, first_name, last_name)
+SELECT DISTINCT(AuthorDimension.authorDim_id) AS author_id,
 AuthorDimension.first_name AS author_first,
 AuthorDimension.last_name AS author_last
-  FROM starschema.AuthorDimension;
+FROM starschema.AuthorDimension;
 ```
 
-```{sql}
+#Inserts into the byTime table
+```{sql connection=mydb}
 INSERT INTO starschema.byTime(time_id, year, month, quarter)
 SELECT TimeDimension.time_id AS time_id,
 TimeDimension.year AS year,
 TimeDimension.month AS month,
-TimeDimension quarter AS quarter
+TimeDimension.quarter AS quarter
   FROM starschema.TimeDimension;
 ```
 
