@@ -724,7 +724,7 @@ for (r in 1:num.historystatus){
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubnVtLmlzc3VlIDwtIG5yb3coSXNzdWUuZGYpXG5cbmZvciAociBpbiAxOm51bS5pc3N1ZSl7XG4gIElzc3VlLmRmJGlzc3VlX2lkW3JdIDwtIHJcbn1cbiMgbWFrZSBjb2x1bW5zIGludFxuY29scy5udW0gPC0gYyhcInZvbHVtZVwiLFwiaXNzdWVcIilcbklzc3VlLmRmW2NvbHMubnVtXSA8LSBzYXBwbHkoSXNzdWUuZGZbY29scy5udW1dLGFzLmludGVnZXIpXG5zYXBwbHkoSXNzdWUuZGYsIGNsYXNzKVxucHJpbnQoSXNzdWUuZGYpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubnVtLmlzc3VlIDwtIG5yb3coSXNzdWUuZGYpXG5cbmZvciAociBpbiAxOm51bS5pc3N1ZSl7XG4gIElzc3VlLmRmJGlzc3VlX2lkW3JdIDwtIHJcbn1cbiMgbWFrZSBjb2x1bW5zIGludFxuY29scy5udW0gPC0gYyhcInZvbHVtZVwiLFwiaXNzdWVcIilcbklzc3VlLmRmW2NvbHMubnVtXSA8LSBzYXBwbHkoSXNzdWUuZGZbY29scy5udW1dLGFzLmludGVnZXIpXG5zYXBwbHkoSXNzdWUuZGYsIGNsYXNzKVxuYGBgIn0= -->
 <pre class="r"><code>num.issue &lt;- nrow(Issue.df)
 
 for (r in 1:num.issue){
@@ -733,9 +733,24 @@ for (r in 1:num.issue){
 # make columns int
 cols.num &lt;- c(&quot;volume&quot;,&quot;issue&quot;)
 Issue.df[cols.num] &lt;- sapply(Issue.df[cols.num],as.integer)
-sapply(Issue.df, class)
-print(Issue.df)</code></pre>
+sapply(Issue.df, class)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgaXNzdWVfaWQgIGpvdXJuYWxfdGl0bGUgICBjaXRlZF9tZWRpdW0gICAgICAgICB2b2x1bWUgICAgICAgICAgaXNzdWUgIHB1Yl9kYXRlX3llYXIgXG4gICAgIFwiaW50ZWdlclwiICAgIFwiY2hhcmFjdGVyXCIgICAgXCJjaGFyYWN0ZXJcIiAgICAgIFwiaW50ZWdlclwiICAgICAgXCJpbnRlZ2VyXCIgICAgXCJjaGFyYWN0ZXJcIiBcbnB1Yl9kYXRlX21vbnRoIFxuICAgXCJjaGFyYWN0ZXJcIiBcbiJ9 -->
+<pre><code>      issue_id  journal_title   cited_medium         volume          issue  pub_date_year 
+     &quot;integer&quot;    &quot;character&quot;    &quot;character&quot;      &quot;integer&quot;      &quot;integer&quot;    &quot;character&quot; 
+pub_date_month 
+   &quot;character&quot; </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoSXNzdWUuZGYpXG5gYGAifQ== -->
+<pre class="r"><code>print(Issue.df)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MTksIm5jb2wiOjcsInN1bW1hcnkiOltdfSwicmRmIjoiSDRzSUFBQUFBQUFBQSsxVlMyOFRNUkRldk52MFRTU0VoSVFzcEI0QUpZSlU0bmxLVzZvMkVoQjFXNGxiNURodVlycTdYdG5lUURqeEwvazNMZVB0ZUxOWnRSSUlqa1NhZUR6aitlWmg1OHZwNGVlOTV1ZW01M2tWcjFxQzd4cW9YdTM4N0tqOTJ2T3FaZGlVdktxM2F0ZHY0RzZCMGdEWkFHbWxUczhycDlGdzJrYUMxUEhNQ29nTnRPaHJJT3NZdHdteUJiSU5zZ055RDdHMjAvVW0yY214NzVNdk1sRVJEY2hiWXFhY2hJbG1TU0QxSlErNEFhdnp5Z3R5TEhVc3JPMUNLdUxIbkFuUS9VUk51Sm9qNE9aQXo5bFVhaGxTSTVoRzZ4UGZLSG5KM3hHYWgyTmM4WkVDblFrRktTRkFSaGl3ZThvbnNBTWZqYmlHc3JTZ29JNUpURVZFUWo0V1RFUWNENy94dWZpZUtJNE41RExZN2I0U1J1Z3BlUitMZ01kNlRucGFTNmc4bCszcFFTQWl3V3lNTWxNWlU0dXYwM3lLUTEzY3JwcFR4YVlZOGZBTWtQdUxSQlRpbEl3RHFrMDJpWjZyWEFaeTRxeXRBV0JUb3dRamlvNlhYT1JRUUE3TnRhdWNnVGZDS3BoSlFqejNLSmVYdWNJWFk4SlRLNE5BK2tSbVEvcWppZjVHZXpVL1hweXZIOUFJYmhOM08vdjljeUlpd3lIY3BEblI4VGdIYWYyUkZqTm9rOExWRlFwQTlPWEhXaHNvaUhMOW5hUUorUDk5Y2I5Z0Rjc01MMEdlMmZzSHVROUU4dE5lTDBoaTN6M0lLNUFIeUNTNzZMUHJEQ1RNN1IxbUdXVU5HYWlFMHNSMUJSbXFuUFBWYzh4VVE2a1VMcmZhZmY2aWkvbzY2SHZrQTFYdFhxenU4SGZKUnpsckgzS1c4Ky9kb1hmL2dYNlRzMCtqOWhFZi9SV0d6K1AySjJhVy9NdXpxUFNUd0pMNk5YeWNDYm90bXFDWVc5VEZTRklZVkh2SkpGT3ptVlpneEJsb0VUeUpGcWZtdDFwVk1jWk9adm5QckJiUmtHdHNyK0dlcXRBNjRVTXh4djBHTXZiUUNCTTRCbGhuQW5oM2FIa2hZNzc2VEFaSm1IRkVDdU13NG1RMEhBTlZEK2ZBMDQ2Q00yTW9Jek10MUxhcTVOZU9xODgrNy9JUEwvMjBpazB3SUQ3WGhETTJBWmQyTGhURXcrNnFFTktRc1dVK0NDcTM4TUhuZzB1cVlOanFqY2NpbXBCc01vc2ZWQW1ySytFUDBPbU5tNVRsYTRTcXVTSHhhSklqMG9DT3VIc0ZtOUJ4Mm5BbnpqRnBFNnk2WTZUSmVMb0ovenpPa3ZibVhmMENoOFlVOHNFSUFBQT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["issue_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["journal_title"],"name":[2],"type":["chr"],"align":["left"]},{"label":["cited_medium"],"name":[3],"type":["chr"],"align":["left"]},{"label":["volume"],"name":[4],"type":["int"],"align":["right"]},{"label":["issue"],"name":[5],"type":["int"],"align":["right"]},{"label":["pub_date_year"],"name":[6],"type":["chr"],"align":["left"]},{"label":["pub_date_month"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"HSS journal : the musculoskeletal journal of Hospital for Special Surgery","3":"Print","4":"8","5":"2","6":"2012","7":"Jul","_rn_":"1"},{"1":"2","2":"Psychosomatics","3":"Internet","4":"54","5":"2","6":"2013 Mar-Apr","7":"NA","_rn_":"2"},{"1":"3","2":"Stroke; a journal of cerebral circulation","3":"Internet","4":"43","5":"11","6":"2012","7":"Nov","_rn_":"3"},{"1":"4","2":"Regional anesthesia and pain medicine","3":"Internet","4":"37","5":"6","6":"2012 Nov-Dec","7":"NA","_rn_":"4"},{"1":"5","2":"Seizure : the journal of the British Epilepsy Association","3":"Internet","4":"22","5":"1","6":"2013","7":"Jan","_rn_":"5"},{"1":"6","2":"Clinical orthopaedics and related research","3":"Internet","4":"471","5":"1","6":"2013","7":"Jan","_rn_":"6"},{"1":"7","2":"The Journal of arthroplasty","3":"Internet","4":"27","5":"10","6":"2012","7":"Dec","_rn_":"7"},{"1":"8","2":"Anesthesiology","3":"Internet","4":"117","5":"1","6":"2012","7":"Jul","_rn_":"8"},{"1":"9","2":"Pediatric radiology","3":"Internet","4":"42","5":"8","6":"2012","7":"Aug","_rn_":"9"},{"1":"10","2":"Diseases of the colon and rectum","3":"Internet","4":"55","5":"4","6":"2012","7":"Apr","_rn_":"10"},{"1":"11","2":"Journal of clinical anesthesia","3":"Internet","4":"24","5":"2","6":"2012","7":"Mar","_rn_":"11"},{"1":"12","2":"PloS one","3":"Internet","4":"7","5":"1","6":"2012","7":"NA","_rn_":"12"},{"1":"13","2":"Regional anesthesia and pain medicine","3":"Internet","4":"37","5":"1","6":"2012 Jan-Feb","7":"NA","_rn_":"13"},{"1":"14","2":"The Journal of arthroplasty","3":"Internet","4":"27","5":"6","6":"2012","7":"Jun","_rn_":"14"},{"1":"15","2":"Spine","3":"Internet","4":"37","5":"11","6":"2012","7":"May","_rn_":"15"},{"1":"16","2":"Cancer","3":"Internet","4":"118","5":"12","6":"2012","7":"Jun","_rn_":"16"},{"1":"17","2":"BJU international","3":"Internet","4":"109","5":"5","6":"2012","7":"Mar","_rn_":"17"},{"1":"18","2":"Journal of intensive care medicine","3":"Internet","4":"27","5":"5","6":"2012 Sep-Oct","7":"NA","_rn_":"18"},{"1":"19","2":"Spine","3":"Internet","4":"37","5":"3","6":"2012","7":"Feb","_rn_":"19"}],"options":{"columns":{"min":{},"max":[10],"total":[7]},"rows":{"min":[10],"max":[10],"total":[19]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -809,6 +824,13 @@ Issue.df$pub_date &lt;- as.Date(Issue.df$pub_date,
 Issue.df$pub_date_year &lt;- NULL
 print(Issue.df)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MTksIm5jb2wiOjYsInN1bW1hcnkiOltdfSwicmRmIjoiSDRzSUFBQUFBQUFBQSsxVnpXNFRNUkRlYkxOcG0vN1FFb1FxSVNFTDFBTlU1QUFTdjVmK2dkcWVRcmVWZWd1dTEwMU1kOWNyMjFzb3B6NEJiOEFqOENKSTVNcWJjQ3lNTitQTlpzVUI3aHkrakdmRzgyZDd2eHp1bmp4cG43UTl6NXZ4bWczNERXRHBCY2RIYng0OTk3eW1EMHJEYTNyelZuNEVkd2NXTGNBU29GTTRQYzh2b21HM2pVVC9MR0FPWUFOdDlnWEFJc1l0QTI0QVZnQ3JnSnVZYTZXUTQyTDdlMkZJM3N0Y3BUUW1MNGtaY3BMa211V3gxT2M4NWdhc3ppdlB5SjdVbWJDMk02bEltSEVtWUIzbWFzRFZKU1pjN3VsTE5wUmFKdFFJcHRINklEUktudk5YaEZiVE1hNzRxWUkxRXdwS1FvQk1NV0Q5a0E5QUF4OU51WWEydEtDd2pFaEdSVW9TSGdrbVVvNmJYNFJjZk1vVnh3RXFGYXk2cllRUmVraGVaeUxtbWI0a1cxcEw2THhTN2VGT0xGTEJiSXd5UTVsUm0xOFg5UlNIdnJpVm1sUEZoaGh4NXdneUgwd0tVWWhUTW91cE51VkpiTG5PWlN3SHp0cnBRVzVxbEdCRTBXaktSWFlGMU5CY3U4NFplRlBzZ3BrOHdYMTNLM1daYTN4eVRMaHJyaGZMa01qeWtQN3BSUDlpdkNETUp2dGJPelNGMjBSdGRmdmdtSWpVY0FnM1JVMTAzS3VrdFA1VWl3c1lrOExWMVJyQTdOT1BOZWdwaUhMejdSY0YrSCs5cms5WXd6TERVOENHdlgvQWJTQ1NIL1o2QWJsOTk0Qm5nRFZra25YMFdYa0JTQ3E2eStrakZwQ0JHb2cyeWpsa0tML2lhMVdZS1VBQWs4MVlodXBzanQ1YUx2UTJSOSt1eHZKelRYNzFwdVVYdEx1NGQ2amZSM2xyYlAvK2MxcU90bEUrdnByV2NmOG9ReGtVL2hvdEJ3eGV2OFlYNll6TlhTQUhrTmYxelNsTnVOdmNjamNrdE01NVgwU29MeUZSOVkwd3NYdjRpMHdBM2ZUdDUxQis4SzBMR2VkSitXa1VhVnpPTEQvdFIwVVRVdzNNSy9taDY1cXdWK2ZqVEozeFJ2OVhiWkkySktIZE13VWhmNWhuVm1iMlE0WmtmZ2Z2cnhyY1VEWERXbVQvUERpUmNVU0tkaTJYNVlsTlVENlVCbmJXR0hkVnJsdmoyak91dzhDZEFrOEhGWUtJNlNsM3ZMSU0weGJEZHJNS1E3VEJxcnRHbXBKLzJ0Q0ZzeFJEZXRlL0FTOGR5WnFaQndBQSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["issue_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["journal_title"],"name":[2],"type":["chr"],"align":["left"]},{"label":["cited_medium"],"name":[3],"type":["chr"],"align":["left"]},{"label":["volume"],"name":[4],"type":["int"],"align":["right"]},{"label":["issue"],"name":[5],"type":["int"],"align":["right"]},{"label":["pub_date"],"name":[6],"type":["date"],"align":["right"]}],"data":[{"1":"1","2":"HSS journal : the musculoskeletal journal of Hospital for Special Surgery","3":"Print","4":"8","5":"2","6":"2012-07-01","_rn_":"1"},{"1":"2","2":"Psychosomatics","3":"Internet","4":"54","5":"2","6":"2013-03-01","_rn_":"2"},{"1":"3","2":"Stroke; a journal of cerebral circulation","3":"Internet","4":"43","5":"11","6":"2012-11-01","_rn_":"3"},{"1":"4","2":"Regional anesthesia and pain medicine","3":"Internet","4":"37","5":"6","6":"2012-11-01","_rn_":"4"},{"1":"5","2":"Seizure : the journal of the British Epilepsy Association","3":"Internet","4":"22","5":"1","6":"2013-01-01","_rn_":"5"},{"1":"6","2":"Clinical orthopaedics and related research","3":"Internet","4":"471","5":"1","6":"2013-01-01","_rn_":"6"},{"1":"7","2":"The Journal of arthroplasty","3":"Internet","4":"27","5":"10","6":"2012-12-01","_rn_":"7"},{"1":"8","2":"Anesthesiology","3":"Internet","4":"117","5":"1","6":"2012-07-01","_rn_":"8"},{"1":"9","2":"Pediatric radiology","3":"Internet","4":"42","5":"8","6":"2012-08-01","_rn_":"9"},{"1":"10","2":"Diseases of the colon and rectum","3":"Internet","4":"55","5":"4","6":"2012-04-01","_rn_":"10"},{"1":"11","2":"Journal of clinical anesthesia","3":"Internet","4":"24","5":"2","6":"2012-03-01","_rn_":"11"},{"1":"12","2":"PloS one","3":"Internet","4":"7","5":"1","6":"2012-01-01","_rn_":"12"},{"1":"13","2":"Regional anesthesia and pain medicine","3":"Internet","4":"37","5":"1","6":"2012-01-01","_rn_":"13"},{"1":"14","2":"The Journal of arthroplasty","3":"Internet","4":"27","5":"6","6":"2012-06-01","_rn_":"14"},{"1":"15","2":"Spine","3":"Internet","4":"37","5":"11","6":"2012-05-01","_rn_":"15"},{"1":"16","2":"Cancer","3":"Internet","4":"118","5":"12","6":"2012-06-01","_rn_":"16"},{"1":"17","2":"BJU international","3":"Internet","4":"109","5":"5","6":"2012-03-01","_rn_":"17"},{"1":"18","2":"Journal of intensive care medicine","3":"Internet","4":"27","5":"5","6":"2012-09-01","_rn_":"18"},{"1":"19","2":"Spine","3":"Internet","4":"37","5":"3","6":"2012-02-01","_rn_":"19"}],"options":{"columns":{"min":{},"max":[10],"total":[6]},"rows":{"min":[10],"max":[10],"total":[19]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -854,11 +876,36 @@ for ( i in 1:numArticles){
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoQXJ0aWNsZS5kZilcbnByaW50KEhpc3RvcnkuZGYpXG5wcmludChIaXN0b3J5U3RhdHVzLmRmKVxuYGBgIn0= -->
-<pre class="r"><code>print(Article.df)
-print(History.df)
-print(HistoryStatus.df)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoQXJ0aWNsZS5kZilcbmBgYCJ9 -->
+<pre class="r"><code>print(Article.df)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MTksIm5jb2wiOjMsInN1bW1hcnkiOltdfSwicmRmIjoiSDRzSUFBQUFBQUFBQTVWWFhXOGNOUlNkcEVrL0Fpa3RlVVJDRmhJU1JkMG9iYVdLaGdlVWo2Wk5SU0RLcGxXUmtDcXZ4N3ZqWnNZZTJaNU50ZytscnlEQkMvKzNjSzdIM3N3bVM0Rkl6c3o0NDk3amU4ODk5aDd0dm55dzhuSWx5N0lyMmRJQy9pL2pOVnQrZnJ6WCt5YkxsaGJ4c1pBdFpUZm9lWWJodFRBenkxYlIxc0pnbGkzR3ZpVmFpWFlWN1JyYWRUUmFTTlkvUXZzNHJydUo5Z25hTGJUYmFKOUdXN2ZDczNXMi83VGZaNjlOWXpVdjJTYnpoV1JWNDBSVEduY2lTK25SbTBiTmtEMDFybGJVTnpTVzlXc3BGTjc3alIxSk80a0dieDY2aVNpTU14WDNTcmpZZTZmdnJUbVIzekxlTlNla2xRT0xkNkVzWEdLQjBYSEJsMGR5aEMrTWNTMGRZRG5GOFpxem1pdk5LcGtyb2JTTWt4LzFwWHJUV0JrMzBQRkFuOXRXZWVVSzlyaFdwYXpkaEcwNVo0Qzg0KzNyblZKcEpXaU45WVdwT2RsM3daK1Z3Q1hwNlNTM29vZ3JQanVHNVdmbmpqaldXVk9YM1BscEpMWVNjbE9hVWVwZE80UnQ3cTBTelBKOFpvanRLdmh3MGlYa0FxTTZvaEMrcWVLOHp6dCtSUUorSHFZNDYvcGhhZnJNVElQMHZ5TDZIN2EzM0svUDUxL2Q0UnJaakYrM3Q1ODlaMHA3aWVVKytJd0RYM1JNMHJoMmFveHRjcVR1QW9Cb2ZaYXM1Ynd0RUJWRm9jcmNTczBhblVzN01rcVBZaWJKS3VQVmdOaGw3SVM1UUZhRkdHUFRGT1BuV2xGNit4NVpkbmZadlVlUEh2YnViMnc4WEk4K2Y5K1ZsUmxaWGhlSkVUWFd3N0RGMWdEZU5GNllTcEs1R2oxU2U4ZE9sUzlZTG10d0JzbHZNOGoxbVpKKzBrWG9UVnRlaU1STWdEZFJKYldwWTBIMEJxQkV6cHh2OGtrQzlYWW5WSTRaY3lwVmJnTTdMZENRSnhkS2pWbmxUaTZqUXF5TlZ6UkphdU1VcUdhWkVhSnNDQ2c1ZGhNTWhkcUYwYkdTcDhGbUJTWG9jVVIrZ2pVSnhXODdwcXA1ak1QY3FDQmdzZGF3ZytCZnk4YnlNNUtOc2JTdWNXd2t0YlNYTStwVTFaUWVuUVp6Qm9wcWtHYTFJVHZSVXM1RUxDRXFYL0FSNXVzUUMrZkpSb2doRzd0MVZKT3RNWWhpZ2JnWmI2cEo0b0Mza3ZzS1FTSmVmaSsxTm1lOUo3RExHNDk0Nk54aUt4U2J1Vkg0NlNtSHMzK0RTSXdieU1BVXg0ZlNmc2UyTHVjWU9BSlRaaDI4cFZvazF3TlRJaXNKMEV4dU82eHFQY05Pb2VvTHRBcjJXeElyM1N1U21FK1ROYThrRW9wZm5udFZxamR0T0VsNFNGVkplRUwxRXZ1VW9IeFhCaGptNFdyakVrREIvNlVVYmpKWnExeFdyU0syb2tjTUhuS0J3cDNDMkh1aFhNTzdRQWl4TnJZaUR0VTFOcWpPV3FvZEhERkpHdFJXYjBoMjBvbGs3Yys5M1NlOXc4ZkhSRlBVYXFJQXFXM1lHV2thMVZadHRBTk5ESmhsZVA2NkdYTk1GQVdVSVdnNElNQUZQSUI2eGwvaVBFUjgxQU9RaXRVQUU4b3VsTGhGQXVDSjZrV09lZG1FTFNWb1ArNjFHd2ZzWWRsSUxTaUdqWlpudEFTV2N3VlVUb1VvOENHc2YxRHdwaFhDOTdXM3ZCYzVnR1U5bkN1b3QwS0dTS0VZRlVRS01kZysydHI3NnNYRGpZM0hkKzVValEvWUFrTnFxeXB1SjFOWmNENklSWVZ6VXVQUVQ0NSszWllURTA2dVdsSW9laFdPTnB6UmJzcHY4akxtVmxHVUVZOThUQytrVExEbldtN0JmbUhBV0ZJRXluTjNLVVZWUVJRVm5RYzU5NXpBZFZRa0hkZ0owR1MvUS9sSVVMQ3JMRjJNM3ovTHNVTDBjNlJBM29XcW41OEdkeSt4OUlNVjlQUEI1Um9tQTJWVERTRGhqZzQ4Tmd4Q25MSTJweWptNjJ6eTRmZWh5S0lsTVJjWUQ2YkdDdlNhY3hiRXUwTTVBVzExSjVmRVRJS2VLdUMwTU5nNFZNdGlVeW4vVTlGTXZ2L1l4WDB3b0JkTmV4YkZaTFhGRlRTQUxqWHB4aklBMllZcVlQM2g0UEQrL1JTOEhGUVVxYm9ISmM4aElSSEpKb1JHZ0ZVdC84NjVNRnRNdUZ6eE1xRjZkNEM2Z0dDMHJKNE5BRlcyc20yZEtPMmE0UkJYRU9TNWpUVFBjUUxOekVITmVUclRPL2tMekpsbWkrQ2JBZWdIYjNReTV1WXM0VGp1SHBaMEJMU0FaczY1OXZUbUkwbUhnS2RFMnpiblNFZjdSU1JCNktaRlBmdkxZVmx6Y0NGZW1xN0V6aFZ3V1lsU3ZsSjU3Rm1ORitSWFh2a3lYYmhXMDdTMmM5YndEV3RPMTVOeCttbXgrQzRMZjJzWEVRaVVURUtRT2xlb090ZUhGdXZ4OWY3Q2ttdW1EdG9DbzJ2eGgwMTM4WUs5MEhHcjBZUWs3NG1pMFNlOWV3L2lMNStGMkZiamM2M3pmcVgxdWZoWHRMV2NycTBTR25KKzV5ejVRS2FyNmsxc09leDRIWVRYUG0wRnZXNDlLRVhxd1NVOTlZVE5aZS8vQnBYRWI5anNEUUFBIn0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["article_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["journal_title"],"name":[2],"type":["chr"],"align":["left"]},{"label":["article_title"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"HSS journal : the musculoskeletal journal of Hospital for Special Surgery","3":"Regional anesthesia for children undergoing orthopedic ambulatory surgeries in the United States, 1996-2006.","_rn_":"1"},{"1":"2","2":"Psychosomatics","3":"Demographics and perioperative outcome in patients with depression and anxiety undergoing total joint arthroplasty: a population-based study.","_rn_":"2"},{"1":"3","2":"Stroke; a journal of cerebral circulation","3":"Cerebrovascular reserve and stroke risk in patients with carotid stenosis or occlusion: a systematic review and meta-analysis.","_rn_":"3"},{"1":"4","2":"Regional anesthesia and pain medicine","3":"Comparative perioperative outcomes associated with neuraxial versus general anesthesia for simultaneous bilateral total knee arthroplasty.","_rn_":"4"},{"1":"5","2":"Seizure : the journal of the British Epilepsy Association","3":"Vagus nerve stimulation vs. corpus callosotomy in the treatment of Lennox-Gastaut syndrome: a meta-analysis.","_rn_":"5"},{"1":"6","2":"Clinical orthopaedics and related research","3":"Have bilateral total knee arthroplasties become safer? A population-based trend analysis.","_rn_":"6"},{"1":"7","2":"The Journal of arthroplasty","3":"The metabolic syndrome in patients undergoing knee and hip arthroplasty: trends and in-hospital outcomes in the United States.","_rn_":"7"},{"1":"8","2":"Anesthesiology","3":"Utilization of critical care services among patients undergoing total hip and knee arthroplasty: epidemiology and risk factors.","_rn_":"8"},{"1":"9","2":"Pediatric radiology","3":"Visualization of the normal appendix with MR enterography in children.","_rn_":"9"},{"1":"10","2":"Diseases of the colon and rectum","3":"FDG-PET assessment of rectal cancer response to neoadjuvant chemoradiotherapy is not associated with long-term prognosis: a prospective evaluation.","_rn_":"10"},{"1":"11","2":"Journal of clinical anesthesia","3":"Factors influencing unexpected disposition after orthopedic ambulatory surgery.","_rn_":"11"},{"1":"12","2":"PloS one","3":"Intra- and inter-tumor heterogeneity of BRAF(V600E))mutations in primary and metastatic melanoma.","_rn_":"12"},{"1":"13","2":"Regional anesthesia and pain medicine","3":"Beyond repeated-measures analysis of variance: advanced statistical methods for the analysis of longitudinal data in anesthesia research.","_rn_":"13"},{"1":"14","2":"The Journal of arthroplasty","3":"In-hospital patient falls after total joint arthroplasty: incidence, demographics, and risk factors in the United States.","_rn_":"14"},{"1":"15","2":"Spine","3":"Metabolic syndrome and lumbar spine fusion surgery: epidemiology and perioperative outcomes.","_rn_":"15"},{"1":"16","2":"Cancer","3":"Impact of race on survival in patients with clinically nonmetastatic prostate cancer who deferred primary treatment.","_rn_":"16"},{"1":"17","2":"BJU international","3":"Decision curve analysis assessing the clinical benefit of NMP22 in the detection of bladder cancer: secondary analysis of a prospective trial.","_rn_":"17"},{"1":"18","2":"Journal of intensive care medicine","3":"Mortality of patients with respiratory insufficiency and adult respiratory distress syndrome after surgery: the obesity paradox.","_rn_":"18"},{"1":"19","2":"Spine","3":"Comparative safety of simultaneous and staged anterior and posterior spinal surgery.","_rn_":"19"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[19]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoSGlzdG9yeS5kZilcbmBgYCJ9 -->
+<pre class="r"><code>print(History.df)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MCwibmNvbCI6Miwic3VtbWFyeSI6W119LCJyZGYiOiJINHNJQUFBQUFBQUFBMjFQVVFyQ01Bek41cXFzb0FpZVl3UHh4d09JQnhBRi82UnVWWXUxbGJaRFQ2K21XNHM0N0VmejhwS1g1RzFXK3dYZFV3QVlRSmJnVHhBQzJXM1h4UklnU3pGSklJUGN4eWVXWndnOE9ZYnVoZmpUU0JTN2NZdGcyalozWkc0ZGM0MDlpRG9RbEJrbktzazk4NnZQalg2VWNjYmZCWlZrTmk2SUpLMlpZK1hKb0E2elYwOHkwbmNudEVKUjZpMlFuamd4UFdMYUtIOUJYVlNYUmwyTCtjSnZhT3RmMzMyY2RqdlRkNWhGd3F3aFYyZWhlRHhlc2lPWElabWcxZFpwZVRkQ3VXZ0ZXVnM2N1Zqc281V1drV25Od2VzRFdDaVR4cm9CQUFBPSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["status_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["article_id"],"name":[2],"type":["int"],"align":["right"]}],"data":[],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[0]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoSGlzdG9yeVN0YXR1cy5kZilcbmBgYCJ9 -->
+<pre class="r"><code>print(HistoryStatus.df)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6OTQsIm5jb2wiOjMsInN1bW1hcnkiOltdfSwicmRmIjoiSDRzSUFBQUFBQUFBQTkyWCtWUGFRQlRIRndRSjBiYjJ2dS83V01vbWhFRHZ3OXI3c3RyYVN5ZENyRXdSR0FpMjA1LzZsOXQrbHlUZ1BrWmlwN1YyNnN4SDhyN1o5OTd1MjJzeU9UNWo2ak02WTJ5SUpXTDRuOFFqUzA1UFRmQUNZNGs0akJoTHNMVDgvWXJYT3pzdEdkc0NaanN2R1lzSFdrSjZnbUdRQWhxUWpqTDZDQmdOL0xhQ2JXQU1iQWM3Z0l5N0Mrd0dlOEJlc0Evc0J3ZkFRWEFJSEFaSHdGRndEQndISjhCSmNBcWNCbWZBV1hBT25BY1h3RVZ3Q1hDUUFaZEJGZ2hnQUJQa2dBWHl3QVlvQUN1Q0srQXF1QWF1Z3h2Z0pyZ0Zib003NEM0WUIvZkFCTGdQSG9DSDRCRjRESjZBcCtBWmVBNWVnSmRnRXJ3Q1UyQWF2QVp2d0F4NEM5NkI5K0FEK0JqVWZheno2MCtNMW5STGJtWFpMWWUyVXlxNURhOW51NDMyZkxYU1dnenNZYmZtTmQxdm9ZV1hTOTIyS1R4V0t6VjNqZENwcHJ0Y2FhMlphZFJaZEoxeWZhSFJyTlM4WDgrMk1VMy83aGlpSnVQZkR2OEhlMExLdkhrZDI5ejUvbzNOOTE4c2k0MnQvdWE2cjZ1cGVsYW5oY1VGTjdMQzZBcDVubE1FSTh2enFtQnlXd3JtK2dVRXRkVXNOaS9RTElxZ0d6WVhwR2RjR0JGQ01KaGNOMGlPaTZ3YWxpcGF6dmN4dXkyeWZUNVUwWXAralV4aTl6cFM0RVYxZUlZcTZPZzV5WUtTUkNsYVgxMU5ybFJBczJsZWl3cjVTS0hJTFRWSk1GZWlLd2gxdUpxbHJoQ1VZNkF0STZvcHdweDluVmdWZ2l3eHNtNDFRU3BCN0xRaHVFbW5aTENnRmRTVklkY284U0FDQ21IUmdlYlYwcGwrdFVYZk9nZ1ZyRWM2cFFOdE9ZRTJHYmt5WGJvc2xWQlNtSFRQRzVFQ0dabU9MZTV2UHJHbWtqWUYzZlVXVjF2WVpQQ2RJRUpWOHBGS09CNXpkWXRzbjQ5YTVyNGRTcWNLTG1UWkY4bmNZVW5STkZha0lzOUM5ZWpEWWFFbUNzL0NBVUtPSHRKQnFYc3R6Q2hCa09XTkxhWk1EclYxa2U4ZVIrcVhXTExtTExtdDRHWVpDdU8zUE1kcnQrWXE0UTJrNHo2YTg4VkFHUW1hbEIzUEpTSFR6ZnFYVEJoV2ZxVEZ2N1BPM3l6TlhhbzZyVEIzS09xSTZHUVdtdkNIdFVKY1V2V0dWNm5YNEJTWG4zbEo0aHhyRW1Hc1haTTlLZlBTWXJ2Mm1RdjViYVl6LzFzekZuUXY1bmV0K3p6azU0ei9DR0lsZTFmMHA5NkZuYXc2ODI0MU1MWml5SjBSWjFaZi96clVWc2FyZTA3WVRpL1ZxNkhTR1J4YitRbk8rZ1AxTmc4QUFBPT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["status_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["pub_status"],"name":[2],"type":["chr"],"align":["left"]},{"label":["status_date"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"received","3":"15-1-2012","_rn_":"1"},{"1":"2","2":"accepted","3":"16-4-2012","_rn_":"2"},{"1":"3","2":"epublish","3":"20-6-2012","_rn_":"3"},{"1":"4","2":"entrez","3":"23-7-2013","_rn_":"4"},{"1":"5","2":"pubmed","3":"23-7-2013","_rn_":"5"},{"1":"6","2":"medline","3":"23-7-2013","_rn_":"6"},{"1":"7","2":"received","3":"16-7-2012","_rn_":"7"},{"1":"8","2":"revised","3":"17-8-2012","_rn_":"8"},{"1":"9","2":"accepted","3":"20-8-2012","_rn_":"9"},{"1":"10","2":"aheadofprint","3":"27-11-2012","_rn_":"10"},{"1":"11","2":"entrez","3":"1-12-2012","_rn_":"11"},{"1":"12","2":"pubmed","3":"1-12-2012","_rn_":"12"},{"1":"13","2":"medline","3":"15-1-2014","_rn_":"13"},{"1":"14","2":"entrez","3":"24-10-2012","_rn_":"14"},{"1":"15","2":"pubmed","3":"24-10-2012","_rn_":"15"},{"1":"16","2":"medline","3":"4-1-2013","_rn_":"16"},{"1":"17","2":"entrez","3":"20-10-2012","_rn_":"17"},{"1":"18","2":"pubmed","3":"20-10-2012","_rn_":"18"},{"1":"19","2":"medline","3":"9-4-2013","_rn_":"19"},{"1":"20","2":"received","3":"9-4-2012","_rn_":"20"},{"1":"21","2":"revised","3":"18-9-2012","_rn_":"21"},{"1":"22","2":"accepted","3":"22-9-2012","_rn_":"22"},{"1":"23","2":"aheadofprint","3":"12-10-2012","_rn_":"23"},{"1":"24","2":"entrez","3":"17-10-2012","_rn_":"24"},{"1":"25","2":"pubmed","3":"17-10-2012","_rn_":"25"},{"1":"26","2":"medline","3":"3-7-2013","_rn_":"26"},{"1":"27","2":"received","3":"13-2-2012","_rn_":"27"},{"1":"28","2":"accepted","3":"7-9-2012","_rn_":"28"},{"1":"29","2":"aheadofprint","3":"25-9-2012","_rn_":"29"},{"1":"30","2":"entrez","3":"26-9-2012","_rn_":"30"},{"1":"31","2":"pubmed","3":"26-9-2012","_rn_":"31"},{"1":"32","2":"medline","3":"29-5-2013","_rn_":"32"},{"1":"33","2":"received","3":"17-8-2011","_rn_":"33"},{"1":"34","2":"accepted","3":"11-4-2012","_rn_":"34"},{"1":"35","2":"aheadofprint","3":"5-6-2012","_rn_":"35"},{"1":"36","2":"entrez","3":"9-6-2012","_rn_":"36"},{"1":"37","2":"pubmed","3":"9-6-2012","_rn_":"37"},{"1":"38","2":"medline","3":"17-5-2013","_rn_":"38"},{"1":"39","2":"entrez","3":"29-5-2012","_rn_":"39"},{"1":"40","2":"pubmed","3":"29-5-2012","_rn_":"40"},{"1":"41","2":"medline","3":"9-7-2013","_rn_":"41"},{"1":"42","2":"received","3":"25-1-2012","_rn_":"42"},{"1":"43","2":"accepted","3":"1-2-2012","_rn_":"43"},{"1":"44","2":"revised","3":"1-2-2012","_rn_":"44"},{"1":"45","2":"aheadofprint","3":"21-3-2012","_rn_":"45"},{"1":"46","2":"entrez","3":"22-3-2012","_rn_":"46"},{"1":"47","2":"pubmed","3":"22-3-2012","_rn_":"47"},{"1":"48","2":"medline","3":"8-1-2013","_rn_":"48"},{"1":"49","2":"entrez","3":"20-3-2012","_rn_":"49"},{"1":"50","2":"pubmed","3":"20-3-2012","_rn_":"50"},{"1":"51","2":"medline","3":"5-5-2012","_rn_":"51"},{"1":"52","2":"received","3":"17-6-2011","_rn_":"52"},{"1":"53","2":"revised","3":"13-9-2011","_rn_":"53"},{"1":"54","2":"accepted","3":"12-10-2011","_rn_":"54"},{"1":"55","2":"aheadofprint","3":"4-2-2012","_rn_":"55"},{"1":"56","2":"entrez","3":"7-2-2012","_rn_":"56"},{"1":"57","2":"pubmed","3":"7-2-2012","_rn_":"57"},{"1":"58","2":"medline","3":"26-7-2012","_rn_":"58"},{"1":"59","2":"received","3":"1-8-2011","_rn_":"59"},{"1":"60","2":"accepted","3":"25-11-2011","_rn_":"60"},{"1":"61","2":"epublish","3":"3-1-2012","_rn_":"61"},{"1":"62","2":"entrez","3":"12-1-2012","_rn_":"62"},{"1":"63","2":"pubmed","3":"12-1-2012","_rn_":"63"},{"1":"64","2":"medline","3":"15-5-2012","_rn_":"64"},{"1":"65","2":"entrez","3":"23-12-2011","_rn_":"65"},{"1":"66","2":"pubmed","3":"23-12-2011","_rn_":"66"},{"1":"67","2":"medline","3":"31-7-2012","_rn_":"67"},{"1":"68","2":"received","3":"15-2-2011","_rn_":"68"},{"1":"69","2":"accepted","3":"7-10-2011","_rn_":"69"},{"1":"70","2":"aheadofprint","3":"23-11-2011","_rn_":"70"},{"1":"71","2":"entrez","3":"26-11-2011","_rn_":"71"},{"1":"72","2":"pubmed","3":"26-11-2011","_rn_":"72"},{"1":"73","2":"medline","3":"3-1-2013","_rn_":"73"},{"1":"74","2":"entrez","3":"26-10-2011","_rn_":"74"},{"1":"75","2":"pubmed","3":"26-10-2011","_rn_":"75"},{"1":"76","2":"medline","3":"8-9-2012","_rn_":"76"},{"1":"77","2":"received","3":"27-6-2011","_rn_":"77"},{"1":"78","2":"revised","3":"26-8-2011","_rn_":"78"},{"1":"79","2":"accepted","3":"19-9-2011","_rn_":"79"},{"1":"80","2":"aheadofprint","3":"21-10-2011","_rn_":"80"},{"1":"81","2":"entrez","3":"25-10-2011","_rn_":"81"},{"1":"82","2":"pubmed","3":"25-10-2011","_rn_":"82"},{"1":"83","2":"medline","3":"16-8-2012","_rn_":"83"},{"1":"84","2":"aheadofprint","3":"18-8-2011","_rn_":"84"},{"1":"85","2":"entrez","3":"20-8-2011","_rn_":"85"},{"1":"86","2":"pubmed","3":"20-8-2011","_rn_":"86"},{"1":"87","2":"medline","3":"24-4-2012","_rn_":"87"},{"1":"88","2":"aheadofprint","3":"21-7-2011","_rn_":"88"},{"1":"89","2":"entrez","3":"23-7-2011","_rn_":"89"},{"1":"90","2":"pubmed","3":"23-7-2011","_rn_":"90"},{"1":"91","2":"medline","3":"18-1-2013","_rn_":"91"},{"1":"92","2":"entrez","3":"9-2-2011","_rn_":"92"},{"1":"93","2":"pubmed","3":"9-2-2011","_rn_":"93"},{"1":"94","2":"medline","3":"16-10-2012","_rn_":"94"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[94]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -911,28 +958,122 @@ for ( i in 1:numArticles){
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoQXJ0aWNsZS5kZilcbnByaW50KEF1dGhvckpvaW4uZGYpXG5wcmludChBdXRob3IuZGYpXG5wcmludChIaXN0b3J5LmRmKVxucHJpbnQoSGlzdG9yeVN0YXR1cy5kZilcbnByaW50KEpvdXJuYWwuZGYpXG5wcmludChJc3N1ZS5kZilcbmBgYCJ9 -->
-<pre class="r"><code>print(Article.df)
-print(AuthorJoin.df)
-print(Author.df)
-print(History.df)
-print(HistoryStatus.df)
-print(Journal.df)
-print(Issue.df)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoQXJ0aWNsZS5kZilcbmBgYCJ9 -->
+<pre class="r"><code>print(Article.df)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MTksIm5jb2wiOjMsInN1bW1hcnkiOltdfSwicmRmIjoiSDRzSUFBQUFBQUFBQTVWWFhXOGNOUlNkcEVrL0Fpa3RlVVJDRmhJU1JkMG9MYWlpNFFIbG8ybFRFWWl5U1ZVa3BNcnI4ZTY0bWJGSHRtZWI3VVBwSzBqd3d2OHRuT3V4TjdQSlVpQ1NNelArdVBmNDNuT1B2VWU3ejc5YWViNlNaZG1WYkdrQi81ZnhtaTJmSE8vMXZzbXlwVVY4TEdSTDJRMTZubUY0TGN6TXNsVzB0VENZWll1eGI0bFdvbDFGdTRaMkhZMFdrdlVQMEQ2TTYyNmlmWVIyQyswMjJzZlIxcTN3YkozdFArbjMyVXZUV00xTHRzbDhJVm5WT05HVXhwM0tVbnIwcGxFelpFK01xeFgxRFkxbC9Wb0toZmQrWTBmU1RxTEJtNGR1SWdyalRNVzlFaTcyM3VsN2EwN2x0NHgzelFscDVjRGlYU2dMbDFoZ2RGencrWkVjNFF0alhFc0hXRTV4dk9hczVrcXpTdVpLS0MzajVJZDlxVjQzVnNZTmREelE1N1pWWHJtQ1BhcFZLV3MzWVZ2T0dTRHZlUHR5cDFSYUNWcGpmV0ZxVHZaZDhHY2xjRWw2T3NtdEtPS0tUNDVoK2VtNUk0NTExdFFsZDM0YWlhMkUzSlJtbEhyWERtR2JlNnNFc3p5ZkdXSzdDajZjZEFtNXdLaU9LSVJ2cWpqdjA0NWZrWUNmaHluT3VuNVltajR6MHlEOXI0aitoKzB0OSt2eitWZDN1RVkyNDlmdDdhY25UR2t2c2R3SG4zSGdzNDVKR3RkT2piRk5qdFJkQUJDdHo1SzFuTGNGb3FJb1ZKbGJxVm1qYzJsSFJ1bFJ6Q1JaWmJ3YUVMdU1uVEFYeUtvUVkyeWFZbnlpRmFXMzc1RmxkNWZkZS9qd1FlLyt4c2FEOWVqejkxMVptWkhsZFpFWVVXTTlERnRzRGVCTjQ0V3BKSm1yMFNPMWQreVY4Z1hMWlEzT0lQbHRCcmsrVTlKUHVnaTlhY3NMa1pnSjhDYXFwRFoxTElqZUFKVEltZk5OUGttZzN1eUV5akZqVHFYS2JXQ25CUnJ5NUVLcE1hdmM2V1ZVaUxYeGlpWkpiWndDMVN3elFwUU5BU1hIYm9LaFVMc3dPbGJ5VmJCWlFRbDZISkdmWUUxQzhkdU9xV29lNHpBM0tnaFlyRFhzSVBqWHNySDhqR1JqTEsxckhCdEpMZTNsakRwVk5hVkhwOEdjZ2FJYXBGbHR5RTYxbERNUlM0aktaM3lFK1RyRXdubXlFV0xJeG00ZDFXUnJES0pZSUc3R20ycVNPT0N0NUw1Q2tJaVgzMHV0elZudk1lenl4aU1lT3JmWUNzVm1iaFIrZXNMaDdOOGdFdU1HTWpERjhhRzAzN0d0eXprR2pzQ1VXUWR2cUJiSjljQ1V5RW9DTkpQYkRxdGF6N0JUcVBvQ3JZTDlsc1JLOTRvazV0Tmt6U3VKaE9LWEU2OUs5Ym9OSndrUHFTb0pUNmhlWXA4U2xPL0tBTU04WEcxY0FpajR2NVRDVFNacmxjdXFWY1JXOUlqQlF5NVF1Rk1ZZTgrVWEzZ1hDQ0hXeGxiRW9ickdCdFZaUzdXREl5WkpnOXJxRGNsT09wR3MvYm0zKzdoMytPaVlhSXBhVFJRZ3RRMDdJMDJqMnFxTmRxQ0pBYk1NejE4Mlk0Nkpvb0F5QkEwSEJMaUFCMURQK0V1Y2g0aVBlZ0JTc1JwZ1F0bUZFcmRJQUR4UnZjZ3hMNXV3cFFUdHg3MTI0NEE5TEJ1cEJjV3cwZktNbHNCeXJvREtxUkFGUG9UMTl3cmV0RUw0dnZhVzl5SUhzS3lIY3dYMVZzZ1FLUlNqZ2tnaEJ0dEhXM3RmUEh1d3NmSG96cDJxOFFGYllFaHRWY1h0WkNvTHpnZXhxSEJPYWh6NnlkR3YyM0ppd3NsVlN3cEZyOExSaGpQYVRmbE5Yc2JjS29veTRwR1A2WVdVQ2ZaY3l5M1lMd3dZUzRwQWVlNHVwYWdxaUtLaTh5RG5uaE80am9xa0F6c0JtdXgzS0I4SkNuYVZwWXZ4KzJjNVZvaCtqaFRJdTFEMTg5UGc3aVdXdnJlQ2ZqNjRYTU5rb0d5cUFTVGMwWUhIaGtHSVU5Ym1GTVY4blUwKy9ENFVXYlFrNWdMandkUllnVjV6em9KNGR5Z25vSzN1NUpLWVNkQlRCYndxRERZTzFiTFlWTXIvVkRTVDd6OTJjUjhNNkVYVG5rVXhXVzF4QlEyZ1MwMjZzUXhBdHFFS1dIODRPTHgvUHdVdkJ4VkZxdTVCeVhOSVNFU3lDYUVSWUZYTHYzTXV6QllUTGxlOFRLamVIcUF1SUJndHEyY0RRSld0YkZzblNydG1PTVFWQkhsdUk4MXpuRUF6YzFCem5zNzBUdjRDYzZiWkl2aG1BUHJCRzUyTXVUbExPSTY3aHlVZEFTMmdtWE91UGIzNVNOSWg0Q25SdHMwNTB0RitFVWtRdW1sUnovNXlXTlljWElpWHBpdXhjd1ZjVnFLVUwxUWVlMWJqQmZtRlY3NU1GNjdWTkszdG5EVjh3NXBYNjhrNC9iUllmSnVGdjdXTENBUktKaUZJblN0VW5ldERpL1g0ZW5kaHlUVlRCMjJCMGJYNHc2YTdlTUZlNkxqVmFFS1M5MFRSNk5QZXZhL2pMNStGMkZiamM2M3pmcVgxdWZoWHRMV2NycTBTR25KKzV5ejVRS2FyNmsxc09leDRIWVRYUG0wRnZXNDlLRVhxd1NVOTlZVE5aZS8rQmpvc2hDdnNEUUFBIn0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["article_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["journal_title"],"name":[2],"type":["chr"],"align":["left"]},{"label":["article_title"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"HSS journal : the musculoskeletal journal of Hospital for Special Surgery","3":"Regional anesthesia for children undergoing orthopedic ambulatory surgeries in the United States, 1996-2006.","_rn_":"1"},{"1":"2","2":"Psychosomatics","3":"Demographics and perioperative outcome in patients with depression and anxiety undergoing total joint arthroplasty: a population-based study.","_rn_":"2"},{"1":"3","2":"Stroke; a journal of cerebral circulation","3":"Cerebrovascular reserve and stroke risk in patients with carotid stenosis or occlusion: a systematic review and meta-analysis.","_rn_":"3"},{"1":"4","2":"Regional anesthesia and pain medicine","3":"Comparative perioperative outcomes associated with neuraxial versus general anesthesia for simultaneous bilateral total knee arthroplasty.","_rn_":"4"},{"1":"5","2":"Seizure : the journal of the British Epilepsy Association","3":"Vagus nerve stimulation vs. corpus callosotomy in the treatment of Lennox-Gastaut syndrome: a meta-analysis.","_rn_":"5"},{"1":"6","2":"Clinical orthopaedics and related research","3":"Have bilateral total knee arthroplasties become safer? A population-based trend analysis.","_rn_":"6"},{"1":"7","2":"The Journal of arthroplasty","3":"The metabolic syndrome in patients undergoing knee and hip arthroplasty: trends and in-hospital outcomes in the United States.","_rn_":"7"},{"1":"8","2":"Anesthesiology","3":"Utilization of critical care services among patients undergoing total hip and knee arthroplasty: epidemiology and risk factors.","_rn_":"8"},{"1":"9","2":"Pediatric radiology","3":"Visualization of the normal appendix with MR enterography in children.","_rn_":"9"},{"1":"10","2":"Diseases of the colon and rectum","3":"FDG-PET assessment of rectal cancer response to neoadjuvant chemoradiotherapy is not associated with long-term prognosis: a prospective evaluation.","_rn_":"10"},{"1":"11","2":"Journal of clinical anesthesia","3":"Factors influencing unexpected disposition after orthopedic ambulatory surgery.","_rn_":"11"},{"1":"12","2":"PloS one","3":"Intra- and inter-tumor heterogeneity of BRAF(V600E))mutations in primary and metastatic melanoma.","_rn_":"12"},{"1":"13","2":"Regional anesthesia and pain medicine","3":"Beyond repeated-measures analysis of variance: advanced statistical methods for the analysis of longitudinal data in anesthesia research.","_rn_":"13"},{"1":"14","2":"The Journal of arthroplasty","3":"In-hospital patient falls after total joint arthroplasty: incidence, demographics, and risk factors in the United States.","_rn_":"14"},{"1":"15","2":"Spine","3":"Metabolic syndrome and lumbar spine fusion surgery: epidemiology and perioperative outcomes.","_rn_":"15"},{"1":"16","2":"Cancer","3":"Impact of race on survival in patients with clinically nonmetastatic prostate cancer who deferred primary treatment.","_rn_":"16"},{"1":"17","2":"BJU international","3":"Decision curve analysis assessing the clinical benefit of NMP22 in the detection of bladder cancer: secondary analysis of a prospective trial.","_rn_":"17"},{"1":"18","2":"Journal of intensive care medicine","3":"Mortality of patients with respiratory insufficiency and adult respiratory distress syndrome after surgery: the obesity paradox.","_rn_":"18"},{"1":"19","2":"Spine","3":"Comparative safety of simultaneous and staged anterior and posterior spinal surgery.","_rn_":"19"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[19]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoQXV0aG9ySm9pbi5kZilcbmBgYCJ9 -->
+<pre class="r"><code>print(AuthorJoin.df)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MTM2LCJuY29sIjoyLCJzdW1tYXJ5IjpbXX0sInJkZiI6Ikg0c0lBQUFBQUFBQUE1WFUyMVBUUUJRRzhHMmF0Q1RRVXFqM0t3cUlGeHBGOEg0QkVWRlFWQkJuZUhOQ0d5VmpUSmcwSFgzMHNYODErbTM1ZG1icHBKMjJNNzltYzg3dU9idnBaV2R0YjlIWmM0UVFlV0htOEc1aEtLeXZ1K3UxeDBLWUJtNXl3aFMydlA1QnVvcUJESmFnM1VrZTMrZkJsQ3VoQUVYR1JzQm1UbllaaFRHdUw4TTQ1MVZnQWlhaHlqcW40RFR6WjdSYVoxbnZISnpYYWx5QWkzQ0orY3R3aGJWay9pcjNOYVh0MTJRUDJlc2E1MTVuZmhwbU9KNkZHekFITitFVzNJWTd6TTlERFZ6V2xEM3V3ajNtRitBK0xNSVNQSUNIOEFqd29NVVRlTXE1eitCNXhqNWZNQ2IzK2xMTEZSaFh6M3daVnVBVnJNSnJXSU0zc0E1dk9lOGRlMjNBSnJ6bk9UL0FGbnlFVC9DWjg3ZlpiNGY5dm1nOWQ3djJzTUs1K3ZkRVovU1JINEk1QUt1UFFvWmlocEUrN0F6T0FFWjdHQnRTU1ZQdVlieVB5b0FtaGpEWlF6WGJpVDhhSy9KKytVMDJOUmkwdlZaNkVDZmZnZ1lEanBla1FUMzBaZVRrZWp1SmY3dXFobndveGwvUmViVzdHOVZEcjZrYXFhRFQ4RkxQL1o1Z1BlNk91cFlVNDhNMGlDTXNNdFRmbEw0NGwzUUZLcTFJN3FSUnF4KzBvcCsxaFNWKzl1cDNVT0sxclkyTjQ1N0dQOWF5V0t2Z1J6K0N5RmViRDcxOVArUk5HVWZ1bk5nOVRJSW9WVWRCdE9tbWNlcXBlVTQ5RGxXa2N6aHg5Qi90UVRyN0FnWUFBQT09In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["author_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["article_id"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"1","_rn_":"1"},{"1":"2","2":"1","_rn_":"2"},{"1":"3","2":"1","_rn_":"3"},{"1":"4","2":"1","_rn_":"4"},{"1":"5","2":"2","_rn_":"5"},{"1":"6","2":"2","_rn_":"6"},{"1":"7","2":"2","_rn_":"7"},{"1":"3","2":"2","_rn_":"8"},{"1":"8","2":"2","_rn_":"9"},{"1":"9","2":"2","_rn_":"10"},{"1":"4","2":"2","_rn_":"11"},{"1":"10","2":"3","_rn_":"12"},{"1":"11","2":"3","_rn_":"13"},{"1":"12","2":"3","_rn_":"14"},{"1":"13","2":"3","_rn_":"15"},{"1":"14","2":"3","_rn_":"16"},{"1":"15","2":"3","_rn_":"17"},{"1":"3","2":"3","_rn_":"18"},{"1":"16","2":"3","_rn_":"19"},{"1":"17","2":"3","_rn_":"20"},{"1":"18","2":"3","_rn_":"21"},{"1":"19","2":"3","_rn_":"22"},{"1":"5","2":"4","_rn_":"23"},{"1":"20","2":"4","_rn_":"24"},{"1":"21","2":"4","_rn_":"25"},{"1":"3","2":"4","_rn_":"26"},{"1":"22","2":"4","_rn_":"27"},{"1":"8","2":"4","_rn_":"28"},{"1":"9","2":"4","_rn_":"29"},{"1":"23","2":"4","_rn_":"30"},{"1":"4","2":"4","_rn_":"31"},{"1":"24","2":"5","_rn_":"32"},{"1":"25","2":"5","_rn_":"33"},{"1":"15","2":"5","_rn_":"34"},{"1":"3","2":"5","_rn_":"35"},{"1":"26","2":"5","_rn_":"36"},{"1":"27","2":"5","_rn_":"37"},{"1":"28","2":"5","_rn_":"38"},{"1":"4","2":"6","_rn_":"39"},{"1":"29","2":"6","_rn_":"40"},{"1":"30","2":"6","_rn_":"41"},{"1":"5","2":"6","_rn_":"42"},{"1":"3","2":"6","_rn_":"43"},{"1":"31","2":"7","_rn_":"44"},{"1":"7","2":"7","_rn_":"45"},{"1":"32","2":"7","_rn_":"46"},{"1":"3","2":"7","_rn_":"47"},{"1":"4","2":"7","_rn_":"48"},{"1":"4","2":"8","_rn_":"49"},{"1":"21","2":"8","_rn_":"50"},{"1":"20","2":"8","_rn_":"51"},{"1":"33","2":"8","_rn_":"52"},{"1":"5","2":"8","_rn_":"53"},{"1":"34","2":"8","_rn_":"54"},{"1":"3","2":"8","_rn_":"55"},{"1":"35","2":"9","_rn_":"56"},{"1":"36","2":"9","_rn_":"57"},{"1":"3","2":"9","_rn_":"58"},{"1":"37","2":"9","_rn_":"59"},{"1":"38","2":"9","_rn_":"60"},{"1":"39","2":"10","_rn_":"61"},{"1":"40","2":"10","_rn_":"62"},{"1":"41","2":"10","_rn_":"63"},{"1":"42","2":"10","_rn_":"64"},{"1":"43","2":"10","_rn_":"65"},{"1":"3","2":"10","_rn_":"66"},{"1":"44","2":"10","_rn_":"67"},{"1":"45","2":"10","_rn_":"68"},{"1":"46","2":"10","_rn_":"69"},{"1":"4","2":"11","_rn_":"70"},{"1":"32","2":"11","_rn_":"71"},{"1":"47","2":"11","_rn_":"72"},{"1":"48","2":"11","_rn_":"73"},{"1":"3","2":"11","_rn_":"74"},{"1":"49","2":"11","_rn_":"75"},{"1":"50","2":"12","_rn_":"76"},{"1":"51","2":"12","_rn_":"77"},{"1":"52","2":"12","_rn_":"78"},{"1":"53","2":"12","_rn_":"79"},{"1":"54","2":"12","_rn_":"80"},{"1":"55","2":"12","_rn_":"81"},{"1":"56","2":"12","_rn_":"82"},{"1":"57","2":"12","_rn_":"83"},{"1":"58","2":"12","_rn_":"84"},{"1":"3","2":"12","_rn_":"85"},{"1":"59","2":"12","_rn_":"86"},{"1":"60","2":"12","_rn_":"87"},{"1":"32","2":"13","_rn_":"88"},{"1":"3","2":"13","_rn_":"89"},{"1":"4","2":"13","_rn_":"90"},{"1":"4","2":"14","_rn_":"91"},{"1":"61","2":"14","_rn_":"92"},{"1":"32","2":"14","_rn_":"93"},{"1":"20","2":"14","_rn_":"94"},{"1":"62","2":"14","_rn_":"95"},{"1":"3","2":"14","_rn_":"96"},{"1":"4","2":"15","_rn_":"97"},{"1":"6","2":"15","_rn_":"98"},{"1":"32","2":"15","_rn_":"99"},{"1":"7","2":"15","_rn_":"100"},{"1":"3","2":"15","_rn_":"101"},{"1":"63","2":"15","_rn_":"102"},{"1":"64","2":"15","_rn_":"103"},{"1":"65","2":"16","_rn_":"104"},{"1":"66","2":"16","_rn_":"105"},{"1":"67","2":"16","_rn_":"106"},{"1":"68","2":"16","_rn_":"107"},{"1":"69","2":"16","_rn_":"108"},{"1":"70","2":"16","_rn_":"109"},{"1":"71","2":"16","_rn_":"110"},{"1":"3","2":"16","_rn_":"111"},{"1":"72","2":"16","_rn_":"112"},{"1":"59","2":"16","_rn_":"113"},{"1":"73","2":"17","_rn_":"114"},{"1":"74","2":"17","_rn_":"115"},{"1":"75","2":"17","_rn_":"116"},{"1":"37","2":"17","_rn_":"117"},{"1":"76","2":"17","_rn_":"118"},{"1":"77","2":"17","_rn_":"119"},{"1":"78","2":"17","_rn_":"120"},{"1":"79","2":"17","_rn_":"121"},{"1":"80","2":"17","_rn_":"122"},{"1":"3","2":"17","_rn_":"123"},{"1":"81","2":"17","_rn_":"124"},{"1":"4","2":"18","_rn_":"125"},{"1":"82","2":"18","_rn_":"126"},{"1":"32","2":"18","_rn_":"127"},{"1":"83","2":"18","_rn_":"128"},{"1":"7","2":"18","_rn_":"129"},{"1":"3","2":"18","_rn_":"130"},{"1":"84","2":"19","_rn_":"131"},{"1":"32","2":"19","_rn_":"132"},{"1":"7","2":"19","_rn_":"133"},{"1":"3","2":"19","_rn_":"134"},{"1":"64","2":"19","_rn_":"135"},{"1":"4","2":"19","_rn_":"136"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[136]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoQXV0aG9yLmRmKVxuYGBgIn0= -->
+<pre class="r"><code>print(Author.df)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6ODQsIm5jb2wiOjMsInN1bW1hcnkiOltdfSwicmRmIjoiSDRzSUFBQUFBQUFBQTQyWCtYTGJOaENIYWV1V216Uk4wdnRpNzlOdTA2VDNLVXMrb3NOUkpUV09PNTNKUUNJc3dxSUFEd2pLa2FiVDZVeWZwcy9SOTByN284d0ZhVFh0NUkvUElrQXVzQmNXNjE3ajNzM3F2YXJqT0RrbnY0YS9CVHc2aFo4R3U1dGZPRTUrSFlNMUorOVU0dDhIZUgxdCthWGpYQUtENVV2SFdVL204ckVrS0lJU0tJTllNRjU5QXp5UnlGMEdUNElyNENsd0ZjVHJYZ2RQZzJmQXMrQTU4RHg0QWJ3SVhnSXZnMWZBcThBRnI0SFh3UnZnVGZBV2VCdThBOTRGNzRIM3dRZmdRN0FKdHNCSDRHTndBM3dDYm9KYjRGUHdHZmdjd0FIT2wrQXI4RFg0Qm53THZnUGZneDlBRFd5RE9taUFIYkFMOXNBK3VBMmFvQVhhb0FNT3dCM1FCVCtDSHVnbi9yeXkvRDEzZUxIT3dsQndHdFVDRVNxWmpBb2Q1dmxSTXFqMERadHBGYnA3eVVUcGpqRnF3alNKZHZqWVp5UmFQR0p1VzlDbzFHWUxCbGxhdDhzTko3bDg3WVROU2FycHR2bE0wSnNPbXpNU2FRZ21hVkE4RUJNZSt2UnFQeEpEbFJyQXBQc3pqZmFWbWxxZDhvM01FbDBobVZ0UHRkMU10UzNlaTZaQ2poK2xiR21QYTU5cGo5N3RSY0tqclVzZE1mSVpEOGhmVFg1OHJQbmM3ZEt5ZmNObm5EYXBEbnl1UEtXNXU1L01sT3RNQi9Edk5pM2VaRE5HTzFWcUFUOWgwdE8wVys3STJyVzZNZlk1OWJsME85YkRla0ZSTE1JSHduNWFxZ1haZUplNkxBcVllMGdxTmptVFVranUxa2g2b0lhQ1VSZ3JBekZWeHArN1RhdXhrTnJtUzVzckNWZFplNG83d1Z5NlBiTDIzQnR1bkt2THZac3EvT3RQbTF6bE9teGdvWFZlK1R3eHJVMlZQYzNIU3MrdGFvV09Db0s1dGRoalU1dFRDbFpRZ2hkMnNBNE5LcjNZY1ZDeGJTZWlNT1JCNFBadE9zbHNtdXd5UFZRVWtuenNMWHErbmFaWm9jRm1najY2VlBlMUNJMUNRTFQxMDFVYlRIZFB5UVVMK0lMTTdEQmovTlRGMVYzdWNTMUd5anBpSmRnWE5pdkdHcVhScUUzbjdnNko3Y2Z1U2UxQ3dnZnA4ZXl6cWREMlpiN0xiZlpmMEo4V0srOUVZNDYwYU5GNDRPT1loZTR1TFhERUJKMlljazhOdVRaMjhVcERSZU1BSDlORXVTdTR4akc0YmVzSWV5QnN2S3A5bi9sYVRYeTdlSFVaa2c3VGdzNXl0ZW11dUsyMFBMUHUza3F0eTdVaWUxaDN2RE5FUGt6OXZvaW1uaTFtMVE2Zm1sQkZuckJmOUUwa1BabFdncGJRazVEYmpLdjdnaksvMmxWUllFTGhjUkl1b215a29xZ2FwOFlXb3JyUEZyWXFsUGFaTm1rcWxSbzhHTE8wd3RSa05NVUpwVDNoRzNwVjZQTXhzMG5SWWxPYkljVTJGOGVwMm4wbWtlRGlFV3JuK2hIdFc5a051QWhIZm1SSWJGY0xnNG0wbnN0UnByRGVoUy9JZUJ4TUxvOVJZMnpwT3VSQ2hvYmJkQ3YzUno2Y2J6SkpMNDBJckYwb1Ezb21GcVRqZFRvakxyeUI4blNYQlFHbHgzckhYaEFIRWRMRTVoUkR6bXJyLzQyV21qRVppRWw2b1ZSNkt1Unl5S0twOVhVVUZ6dGI5cmMxVkNJRGU5RndibTNudUc2c2RhWGF4STkwYU5LWTJMd3M5RmxnalN6MkJJNXlHaFNtTTNVWDF3aHNJazBxL1RPY1IwK0ZOcDB2Sm11cExjYVIwdVNmQ202Q2tab0p1MVdsTFF6U1B4T2ZJMlgzV2o4Z0MwdEluMU5oTDVUaWRsWUVNWmdGWW1TajJvaERFc0kyRzhTa01OZzcvVTZZU2hlN0tnZ241TEgxQmoxdC9EdUNsVzQwUllFWVo2NVlvV0VzV1ZkdHFYQVVpWEF4c2VteHo4ekl0OSt2S3BLUEE1dTVKYmc4WXpaYTJYd3ZEbkFVVG1qVlhKdVRWSGtiWlI1RmlWVEk0WWpTZ3RoTVRmbG9RdThLYldWU3Mvc3padmpFam1JdFNjMk5GdE5zSXZpWkdGR2NNZ2N1amdVS0dtWFJ4cmFhRG1NbnBFcmtEMW13U0lPRG5nM1Y3bUx2WEpBNDltRlM4M0trTVl1TXIvUjllMGxVandYUzlYNzhMWDJDY3B4TVhGeXdvdFhaRmkzNk9NMzRjbjNudjV2dzFRYWNtdSs0OFk0YmJ0YzViN2F6VFRZMTJIRmpIVGZWY1FNZE44L1VPUDlmMDV4dG1LbFJmdHdtK1M0NEJMK0ErK0FZaklFUEJEZ0JFeENBS1pEZ0ZHZ1ErOHVBR1RnRCtLZkdtWU1GK0JYOEJuNEhmNnhHY0lSUVVBUnBzdW94dzdhTzlUSSt6c01Wa1pJNk5VSkpDSzFmUzZLUkZWN1RLeE5YVU9Xd2tyZUo2aTRubXpkdUpTRmJTN2lVL0E0eXo3bnpQZGYvVHRZcVVJYWpUMGl2NmtMQWhyYkFYVWJxTERObjYxUUxTWGxkeFd5NFpYQms2THZxQ0pVaW1Wa2E1eno4Qi84WlRCc3VEZ0FBIn0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["author_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["first_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["last_name"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"Cassie","3":"Kuo","_rn_":"1"},{"1":"2","2":"Alison","3":"Edwards","_rn_":"2"},{"1":"3","2":"Madhu","3":"Mazumdar","_rn_":"3"},{"1":"4","2":"Stavros G","3":"Memtsoudis","_rn_":"4"},{"1":"5","2":"Ottokar","3":"Stundner","_rn_":"5"},{"1":"6","2":"Meghan","3":"Kirksey","_rn_":"6"},{"1":"7","2":"Ya Lin","3":"Chiu","_rn_":"7"},{"1":"8","2":"Lazaros","3":"Poultsides","_rn_":"9"},{"1":"9","2":"Peter","3":"Gerner","_rn_":"10"},{"1":"10","2":"Ajay","3":"Gupta","_rn_":"12"},{"1":"11","2":"J Levi","3":"Chazen","_rn_":"13"},{"1":"12","2":"Maya","3":"Hartman","_rn_":"14"},{"1":"13","2":"Diana","3":"Delgado","_rn_":"15"},{"1":"14","2":"Nikesh","3":"Anumula","_rn_":"16"},{"1":"15","2":"Huibo","3":"Shao","_rn_":"17"},{"1":"16","2":"Alan Z","3":"Segal","_rn_":"19"},{"1":"17","2":"Hooman","3":"Kamel","_rn_":"20"},{"1":"18","2":"Dana","3":"Leifer","_rn_":"21"},{"1":"19","2":"Pina C","3":"Sanelli","_rn_":"22"},{"1":"20","2":"Ya-Lin","3":"Chiu","_rn_":"24"},{"1":"21","2":"Xuming","3":"Sun","_rn_":"25"},{"1":"22","2":"Peter","3":"Fleischut","_rn_":"27"},{"1":"23","2":"Gerhard","3":"Fritsch","_rn_":"30"},{"1":"24","2":"Guido","3":"Lancman","_rn_":"32"},{"1":"25","2":"Michael","3":"Virk","_rn_":"33"},{"1":"26","2":"Jeffrey P","3":"Greenfield","_rn_":"36"},{"1":"27","2":"Steven","3":"Weinstein","_rn_":"37"},{"1":"28","2":"Theodore H","3":"Schwartz","_rn_":"38"},{"1":"29","2":"Carlos B","3":"Mantilla","_rn_":"40"},{"1":"30","2":"Javad","3":"Parvizi","_rn_":"41"},{"1":"31","2":"Alejandro","3":"Gonzalez Della Valle","_rn_":"44"},{"1":"32","2":"Yan","3":"Ma","_rn_":"46"},{"1":"33","2":"Michael","3":"Nurok","_rn_":"52"},{"1":"34","2":"Stephen M","3":"Pastores","_rn_":"54"},{"1":"35","2":"Arzu","3":"Kovanlikaya","_rn_":"56"},{"1":"36","2":"Daniel","3":"Rosenbaum","_rn_":"57"},{"1":"37","2":"Allison","3":"Dunning","_rn_":"59"},{"1":"38","2":"Paula W","3":"Brill","_rn_":"60"},{"1":"39","2":"Jeannine A","3":"Ruby","_rn_":"61"},{"1":"40","2":"Tobias","3":"Leibold","_rn_":"62"},{"1":"41","2":"Timothy J","3":"Akhurst","_rn_":"63"},{"1":"42","2":"Jinru","3":"Shia","_rn_":"64"},{"1":"43","2":"Leonard B","3":"Saltz","_rn_":"65"},{"1":"44","2":"Elyn R","3":"Riedel","_rn_":"67"},{"1":"45","2":"Steven M","3":"Larson","_rn_":"68"},{"1":"46","2":"José G","3":"Guillem","_rn_":"69"},{"1":"47","2":"Cephas P","3":"Swamidoss","_rn_":"72"},{"1":"48","2":"Alison M","3":"Edwards","_rn_":"73"},{"1":"49","2":"Gregory A","3":"Liguori","_rn_":"75"},{"1":"50","2":"Molly","3":"Yancovitz","_rn_":"76"},{"1":"51","2":"Adam","3":"Litterman","_rn_":"77"},{"1":"52","2":"Joanne","3":"Yoon","_rn_":"78"},{"1":"53","2":"Elise","3":"Ng","_rn_":"79"},{"1":"54","2":"Richard L","3":"Shapiro","_rn_":"80"},{"1":"55","2":"Russell S","3":"Berman","_rn_":"81"},{"1":"56","2":"Anna C","3":"Pavlick","_rn_":"82"},{"1":"57","2":"Farbod","3":"Darvishian","_rn_":"83"},{"1":"58","2":"Paul","3":"Christos","_rn_":"84"},{"1":"59","2":"Iman","3":"Osman","_rn_":"86"},{"1":"60","2":"David","3":"Polsky","_rn_":"87"},{"1":"61","2":"Christopher J","3":"Dy","_rn_":"92"},{"1":"62","2":"Alejandro Gonzalez","3":"Della Valle","_rn_":"95"},{"1":"63","2":"Matthias","3":"Pumberger","_rn_":"102"},{"1":"64","2":"Federico P","3":"Girardi","_rn_":"103"},{"1":"65","2":"Michael","3":"Koscuiszka","_rn_":"104"},{"1":"66","2":"David","3":"Hatcher","_rn_":"105"},{"1":"67","2":"Paul J","3":"Christos","_rn_":"106"},{"1":"68","2":"Amy E","3":"Rose","_rn_":"107"},{"1":"69","2":"Holly S","3":"Greenwald","_rn_":"108"},{"1":"70","2":"Ya-lin","3":"Chiu","_rn_":"109"},{"1":"71","2":"Samir S","3":"Taneja","_rn_":"110"},{"1":"72","2":"Peng","3":"Lee","_rn_":"112"},{"1":"73","2":"Christopher E","3":"Barbieri","_rn_":"114"},{"1":"74","2":"Eugene K","3":"Cha","_rn_":"115"},{"1":"75","2":"Thomas F","3":"Chromecki","_rn_":"116"},{"1":"76","2":"Yair","3":"Lotan","_rn_":"118"},{"1":"77","2":"Robert S","3":"Svatek","_rn_":"119"},{"1":"78","2":"Douglas S","3":"Scherr","_rn_":"120"},{"1":"79","2":"Pierre I","3":"Karakiewicz","_rn_":"121"},{"1":"80","2":"Maxine","3":"Sun","_rn_":"122"},{"1":"81","2":"Shahrokh F","3":"Shariat","_rn_":"124"},{"1":"82","2":"Anna Maria","3":"Bombardieri","_rn_":"126"},{"1":"83","2":"J Matthias","3":"Walz","_rn_":"128"},{"1":"84","2":"Peter G","3":"Passias","_rn_":"131"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[84]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoSGlzdG9yeS5kZilcbmBgYCJ9 -->
+<pre class="r"><code>print(History.df)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6OTQsIm5jb2wiOjIsInN1bW1hcnkiOltdfSwicmRmIjoiSDRzSUFBQUFBQUFBQTMzVCtYT1RRQlRBOFEyQnBLRk5tamJlZDcydm9MWDFQdXJSMXZ1cXJjWXJEaWFvakFnZElLTS8rcGRYdjVzdTQ1WXhNUE9CM1VmZVc5NUNWaFk3YzNiSEZrS1VoVm5pYkRFVTF0cnFjdnVLRUtiQnBDUk1VWlBYWDl4dU1aREJPcnJEbTV2ek1reVppUXFxR0lOTWxOWEhNYUh5R3BoRUUxT1locXk3RGR1eEF6dXhDN3V4QjN1eEQvdHhBQWR4Q0RNNGpDTTRpbU00amhNNGlWTTRqVE00aXpZY25NTjV6T0lDNWpDUGk3aUV5MkFEeEZWY3czWGN3RTNjd2dKdTR3N3U0aDRXc1lSbDNNY0RQTVFqUE1ZVFBNVXpQTWNMdk1RS1htRVZhM2lOTitqZ0xkN2hQVDdnbzlwM2ZmLy94eWhRMXBnYXEwQmxoT29JWTVwYUFWc3pYbUJpaExxbU1jS2twbGxnS21jNnAvWFBsaitHRmJvL3ZFUVZNVlN3bHFSdU9rZysrWDBWc04wNDlYdUJKeU5iODJ0eDlOUEphc2hHak45aWVIVHpDL1VDTjhrV3lvSjIzMDFkNTB0TVByT05YRW8xV2svOUtDVEphS2xYcVNlWDRseWdPUWpsay9UYnZXK0Q4SHQ3ZGw2OW0reTdxcXRyVnhzYm0yc2FmMVF0UzlXcWVPRlhQL1N5aHcvY3oxNmdKZzFhSG5ic3JNZCttR2F0RUUyY05FcmQ3SGQyTHdxeXlMQTVzZkVYSGJJNnNySUVBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["status_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["article_id"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"1","_rn_":"1"},{"1":"2","2":"1","_rn_":"2"},{"1":"3","2":"1","_rn_":"3"},{"1":"4","2":"1","_rn_":"4"},{"1":"5","2":"1","_rn_":"5"},{"1":"6","2":"1","_rn_":"6"},{"1":"7","2":"2","_rn_":"7"},{"1":"8","2":"2","_rn_":"8"},{"1":"9","2":"2","_rn_":"9"},{"1":"10","2":"2","_rn_":"10"},{"1":"11","2":"2","_rn_":"11"},{"1":"12","2":"2","_rn_":"12"},{"1":"13","2":"2","_rn_":"13"},{"1":"14","2":"3","_rn_":"14"},{"1":"15","2":"3","_rn_":"15"},{"1":"16","2":"3","_rn_":"16"},{"1":"17","2":"4","_rn_":"17"},{"1":"18","2":"4","_rn_":"18"},{"1":"19","2":"4","_rn_":"19"},{"1":"20","2":"5","_rn_":"20"},{"1":"21","2":"5","_rn_":"21"},{"1":"22","2":"5","_rn_":"22"},{"1":"23","2":"5","_rn_":"23"},{"1":"24","2":"5","_rn_":"24"},{"1":"25","2":"5","_rn_":"25"},{"1":"26","2":"5","_rn_":"26"},{"1":"27","2":"6","_rn_":"27"},{"1":"28","2":"6","_rn_":"28"},{"1":"29","2":"6","_rn_":"29"},{"1":"30","2":"6","_rn_":"30"},{"1":"31","2":"6","_rn_":"31"},{"1":"32","2":"6","_rn_":"32"},{"1":"33","2":"7","_rn_":"33"},{"1":"34","2":"7","_rn_":"34"},{"1":"35","2":"7","_rn_":"35"},{"1":"36","2":"7","_rn_":"36"},{"1":"37","2":"7","_rn_":"37"},{"1":"38","2":"7","_rn_":"38"},{"1":"39","2":"8","_rn_":"39"},{"1":"40","2":"8","_rn_":"40"},{"1":"41","2":"8","_rn_":"41"},{"1":"42","2":"9","_rn_":"42"},{"1":"43","2":"9","_rn_":"43"},{"1":"44","2":"9","_rn_":"44"},{"1":"45","2":"9","_rn_":"45"},{"1":"46","2":"9","_rn_":"46"},{"1":"47","2":"9","_rn_":"47"},{"1":"48","2":"9","_rn_":"48"},{"1":"49","2":"10","_rn_":"49"},{"1":"50","2":"10","_rn_":"50"},{"1":"51","2":"10","_rn_":"51"},{"1":"52","2":"11","_rn_":"52"},{"1":"53","2":"11","_rn_":"53"},{"1":"54","2":"11","_rn_":"54"},{"1":"55","2":"11","_rn_":"55"},{"1":"56","2":"11","_rn_":"56"},{"1":"57","2":"11","_rn_":"57"},{"1":"58","2":"11","_rn_":"58"},{"1":"59","2":"12","_rn_":"59"},{"1":"60","2":"12","_rn_":"60"},{"1":"61","2":"12","_rn_":"61"},{"1":"62","2":"12","_rn_":"62"},{"1":"63","2":"12","_rn_":"63"},{"1":"64","2":"12","_rn_":"64"},{"1":"65","2":"13","_rn_":"65"},{"1":"66","2":"13","_rn_":"66"},{"1":"67","2":"13","_rn_":"67"},{"1":"68","2":"14","_rn_":"68"},{"1":"69","2":"14","_rn_":"69"},{"1":"70","2":"14","_rn_":"70"},{"1":"71","2":"14","_rn_":"71"},{"1":"72","2":"14","_rn_":"72"},{"1":"73","2":"14","_rn_":"73"},{"1":"74","2":"15","_rn_":"74"},{"1":"75","2":"15","_rn_":"75"},{"1":"76","2":"15","_rn_":"76"},{"1":"77","2":"16","_rn_":"77"},{"1":"78","2":"16","_rn_":"78"},{"1":"79","2":"16","_rn_":"79"},{"1":"80","2":"16","_rn_":"80"},{"1":"81","2":"16","_rn_":"81"},{"1":"82","2":"16","_rn_":"82"},{"1":"83","2":"16","_rn_":"83"},{"1":"84","2":"17","_rn_":"84"},{"1":"85","2":"17","_rn_":"85"},{"1":"86","2":"17","_rn_":"86"},{"1":"87","2":"17","_rn_":"87"},{"1":"88","2":"18","_rn_":"88"},{"1":"89","2":"18","_rn_":"89"},{"1":"90","2":"18","_rn_":"90"},{"1":"91","2":"18","_rn_":"91"},{"1":"92","2":"19","_rn_":"92"},{"1":"93","2":"19","_rn_":"93"},{"1":"94","2":"19","_rn_":"94"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[94]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoSGlzdG9yeVN0YXR1cy5kZilcbmBgYCJ9 -->
+<pre class="r"><code>print(HistoryStatus.df)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6OTQsIm5jb2wiOjMsInN1bW1hcnkiOltdfSwicmRmIjoiSDRzSUFBQUFBQUFBQTkyWCtWUGFRQlRIRndRSjBiYjJ2dS83V01vbWhFRHZ3OXI3c3RyYVN5ZENyRXdSR0FpMjA1LzZsOXQrbHlUZ1BrWmlwN1YyNnN4SDhyN1o5OTd1MjJzeU9UNWo2ak02WTJ5SUpXTDRuOFFqUzA1UFRmQUNZNGs0akJoTHNMVDgvWXJYT3pzdEdkc0NaanN2R1lzSFdrSjZnbUdRQWhxUWpqTDZDQmdOL0xhQ2JXQU1iQWM3Z0l5N0Mrd0dlOEJlc0Evc0J3ZkFRWEFJSEFaSHdGRndEQndISjhCSmNBcWNCbWZBV1hBT25BY1h3RVZ3Q1hDUUFaZEJGZ2hnQUJQa2dBWHl3QVlvQUN1Q0srQXF1QWF1Z3h2Z0pyZ0Zib003NEM0WUIvZkFCTGdQSG9DSDRCRjRESjZBcCtBWmVBNWVnSmRnRXJ3Q1UyQWF2QVp2d0F4NEM5NkI5K0FEK0JqVWZheno2MCtNMW5STGJtWFpMWWUyVXlxNURhOW51NDMyZkxYU1dnenNZYmZtTmQxdm9ZV1hTOTIyS1R4V0t6VjNqZENwcHJ0Y2FhMlphZFJaZEoxeWZhSFJyTlM4WDgrMk1VMy83aGlpSnVQZkR2OEhlMExLdkhrZDI5ejUvbzNOOTE4c2k0MnQvdWE2cjZ1cGVsYW5oY1VGTjdMQzZBcDVubE1FSTh2enFtQnlXd3JtK2dVRXRkVXNOaS9RTElxZ0d6WVhwR2RjR0JGQ01KaGNOMGlPaTZ3YWxpcGF6dmN4dXkyeWZUNVUwWXAralV4aTl6cFM0RVYxZUlZcTZPZzV5WUtTUkNsYVgxMU5ybFJBczJsZWl3cjVTS0hJTFRWSk1GZWlLd2gxdUpxbHJoQ1VZNkF0STZvcHdweDluVmdWZ2l3eHNtNDFRU3BCN0xRaHVFbW5aTENnRmRTVklkY284U0FDQ21IUmdlYlYwcGwrdFVYZk9nZ1ZyRWM2cFFOdE9ZRTJHYmt5WGJvc2xWQlNtSFRQRzVFQ0dabU9MZTV2UHJHbWtqWUYzZlVXVjF2WVpQQ2RJRUpWOHBGS09CNXpkWXRzbjQ5YTVyNGRTcWNLTG1UWkY4bmNZVW5STkZha0lzOUM5ZWpEWWFFbUNzL0NBVUtPSHRKQnFYc3R6Q2hCa09XTkxhWk1EclYxa2U4ZVIrcVhXTExtTExtdDRHWVpDdU8zUE1kcnQrWXE0UTJrNHo2YTg4VkFHUW1hbEIzUEpTSFR6ZnFYVEJoV2ZxVEZ2N1BPM3l6TlhhbzZyVEIzS09xSTZHUVdtdkNIdFVKY1V2V0dWNm5YNEJTWG4zbEo0aHhyRW1Hc1haTTlLZlBTWXJ2Mm1RdjVYYVl6LzFzekZuUXY1bmV0K3p6azU0ei9DR0lsZTFmMHA5NkZuYXc2ODI0MU1MWml5SjBSWjFaZi96clVWc2FyZTA3WVRpL1ZxNkhTR1J4YitRbGhFdWdHTmc4QUFBPT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["status_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["pub_status"],"name":[2],"type":["chr"],"align":["left"]},{"label":["status_date"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"received","3":"15-1-2012","_rn_":"1"},{"1":"2","2":"accepted","3":"16-4-2012","_rn_":"2"},{"1":"3","2":"epublish","3":"20-6-2012","_rn_":"3"},{"1":"4","2":"entrez","3":"23-7-2013","_rn_":"4"},{"1":"5","2":"pubmed","3":"23-7-2013","_rn_":"5"},{"1":"6","2":"medline","3":"23-7-2013","_rn_":"6"},{"1":"7","2":"received","3":"16-7-2012","_rn_":"7"},{"1":"8","2":"revised","3":"17-8-2012","_rn_":"8"},{"1":"9","2":"accepted","3":"20-8-2012","_rn_":"9"},{"1":"10","2":"aheadofprint","3":"27-11-2012","_rn_":"10"},{"1":"11","2":"entrez","3":"1-12-2012","_rn_":"11"},{"1":"12","2":"pubmed","3":"1-12-2012","_rn_":"12"},{"1":"13","2":"medline","3":"15-1-2014","_rn_":"13"},{"1":"14","2":"entrez","3":"24-10-2012","_rn_":"14"},{"1":"15","2":"pubmed","3":"24-10-2012","_rn_":"15"},{"1":"16","2":"medline","3":"4-1-2013","_rn_":"16"},{"1":"17","2":"entrez","3":"20-10-2012","_rn_":"17"},{"1":"18","2":"pubmed","3":"20-10-2012","_rn_":"18"},{"1":"19","2":"medline","3":"9-4-2013","_rn_":"19"},{"1":"20","2":"received","3":"9-4-2012","_rn_":"20"},{"1":"21","2":"revised","3":"18-9-2012","_rn_":"21"},{"1":"22","2":"accepted","3":"22-9-2012","_rn_":"22"},{"1":"23","2":"aheadofprint","3":"12-10-2012","_rn_":"23"},{"1":"24","2":"entrez","3":"17-10-2012","_rn_":"24"},{"1":"25","2":"pubmed","3":"17-10-2012","_rn_":"25"},{"1":"26","2":"medline","3":"3-7-2013","_rn_":"26"},{"1":"27","2":"received","3":"13-2-2012","_rn_":"27"},{"1":"28","2":"accepted","3":"7-9-2012","_rn_":"28"},{"1":"29","2":"aheadofprint","3":"25-9-2012","_rn_":"29"},{"1":"30","2":"entrez","3":"26-9-2012","_rn_":"30"},{"1":"31","2":"pubmed","3":"26-9-2012","_rn_":"31"},{"1":"32","2":"medline","3":"29-5-2013","_rn_":"32"},{"1":"33","2":"received","3":"17-8-2011","_rn_":"33"},{"1":"34","2":"accepted","3":"11-4-2012","_rn_":"34"},{"1":"35","2":"aheadofprint","3":"5-6-2012","_rn_":"35"},{"1":"36","2":"entrez","3":"9-6-2012","_rn_":"36"},{"1":"37","2":"pubmed","3":"9-6-2012","_rn_":"37"},{"1":"38","2":"medline","3":"17-5-2013","_rn_":"38"},{"1":"39","2":"entrez","3":"29-5-2012","_rn_":"39"},{"1":"40","2":"pubmed","3":"29-5-2012","_rn_":"40"},{"1":"41","2":"medline","3":"9-7-2013","_rn_":"41"},{"1":"42","2":"received","3":"25-1-2012","_rn_":"42"},{"1":"43","2":"accepted","3":"1-2-2012","_rn_":"43"},{"1":"44","2":"revised","3":"1-2-2012","_rn_":"44"},{"1":"45","2":"aheadofprint","3":"21-3-2012","_rn_":"45"},{"1":"46","2":"entrez","3":"22-3-2012","_rn_":"46"},{"1":"47","2":"pubmed","3":"22-3-2012","_rn_":"47"},{"1":"48","2":"medline","3":"8-1-2013","_rn_":"48"},{"1":"49","2":"entrez","3":"20-3-2012","_rn_":"49"},{"1":"50","2":"pubmed","3":"20-3-2012","_rn_":"50"},{"1":"51","2":"medline","3":"5-5-2012","_rn_":"51"},{"1":"52","2":"received","3":"17-6-2011","_rn_":"52"},{"1":"53","2":"revised","3":"13-9-2011","_rn_":"53"},{"1":"54","2":"accepted","3":"12-10-2011","_rn_":"54"},{"1":"55","2":"aheadofprint","3":"4-2-2012","_rn_":"55"},{"1":"56","2":"entrez","3":"7-2-2012","_rn_":"56"},{"1":"57","2":"pubmed","3":"7-2-2012","_rn_":"57"},{"1":"58","2":"medline","3":"26-7-2012","_rn_":"58"},{"1":"59","2":"received","3":"1-8-2011","_rn_":"59"},{"1":"60","2":"accepted","3":"25-11-2011","_rn_":"60"},{"1":"61","2":"epublish","3":"3-1-2012","_rn_":"61"},{"1":"62","2":"entrez","3":"12-1-2012","_rn_":"62"},{"1":"63","2":"pubmed","3":"12-1-2012","_rn_":"63"},{"1":"64","2":"medline","3":"15-5-2012","_rn_":"64"},{"1":"65","2":"entrez","3":"23-12-2011","_rn_":"65"},{"1":"66","2":"pubmed","3":"23-12-2011","_rn_":"66"},{"1":"67","2":"medline","3":"31-7-2012","_rn_":"67"},{"1":"68","2":"received","3":"15-2-2011","_rn_":"68"},{"1":"69","2":"accepted","3":"7-10-2011","_rn_":"69"},{"1":"70","2":"aheadofprint","3":"23-11-2011","_rn_":"70"},{"1":"71","2":"entrez","3":"26-11-2011","_rn_":"71"},{"1":"72","2":"pubmed","3":"26-11-2011","_rn_":"72"},{"1":"73","2":"medline","3":"3-1-2013","_rn_":"73"},{"1":"74","2":"entrez","3":"26-10-2011","_rn_":"74"},{"1":"75","2":"pubmed","3":"26-10-2011","_rn_":"75"},{"1":"76","2":"medline","3":"8-9-2012","_rn_":"76"},{"1":"77","2":"received","3":"27-6-2011","_rn_":"77"},{"1":"78","2":"revised","3":"26-8-2011","_rn_":"78"},{"1":"79","2":"accepted","3":"19-9-2011","_rn_":"79"},{"1":"80","2":"aheadofprint","3":"21-10-2011","_rn_":"80"},{"1":"81","2":"entrez","3":"25-10-2011","_rn_":"81"},{"1":"82","2":"pubmed","3":"25-10-2011","_rn_":"82"},{"1":"83","2":"medline","3":"16-8-2012","_rn_":"83"},{"1":"84","2":"aheadofprint","3":"18-8-2011","_rn_":"84"},{"1":"85","2":"entrez","3":"20-8-2011","_rn_":"85"},{"1":"86","2":"pubmed","3":"20-8-2011","_rn_":"86"},{"1":"87","2":"medline","3":"24-4-2012","_rn_":"87"},{"1":"88","2":"aheadofprint","3":"21-7-2011","_rn_":"88"},{"1":"89","2":"entrez","3":"23-7-2011","_rn_":"89"},{"1":"90","2":"pubmed","3":"23-7-2011","_rn_":"90"},{"1":"91","2":"medline","3":"18-1-2013","_rn_":"91"},{"1":"92","2":"entrez","3":"9-2-2011","_rn_":"92"},{"1":"93","2":"pubmed","3":"9-2-2011","_rn_":"93"},{"1":"94","2":"medline","3":"16-10-2012","_rn_":"94"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[94]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoSm91cm5hbC5kZilcbmBgYCJ9 -->
+<pre class="r"><code>print(Journal.df)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MTYsIm5jb2wiOjEsInN1bW1hcnkiOltdfSwicmRmIjoiSDRzSUFBQUFBQUFBQTExVFRXOFRNUkIxUXBiU1NLMkNlcXlFTENRT0lDVVNnZ01mcDM2QVNrOVJ0NVY2UTY1M2tqVnhiTXZqQmNLSlgxNFliKzFrdXl2dDd2aU4zN3ladDk2cjg5dDM0OXN4WSt3Skd3M29XVkRJaXB2cnI5TVBqSTJHdEJpd0VkdVA3OStVUG1vQnhpYnQvWkQ0ZGxHVy9JZHR2QkdhZitLaEJyNXVVRGJhNGdvMEJFSnoxaTc0aFVXbklyYXducGNPcEtLNGJQd1MvQ1lWUEp6alJ0WVc3Vm9FSlRHaHI4dmc3UW8rYzlFdEo4SERuYWRZS2srU1JMQW1FVjVkd1pKV2xCTUdrTnBDSlNpc3VCUEs4RFZVU2lvRGFmUEhFdFNmeGtNYW9LTVFsNmRlQllVMS8rS1VCb2NiZm9Kb3FmT08ycHN6cll5U2tlTkRiWjJJOWJIVjgwQjlRWHdqQ0MvcnhEaStwc3FYT3lGQlBHK2RGaGkyVHB6a3pxMjJ5NHdlemFtMkNGNUo3a1gxS01YUEZXa2dZTzVjVXRha0xtUm8xbW5maTQ2dXpJM3ZiRXE3bnMyMUxibmRtbFNVYnVmWTB6Tmh5UDIwZW41NmVjT1ZDVUJWUSt0NlNyenNLTVc4UWZXVDJoSms5ZllUUEQ1b2hSRnJ3SFRJTW5pUXZzajNvSUx1TS9hOS9UWExyQU82aDM5WmUwMzZwU1c1Mnk4OXJrUVFzNFVuUHEzdWU1UTk2K0k4UkJyR3cxLzB5QVBmQXlhTmlaMVVVMWszWmpWOSt6NHFwTCtHcGZieUg1VGp3WVBtOEYvQ2kyd3htT1hPOEVLTE84aTJIdExJN2NRejU4bldQQXFoT0FzMmJPMGYwd0hJU0RzY3UvOFBVTVdxQ2ZRREFBQT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["journal_title"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"HSS journal : the musculoskeletal journal of Hospital for Special Surgery"},{"1":"Psychosomatics"},{"1":"Stroke; a journal of cerebral circulation"},{"1":"Regional anesthesia and pain medicine"},{"1":"Seizure : the journal of the British Epilepsy Association"},{"1":"Clinical orthopaedics and related research"},{"1":"The Journal of arthroplasty"},{"1":"Anesthesiology"},{"1":"Pediatric radiology"},{"1":"Diseases of the colon and rectum"},{"1":"Journal of clinical anesthesia"},{"1":"PloS one"},{"1":"Spine"},{"1":"Cancer"},{"1":"BJU international"},{"1":"Journal of intensive care medicine"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[16]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoSXNzdWUuZGYpXG5gYGAifQ== -->
+<pre class="r"><code>print(Issue.df)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MTksIm5jb2wiOjYsInN1bW1hcnkiOltdfSwicmRmIjoiSDRzSUFBQUFBQUFBQSsxVXkyNFRNUlNkVEROcG16NW9DVUpJU01nQ2RRR29rWGlJNTZZdlVOdFY2TFFTdStBNmJtSTZZNDlzVDZHcytnWDhBWi9BanlDUkxYL0NzbkE5dVU0bUl4YXdaM0htK3Q3cit4cmI1MkRuN2FQbTIyWVFCRE5CdlFiZkNKWkJkSFQ0ZXYxWkVOUkRVR3BCUFpoMzhpTzRXN0JvQUpZQXJjSVpCR0VSRGJ0ZEpQcG5BWE1BRitpeUx3QVdNVzRaY0FXd0FsZ0ZYTVZjSzRVY0ZkdmJqV1B5WHVWYTBvUzhJSGJBU1pvYmxpZktuUEtFVzdCNnJ6b2h1OHBrd3RsT2xDWnh4cG1BZFp6clB0Zm5tSEM1WTg3WlFCbVZVaXVZUWV2ZDJHcDF5bDhTV2s3SHVPYkhHdFpNYUNnSkFVcGl3Tm9CNzRNR1BpcTVnYmFNb0xEc2tZd0tTVkxlRTB4SWpwdWZ4MXg4eWpYSEFVb1ZuTHFsaFJWbVFGNWxJdUdaT1NlYnhpam92RlR0M25ZaXBHQXVSdHVCeXFqTGI0cDZta05mM0VuRHFXWURqTGg1Q0puM0o0VW94R21WSmRUWThaL1k5SjJyUlBXOXRkV0IzTlJxd1lpbXZTa1gyUkZRdzNEak8yZmdsZGdGczNtSysyNlY2akxmK09RMzRhNjVUcUppb3NZLzZaLys2RitNRjhYWlpIOWptMG80VGRSV3QvYVBpSkNXUTdndGFxTGpkaW1sODBzanptQk1Da2RYYVFDelQxL1dxS01oeXMrM1Z4VGcvL1dxUG1FTnh3eFBBUGZkK1FPdUE1SDhjTWNMeU4yOUJ6d0YzRUFtV1VPZmsyZUF0S1Q3bkNGaUFSbW9obWlpbkVPR0NrdStSb21aSWdRdzJZeGpxTmJHOEkzandtQmorTzFpSkQ5WDVOZGdXbjVCdTQ5N2gvb2RsTmRHOXU4L3ArVndDK1hEaTJrZDl3OHpsRkhocjlCeXhPRDJHN3lSM2xqZkFYSUFlVm5kTEduSy9lYUdQeUZoVE02N29vZjZFaEpWMXdxYitJdS95QVRRVGRjOWgvR0RiNXlwSkUvSFQ2Tkk0M05tK1hHM1Z6UXgxY0M4VmgvYXZnbDNkQ0hPMUJwdERIOVZKbWxDRXRvKzBSRHloM2xtVmVZZU1pUUxXM2grNWVDYXJoaFdjdW1LOTliWklKZW42dzhlbHk1SURUdXFqYm9acnh1am1qTytzOGhQejJXL1JBd0pQZWFlVDVaaHltTElkbFppaGlaWVRkc3FPK2FkSmpDcHR4VERCWmUvQWJsbytyK1JCd0FBIn0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["issue_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["journal_title"],"name":[2],"type":["chr"],"align":["left"]},{"label":["cited_medium"],"name":[3],"type":["chr"],"align":["left"]},{"label":["volume"],"name":[4],"type":["int"],"align":["right"]},{"label":["issue"],"name":[5],"type":["int"],"align":["right"]},{"label":["pub_date"],"name":[6],"type":["date"],"align":["right"]}],"data":[{"1":"1","2":"HSS journal : the musculoskeletal journal of Hospital for Special Surgery","3":"Print","4":"8","5":"2","6":"2012-07-01","_rn_":"1"},{"1":"2","2":"Psychosomatics","3":"Internet","4":"54","5":"2","6":"2013-03-01","_rn_":"2"},{"1":"3","2":"Stroke; a journal of cerebral circulation","3":"Internet","4":"43","5":"11","6":"2012-11-01","_rn_":"3"},{"1":"4","2":"Regional anesthesia and pain medicine","3":"Internet","4":"37","5":"6","6":"2012-11-01","_rn_":"4"},{"1":"5","2":"Seizure : the journal of the British Epilepsy Association","3":"Internet","4":"22","5":"1","6":"2013-01-01","_rn_":"5"},{"1":"6","2":"Clinical orthopaedics and related research","3":"Internet","4":"471","5":"1","6":"2013-01-01","_rn_":"6"},{"1":"7","2":"The Journal of arthroplasty","3":"Internet","4":"27","5":"10","6":"2012-12-01","_rn_":"7"},{"1":"8","2":"Anesthesiology","3":"Internet","4":"117","5":"1","6":"2012-07-01","_rn_":"8"},{"1":"9","2":"Pediatric radiology","3":"Internet","4":"42","5":"8","6":"2012-08-01","_rn_":"9"},{"1":"10","2":"Diseases of the colon and rectum","3":"Internet","4":"55","5":"4","6":"2012-04-01","_rn_":"10"},{"1":"11","2":"Journal of clinical anesthesia","3":"Internet","4":"24","5":"2","6":"2012-03-01","_rn_":"11"},{"1":"12","2":"PloS one","3":"Internet","4":"7","5":"1","6":"2012-01-01","_rn_":"12"},{"1":"13","2":"Regional anesthesia and pain medicine","3":"Internet","4":"37","5":"1","6":"2012-01-01","_rn_":"13"},{"1":"14","2":"The Journal of arthroplasty","3":"Internet","4":"27","5":"6","6":"2012-06-01","_rn_":"14"},{"1":"15","2":"Spine","3":"Internet","4":"37","5":"11","6":"2012-05-01","_rn_":"15"},{"1":"16","2":"Cancer","3":"Internet","4":"118","5":"12","6":"2012-06-01","_rn_":"16"},{"1":"17","2":"BJU international","3":"Internet","4":"109","5":"5","6":"2012-03-01","_rn_":"17"},{"1":"18","2":"Journal of intensive care medicine","3":"Internet","4":"27","5":"5","6":"2012-09-01","_rn_":"18"},{"1":"19","2":"Spine","3":"Internet","4":"37","5":"3","6":"2012-02-01","_rn_":"19"}],"options":{"columns":{"min":{},"max":[10],"total":[6]},"rows":{"min":[10],"max":[10],"total":[19]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGJXcml0ZVRhYmxlKG15ZGIsIFwiQXJ0aWNsZVwiLCBBcnRpY2xlLmRmLCBvdmVyd3JpdGUgPSBULCByb3cubmFtZXMgPSBGKVxuZGJXcml0ZVRhYmxlKG15ZGIsIFwiQXV0aG9ySm9pblwiLCBBdXRob3JKb2luLmRmLCBvdmVyd3JpdGUgPSBULCByb3cubmFtZXMgPSBGKVxuZGJXcml0ZVRhYmxlKG15ZGIsIFwiQXV0aG9yXCIsIEF1dGhvci5kZiwgb3ZlcndyaXRlID0gVCwgcm93Lm5hbWVzID0gRilcbmRiV3JpdGVUYWJsZShteWRiLCBcIkhpc3RvcnlcIiwgSGlzdG9yeS5kZiwgb3ZlcndyaXRlID0gVCwgcm93Lm5hbWVzID0gRilcbmRiV3JpdGVUYWJsZShteWRiLCBcIkhpc3RvcnlTdGF0dXNcIiwgSGlzdG9yeVN0YXR1cy5kZiwgb3ZlcndyaXRlID0gVCwgcm93Lm5hbWVzID0gRilcbmRiV3JpdGVUYWJsZShteWRiLCBcIkpvdXJuYWxJc3N1ZVwiLCBJc3N1ZS5kZiwgb3ZlcndyaXRlID0gVCwgcm93Lm5hbWVzID0gRilcbmRiV3JpdGVUYWJsZShteWRiLCBcIkpvdXJuYWxcIiwgSm91cm5hbC5kZiwgb3ZlcndyaXRlID0gVCwgcm93Lm5hbWVzID0gRilcbmBgYCJ9 -->
-<pre class="r"><code>dbWriteTable(mydb, &quot;Article&quot;, Article.df, overwrite = T, row.names = F)
-dbWriteTable(mydb, &quot;AuthorJoin&quot;, AuthorJoin.df, overwrite = T, row.names = F)
-dbWriteTable(mydb, &quot;Author&quot;, Author.df, overwrite = T, row.names = F)
-dbWriteTable(mydb, &quot;History&quot;, History.df, overwrite = T, row.names = F)
-dbWriteTable(mydb, &quot;HistoryStatus&quot;, HistoryStatus.df, overwrite = T, row.names = F)
-dbWriteTable(mydb, &quot;JournalIssue&quot;, Issue.df, overwrite = T, row.names = F)
-dbWriteTable(mydb, &quot;Journal&quot;, Journal.df, overwrite = T, row.names = F)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGJXcml0ZVRhYmxlKG15ZGIsIFwiQXJ0aWNsZVwiLCBBcnRpY2xlLmRmLCBvdmVyd3JpdGUgPSBULCByb3cubmFtZXMgPSBGKVxuYGBgIn0= -->
+<pre class="r"><code>dbWriteTable(mydb, &quot;Article&quot;, Article.df, overwrite = T, row.names = F)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFRSVUVcbiJ9 -->
+<pre><code>[1] TRUE</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGJXcml0ZVRhYmxlKG15ZGIsIFwiQXV0aG9ySm9pblwiLCBBdXRob3JKb2luLmRmLCBvdmVyd3JpdGUgPSBULCByb3cubmFtZXMgPSBGKVxuYGBgIn0= -->
+<pre class="r"><code>dbWriteTable(mydb, &quot;AuthorJoin&quot;, AuthorJoin.df, overwrite = T, row.names = F)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFRSVUVcbiJ9 -->
+<pre><code>[1] TRUE</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGJXcml0ZVRhYmxlKG15ZGIsIFwiQXV0aG9yXCIsIEF1dGhvci5kZiwgb3ZlcndyaXRlID0gVCwgcm93Lm5hbWVzID0gRilcbmBgYCJ9 -->
+<pre class="r"><code>dbWriteTable(mydb, &quot;Author&quot;, Author.df, overwrite = T, row.names = F)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFRSVUVcbiJ9 -->
+<pre><code>[1] TRUE</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGJXcml0ZVRhYmxlKG15ZGIsIFwiSGlzdG9yeVwiLCBIaXN0b3J5LmRmLCBvdmVyd3JpdGUgPSBULCByb3cubmFtZXMgPSBGKVxuYGBgIn0= -->
+<pre class="r"><code>dbWriteTable(mydb, &quot;History&quot;, History.df, overwrite = T, row.names = F)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFRSVUVcbiJ9 -->
+<pre><code>[1] TRUE</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGJXcml0ZVRhYmxlKG15ZGIsIFwiSGlzdG9yeVN0YXR1c1wiLCBIaXN0b3J5U3RhdHVzLmRmLCBvdmVyd3JpdGUgPSBULCByb3cubmFtZXMgPSBGKVxuYGBgIn0= -->
+<pre class="r"><code>dbWriteTable(mydb, &quot;HistoryStatus&quot;, HistoryStatus.df, overwrite = T, row.names = F)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFRSVUVcbiJ9 -->
+<pre><code>[1] TRUE</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGJXcml0ZVRhYmxlKG15ZGIsIFwiSm91cm5hbElzc3VlXCIsIElzc3VlLmRmLCBvdmVyd3JpdGUgPSBULCByb3cubmFtZXMgPSBGKVxuYGBgIn0= -->
+<pre class="r"><code>dbWriteTable(mydb, &quot;JournalIssue&quot;, Issue.df, overwrite = T, row.names = F)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFRSVUVcbiJ9 -->
+<pre><code>[1] TRUE</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGJXcml0ZVRhYmxlKG15ZGIsIFwiSm91cm5hbFwiLCBKb3VybmFsLmRmLCBvdmVyd3JpdGUgPSBULCByb3cubmFtZXMgPSBGKVxuYGBgIn0= -->
+<pre class="r"><code>dbWriteTable(mydb, &quot;Journal&quot;, Journal.df, overwrite = T, row.names = F)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFRSVUVcbiJ9 -->
+<pre><code>[1] TRUE</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -941,6 +1082,13 @@ dbWriteTable(mydb, &quot;Journal&quot;, Journal.df, overwrite = T, row.names = F
 <pre class="sql"><code>ALTER TABLE JournalIssue
 ADD pubDate DATE;</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6W10sInJkZiI6Ikg0c0lBQUFBQUFBQUF3dHlpVERtaXVCaVlHQmdabUJoQkpLc1FDWURhMmlJbTY0RkF3TUxFNUREeU1EQ3dBbWlLNERTd2d4Z2dDTEJtcGVZbTFvTVpBaGdrZVFzeWkvWGd5bmd4YVk3T1NleEdLWWJKc2lWa2xpU3FKZFdCTlFINVAwRFlRQ2FoRzBhcWdBQUFBPT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[],"data":[],"options":{"columns":{"min":{},"max":[10],"total":{}},"rows":{"min":[10],"max":[10],"total":{}},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -948,6 +1096,13 @@ ADD pubDate DATE;</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEFydGljbGUgTElNSVQgNTtcbmBgYCJ9 -->
 <pre class="sql"><code>SELECT * FROM Article LIMIT 5;</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6W10sInJkZiI6Ikg0c0lBQUFBQUFBQUEyMVRUV3NVUVJDZGZDeVloUVJCZjBCZlBBanVFaFdDaVFjL0VqV0NCOGtZeVMzMDlsUm0yNTNwYXFwNk5qc2V4TFBnZi9VdUdLdG5leUNiWkdDbXU2dXJYcjE2VlhOeWRQWjhlRGJNc213ajIxeVQ3MEMyMmVEMHkvdlJpeXpiWEpmRFdyYVpiY1YxSWRjUE9zOHMyNGxlci81azNmTTZTK3U5dE41UDY4T3NmNkpsa0lBK0h1ZTUrb1lOT1YycEF4V21vT3FHVFZNaHo2Q0NJTmIrRmkvVU1iSzMwWGFCcEhJUHhzbytiNmdFYWhQZ3ptZHV6UlFaYXgyczRXUjluQWZDR2J4VStqcWNBWUlKeWQ1WWtwUVNnQzRGUERxQlVrNXlweDJ3MEdLclpWc29yNjFUTlJUV1dBZkplVDhIKzcwaFNBVmN5eENQYjhrR3kxUDF6dHNLUExmcURUTUs4eTdicWhyVlhWbGpyV1pxcTRMQXFjWVZRQ1ZhVnlxa01FVWZtU2hkVHlKOXBGWnhwNFlGVnNJenBqOTFOa0NoOHFBRDhCUDFkSDkvYi9Sc2QzZHZuSEwrUG9JYVM5SitLbkl0UzVSNEFTWmhPQWVGVFRCWVE0VHpZZ0VYV0YzYU1GVUZlQUptNGR0RmFiZXdFTnJyREFNdSsyZGRVRnJZRXZwS2MyZ1BwQTBlZlZKOE5ORXNCRGswUmR1VCtuSFl0UWJuT3M2Q0ppV1pnSVJOek1SZEx4VlpudDFtWlRSaHNORUpITEpsa1VtaE1WVVRpY2JFM01wVk54d0NPcmR3MldIV01tb2pMY3EzRXRPeitIV0l0ZGRKaHp0VkVjRlNNNldDTHIrRGh2UWl6dVVjaUJ0V0pUaWcyeDFsV3pkVkVDT0t6OFNLRkozWFVyS1pBMWhSckdkVWZkV2wrTHRPQ3c0Um85TlF6WG1zREpLWFM2TXIrWHN3WU4zMk14QUlkS2hGcERpVG44QTVYSXcrQ0s1dWd1amhDcEpTb2pZM1ZGajk1d2RPUzhGcFlqZVNjU2dzcmFuZzNCYkpzcDNHL3p6WVVQVi95SGJ2dGpTdUFtOFJYbzU3OEcxNTEzL0s1K3JxNnU5TkJrYkU2Qm4weG1HaGd4NWZrTVRMNlY5OC93TTMxcVlZeVFRQUFBPT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["article_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["journal_title"],"name":[2],"type":["chr"],"align":["left"]},{"label":["article_title"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"HSS journal : the musculoskeletal journal of Hospital for Special Surgery","3":"Regional anesthesia for children undergoing orthopedic ambulatory surgeries in the United States, 1996-2006."},{"1":"2","2":"Psychosomatics","3":"Demographics and perioperative outcome in patients with depression and anxiety undergoing total joint arthroplasty: a population-based study."},{"1":"3","2":"Stroke; a journal of cerebral circulation","3":"Cerebrovascular reserve and stroke risk in patients with carotid stenosis or occlusion: a systematic review and meta-analysis."},{"1":"4","2":"Regional anesthesia and pain medicine","3":"Comparative perioperative outcomes associated with neuraxial versus general anesthesia for simultaneous bilateral total knee arthroplasty."},{"1":"5","2":"Seizure : the journal of the British Epilepsy Association","3":"Vagus nerve stimulation vs. corpus callosotomy in the treatment of Lennox-Gastaut syndrome: a meta-analysis."}],"options":{"columns":{"min":{},"max":[10],"total":{}},"rows":{"min":[10],"max":[10],"total":{}},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -955,6 +1110,13 @@ ADD pubDate DATE;</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEF1dGhvckpvaW4gTElNSVQgNTtcbmBgYCJ9 -->
 <pre class="sql"><code>SELECT * FROM AuthorJoin LIMIT 5;</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6W10sInJkZiI6Ikg0c0lBQUFBQUFBQUF3dHlpVERtaXVCaVlHQmdabUJoQkpLc1FDWURhMmlJbTY0RkF3TUxFNUREeU1EQ3dBbWlLNERTd2tBR1NKQVBwTXIrQXdNWU9EQkFhUTRvTFFDbFJSaGdBRVU5THRvQnJoekZZdGE4eE56VVlpQkRBR3c1UkpBenNiUWtJNzhvUGpNRktzQ1ZXRlNTbVp5VENoSkIxYzlabEYrdUJ6T0RGMlJHQTVENC8vLy9iM1NMa25NU2kyRVd3UVM1VWhKTEV2WFNpb0Q2Z2J4L0lBd0FRUjdpSkRVQkFBQT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["author_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["article_id"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1"},{"1":"2","2":"1"},{"1":"3","2":"1"},{"1":"4","2":"1"},{"1":"5","2":"2"}],"options":{"columns":{"min":{},"max":[10],"total":{}},"rows":{"min":[10],"max":[10],"total":{}},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -962,6 +1124,13 @@ ADD pubDate DATE;</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEF1dGhvciBMSU1JVCA1O1xuYGBgIn0= -->
 <pre class="sql"><code>SELECT * FROM Author LIMIT 5;</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6W10sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVBUVXNETVJDZGRqZTJ1NkFJK2dQNkIreWxsOTVzOGVzZ1M4RXE5RllHczZYQjdnYnlZY1dUUDlsN3dUVlpad3J1d09UbHZieThTWjV1VjVOOGxRTkFBbWt2ckNKc1FidzgzMTlOQWRKK0lEMUlJWXY0RVk0dldpZkFXWFJkZjBOYk15QWNFcDRUWGdKWFZBUUZuZHlndGFwa050OHBxMnRpb2tDNTlVU3lwY04zbyszb2dZVEJ3am45aHFZVG1EeDZ6WTQ3dVVjakxkRmhnWisra3VIR0g4K0xzbkpXZTZtT2pxWHp0YXhMMC9tdHFMRXFMUTFLK0VIbzNWYWJ0WktjdDFIR3VuWDBzbVdITFB3UHpJemVqem4wTkhUL0t5eE4weHk2azE5REJFOW1NWmZvY0x3eGJTNzh4UDRGbnB0NGpMc0JBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["author_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["first_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["last_name"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"Cassie","3":"Kuo"},{"1":"2","2":"Alison","3":"Edwards"},{"1":"3","2":"Madhu","3":"Mazumdar"},{"1":"4","2":"Stavros G","3":"Memtsoudis"},{"1":"5","2":"Ottokar","3":"Stundner"}],"options":{"columns":{"min":{},"max":[10],"total":{}},"rows":{"min":[10],"max":[10],"total":{}},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -969,6 +1138,13 @@ ADD pubDate DATE;</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEhpc3RvcnkgTElNSVQgNTtcbmBgYCJ9 -->
 <pre class="sql"><code>SELECT * FROM History LIMIT 5;</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6W10sInJkZiI6Ikg0c0lBQUFBQUFBQUF3dHlpVERtaXVCaVlHQmdabUJoQkpLc1FDWURhMmlJbTY0RkF3TUxFNUREeU1EQ3dBbWlLNERTd2tBR1NKQVBwTXIrQXdNWU9EQkFhUTRvTFFDbFJSaGdBRVU5SVJyTll0YTh4TnpVWWlCREFHdzVSSkN6dUNTeHBMUTRQak1GS3NDVldGU1NtWnlUQ2hKQjFjOVpsRit1QnpPREYyUkdBNUQ0Ly8vL2IzU0xrbk1TaTJFV3dRUzVVaEpMRXZYU2lvRDZnYngvSUF3QThtNzhORFVCQUFBPSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["status_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["article_id"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1"},{"1":"2","2":"1"},{"1":"3","2":"1"},{"1":"4","2":"1"},{"1":"5","2":"1"}],"options":{"columns":{"min":{},"max":[10],"total":{}},"rows":{"min":[10],"max":[10],"total":{}},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -976,6 +1152,13 @@ ADD pubDate DATE;</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEhpc3RvcnlTdGF0dXMgTElNSVQgNTtcbmBgYCJ9 -->
 <pre class="sql"><code>SELECT * FROM HistoryStatus LIMIT 5;</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6W10sInJkZiI6Ikg0c0lBQUFBQUFBQUEyV1B5d3JDTUJCRlIyM0ZWaFJCZnlOaVcxODdYWWdmSUFydUpOWVJDNzVvNGdOWGZySjd3VHJSUktrR2tzazl1Ym1UakFiVHdKMjZBSkFESzBPclRWdXdKK01oNndKWVdSSVpzTUJSOVV6SDFaY1RvS3hjdlJ1OFJoOTBMZWhhMGJVR1ppaGk2NkJDakNGR1Ixd1l6Y01ROS9LcmNYK1lyeU94MGpxUFd4bmp4U2c2M0pBM25lbDRMZVl4ditINUg5Qm16UlR3RzZ5ZEJnSHJLQkQ4Zy9UUDdTM2ZvTkFkYzhZdEpKY0hNWXZNczExNjJPd05OU2xxeTRKTC9JbDA0dDJwYm1KTE5MTlhXcElrdWYvMkR0ZGNtTjRHdXBUSTY4dVk3cE42cVBrRWYvZ0VQTWtCQUFBPSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["status_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["pub_status"],"name":[2],"type":["chr"],"align":["left"]},{"label":["status_date"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"received","3":"15-1-2012"},{"1":"2","2":"accepted","3":"16-4-2012"},{"1":"3","2":"epublish","3":"20-6-2012"},{"1":"4","2":"entrez","3":"23-7-2013"},{"1":"5","2":"pubmed","3":"23-7-2013"}],"options":{"columns":{"min":{},"max":[10],"total":{}},"rows":{"min":[10],"max":[10],"total":{}},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -983,6 +1166,13 @@ ADD pubDate DATE;</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEpvdXJuYWwgTElNSVQgNTtcbmBgYCJ9 -->
 <pre class="sql"><code>SELECT * FROM Journal LIMIT 5;</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6W10sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVFUVS9ETUF6TlJudFlwU0VrL2tBdUhEaXdDeGMrVGlCQTQ0WVdrSFpESVhWWHM3YXA0bFJRVHZ4dkpJbzdwZExvd1k3OTdQZnNlSFczUGsvV2lSRGlRRVFUOWpHSEluNTVmamk3RUNLYWNqSVJrWmoxN3llWGozZUFFRWQ5VnlnOExwV1M3N1p4bFM3a2xmUTV5TEloMHhTV3RsQ0FaM1NvMmt3dUxkWFlZNWwxVXRWZ2tHUFZ1QTI0TmdnZVBsRnJja3UyMUI0TkJmUlVlV2UzY0MzMXZwd0JCMitPWTRPT1J6TEJWb0Z3c29JTloxelRGUkN2UmFnNVRHV3RzWklscEdpd2d0QjhxUUMvR2dmaEEzc1QrdlRXb1VmSzVYMk5CZFRVeWhzaXk1dnZwdjAvVTF6cEVpaWNhQURuUWUvVm95OWd4Smc1KzdFWVdITzI2VGU3cnV0K3h0S20wRFNXVGxMdDlTSnp6T2ZzdDdjL0I0SjVOTlVCQUFBPSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["journal_title"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"HSS journal : the musculoskeletal journal of Hospital for Special Surgery"},{"1":"Psychosomatics"},{"1":"Stroke; a journal of cerebral circulation"},{"1":"Regional anesthesia and pain medicine"},{"1":"Seizure : the journal of the British Epilepsy Association"}],"options":{"columns":{"min":{},"max":[10],"total":{}},"rows":{"min":[10],"max":[10],"total":{}},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -990,6 +1180,13 @@ ADD pubDate DATE;</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIEpvdXJuYWxJc3N1ZSBMSU1JVCA1O1xuYGBgIn0= -->
 <pre class="sql"><code>SELECT * FROM JournalIssue LIMIT 5;</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6W10sInJkZiI6Ikg0c0lBQUFBQUFBQUE1VlNUVThiTVJBMU5OdVFxS0JLN2FGSFg0ckVZVkUrSkZyYVF5bUNDc1FGc1ZUaUZobnZoQmgyN1pVLzJvWVRQNWs3VXR0eE1rWUpGNFFsNTgxN0hzOU0vUGJzNEdMWXZlZ3l4bDZ4MWdyK1poaXk3T2Y1ai93elk2MVZKQ3VzeFRvUi8rRHhPd3phdURkaTFyZDdObHQ3akhDTjhDM2hlNVpXVkRJcWRIeFVGUHphQkt0RnhiOXdQd0ZlQnlkRFpkd05WT0JSVGFkbXpJK01hMVRVeHNieW9nR3BNQzZDdlFJN3BZSWJwMjRxSjhhWlduZ2xIYWxiaGJmbUJyNXlzVmhPZ29WTGk3RlVGbHZpQmFQcHdzY3p1RUtHWjBLRHc3R2NFaGlXdkJGSzh4cEtKWlVHU3Q0dFFOMEdDL1FIRmpwRXVtK1ZWMjdDRHh0VlFlT20vTHR6QmllZmRWdCtqZXpVS3UySnJCMXJEMWJEeXpsWnNzZnA2VThJRCsvbXVFKzQ4MmpKUEQ5WmwzQ1Q4TU1jazhWUGh1NE9ldjFCM3Z1VTkvb0x5akR2RFplVlFkN3ZQNmZFSzFGSkhSanIvTVAxUEM1OW5aa1dOVGdxMGs3UG81d0xNRklsOFhXeWFlU1ZyNUtUYjZUeVVJNml2NkVtN2ZVdlU0VTZaV1N6TXFsbUV5NUhwZkNKdDVFZlJMbzhUOGVhMzl0cHBuWGNxOUVBblB2aDZlQ3lFaTRObnNRdU5oRGJZNHYza2YyTit6OEN4ZXBkcWdNQUFBPT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["issue_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["journal_title"],"name":[2],"type":["chr"],"align":["left"]},{"label":["cited_medium"],"name":[3],"type":["chr"],"align":["left"]},{"label":["volume"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["issue"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["pub_date"],"name":[6],"type":["chr"],"align":["left"]},{"label":["pubDate"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"HSS journal : the musculoskeletal journal of Hospital for Special Surgery","3":"Print","4":"8","5":"2","6":"2012-07-01","7":"NA"},{"1":"2","2":"Psychosomatics","3":"Internet","4":"54","5":"2","6":"2013-03-01","7":"NA"},{"1":"3","2":"Stroke; a journal of cerebral circulation","3":"Internet","4":"43","5":"11","6":"2012-11-01","7":"NA"},{"1":"4","2":"Regional anesthesia and pain medicine","3":"Internet","4":"37","5":"6","6":"2012-11-01","7":"NA"},{"1":"5","2":"Seizure : the journal of the British Epilepsy Association","3":"Internet","4":"22","5":"1","6":"2013-01-01","7":"NA"}],"options":{"columns":{"min":{},"max":[10],"total":{}},"rows":{"min":[10],"max":[10],"total":{}},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>#creates a new schema to use</p>
@@ -1062,12 +1259,11 @@ ADD pubDate DATE;</code></pre>
 <p>#inserts into the fact table</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5JTlNFUlQgSU5UTyBzdGFyc2NoZW1hLkFydGljbGVGYWN0VGFibGUoYXJ0aWNsZV9pZCwgYXJ0aWNsZV90aXRsZSwgam91cm5hbF90aXRsZSlcblNFTEVDVCBBcnRpY2xlLmFydGljbGVfaWQsIEFydGljbGUuYXJ0aWNsZV90aXRsZSwgSm91cm5hbC5qb3VybmFsX3RpdGxlXG4gIEZST00gZGJwcmFjdGljdW0yLkpvdXJuYWwgXG4gIEpPSU4gZGJwcmFjdGljdW0yLkFydGljbGUgVVNJTkcoam91cm5hbF90aXRsZSk7XG5gYGAifQ== -->
-<pre class="sql"><code>INSERT INTO starschema.ArticleFactTable(article_id, article_title, journal_title)
-SELECT Article.article_id, Article.article_title, Journal.journal_title
-  FROM dbpracticum2.Journal 
-  JOIN dbpracticum2.Article USING(journal_title);</code></pre>
-<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gLmxvY2FsKGNvbm4sIHN0YXRlbWVudCwgLi4uKSA6IFxuICBjb3VsZCBub3QgcnVuIHN0YXRlbWVudDogRHVwbGljYXRlIGVudHJ5ICcxJyBmb3Iga2V5ICdBcnRpY2xlRmFjdFRhYmxlLlBSSU1BUlknXG5GYWlsZWQgdG8gZXhlY3V0ZSBTUUwgY2h1bmtcbiJ9 -->
+<pre><code>Error in .local(conn, statement, ...) : 
+  could not run statement: Duplicate entry &#39;1&#39; for key &#39;ArticleFactTable.PRIMARY&#39;
+Failed to execute SQL chunk</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1085,14 +1281,11 @@ SELECT Article.article_id, Article.article_title, Journal.journal_title
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5JTlNFUlQgSU5UTyBzdGFyc2NoZW1hLlRpbWVEaW1lbnNpb24gKGNoYXJEYXRlLCB5ZWFyLCBtb250aCwgcXVhcnRlcilcbiAgU0VMRUNUIERJU1RJTkNUIHB1Yl9kYXRlIGFzIGNoYXJEYXRlLFxuICBDQVNUKFNVQlNUUklORyhwdWJfZGF0ZSwgMSw0KSBBUyBVTlNJR05FRCkgYXMgeWVhciwgXG4gIENBU1QoU1VCU1RSSU5HKHB1Yl9kYXRlLCA2LDIpIEFTIFVOU0lHTkVEKSBhcyBtb250aCxcbiAgMCBhcyBxdWFydGVyXG4gIGZyb20gc3RhcnNjaGVtYS5Kb3VybmFsRGltZW5zaW9uO1xuYGBgIn0= -->
-<pre class="sql"><code>INSERT INTO starschema.TimeDimension (charDate, year, month, quarter)
-  SELECT DISTINCT pub_date as charDate,
-  CAST(SUBSTRING(pub_date, 1,4) AS UNSIGNED) as year, 
-  CAST(SUBSTRING(pub_date, 6,2) AS UNSIGNED) as month,
-  0 as quarter
-  from starschema.JournalDimension;</code></pre>
-<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gLmxvY2FsKGNvbm4sIHN0YXRlbWVudCwgLi4uKSA6IFxuICBjb3VsZCBub3QgcnVuIHN0YXRlbWVudDogVW5rbm93biBjb2x1bW4gJ3B1Yl9kYXRlJyBpbiAnZmllbGQgbGlzdCdcbkZhaWxlZCB0byBleGVjdXRlIFNRTCBjaHVua1xuIn0= -->
+<pre><code>Error in .local(conn, statement, ...) : 
+  could not run statement: Unknown column &#39;pub_date&#39; in &#39;field list&#39;
+Failed to execute SQL chunk</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1111,26 +1304,29 @@ WHERE quarter = 0;</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5BTFRFUiBUQUJMRSBzdGFyc2NoZW1hLkpvdXJuYWxEaW1lbnNpb25cbiAgQUREIHRpbWVfaWQgSU5UO1xuYGBgIn0= -->
-<pre class="sql"><code>ALTER TABLE starschema.JournalDimension
-  ADD time_id INT;</code></pre>
-<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gLmxvY2FsKGNvbm4sIHN0YXRlbWVudCwgLi4uKSA6IFxuICBjb3VsZCBub3QgcnVuIHN0YXRlbWVudDogRHVwbGljYXRlIGNvbHVtbiBuYW1lICd0aW1lX2lkJ1xuRmFpbGVkIHRvIGV4ZWN1dGUgU1FMIGNodW5rXG4ifQ== -->
+<pre><code>Error in .local(conn, statement, ...) : 
+  could not run statement: Duplicate column name &#39;time_id&#39;
+Failed to execute SQL chunk</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5VUERBVEUgc3RhcnNjaGVtYS5Kb3VybmFsRGltZW5zaW9uXG4gIFNFVCB0aW1lX2lkID0gKFNlbGVjdCB0aW1lX2lkIGZyb20gc3RhcnNjaGVtYS5UaW1lRGltZW5zaW9uIFdIRVJFIEpvdXJuYWxEaW1lbnNpb24ucHViX2RhdGUgPSBUaW1lRGltZW5zaW9uLmNoYXJEYXRlKVxuYGBgIn0= -->
-<pre class="sql"><code>UPDATE starschema.JournalDimension
-  SET time_id = (Select time_id from starschema.TimeDimension WHERE JournalDimension.pub_date = TimeDimension.charDate)</code></pre>
-<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gLmxvY2FsKGNvbm4sIHN0YXRlbWVudCwgLi4uKSA6IFxuICBjb3VsZCBub3QgcnVuIHN0YXRlbWVudDogVW5rbm93biBjb2x1bW4gJ0pvdXJuYWxEaW1lbnNpb24ucHViX2RhdGUnIGluICd3aGVyZSBjbGF1c2UnXG5GYWlsZWQgdG8gZXhlY3V0ZSBTUUwgY2h1bmtcbiJ9 -->
+<pre><code>Error in .local(conn, statement, ...) : 
+  could not run statement: Unknown column &#39;JournalDimension.pub_date&#39; in &#39;where clause&#39;
+Failed to execute SQL chunk</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5BTFRFUiBUQUJMRSBzdGFyc2NoZW1hLkpvdXJuYWxEaW1lbnNpb25cbiAgRFJPUCBDT0xVTU4gcHViX2RhdGU7XG5gYGAifQ== -->
-<pre class="sql"><code>ALTER TABLE starschema.JournalDimension
-  DROP COLUMN pub_date;</code></pre>
-<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gLmxvY2FsKGNvbm4sIHN0YXRlbWVudCwgLi4uKSA6IFxuICBjb3VsZCBub3QgcnVuIHN0YXRlbWVudDogQ2FuJ3QgRFJPUCAncHViX2RhdGUnOyBjaGVjayB0aGF0IGNvbHVtbi9rZXkgZXhpc3RzXG5GYWlsZWQgdG8gZXhlY3V0ZSBTUUwgY2h1bmtcbiJ9 -->
+<pre><code>Error in .local(conn, statement, ...) : 
+  could not run statement: Can&#39;t DROP &#39;pub_date&#39;; check that column/key exists
+Failed to execute SQL chunk</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1138,6 +1334,13 @@ WHERE quarter = 0;</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5TRUxFQ1QgKiBGUk9NIHN0YXJzY2hlbWEuSm91cm5hbERpbWVuc2lvblxuYGBgIn0= -->
 <pre class="sql"><code>SELECT * FROM starschema.JournalDimension</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6W10sInJkZiI6Ikg0c0lBQUFBQUFBQUErMVYzVThVTVJBdmNNZkhDUVNERHhxSmFZZ2FKVXBVRW9QeTRIR0FBWHk1c0pDUUdISXB2Y0pWZHJlYnRvdWVpUW4vcmEvK0JlTDBicnAzMjZCUllueHlrKzZ2OHozVG5lM3NiUjZ1MUE1cmhKQXhVaG1CZHhXMnBIcXcvL2JwS2lHVlVTQkdTSVZNT2Z3RTRubllqTU9hZzNVSEJUdmJVVVEvcUZ5bkxLYXZxZTBJbXVTRzU3RXlaeUlXRnJoZXFrN290aktaZEx3VHBXbVVDUzVoSCtYNlZPZ3VPcHh0bWk3dktLTVNaaVUzeUgwY1dhM094QnBsdys2NDBPSll3NTVMRFNIQlFLVm84R0JQbkFJRk1wWUtBMmtaeVdEYnBobVRLVTFFVzNLWml1c292NHFFL0p4cmdkVU9wZVBJaHBaV21nN2R5bVFzTXRPbDY4WW9LSE1vdGFXTldLYVNPeHR0T3lwanpyL3B4ZE1DaWhBT2pXQ2FkOURpN2o1NDNoMEVZbUNuVlJZelk3dS9yeks3N290VHNUcjEzUGttaEdkV1MwNDFhNWRFZEZOQ0drWVlYeHdIYVlxSmNwc25xSGR2S0M3M3RRMU9FclVtbTdHS3FMcmVvZitSOHQ4NXJtcVVEVnlXaVBFTmxrTHJJWFd6c1h0QVpXb0YrTEs5SEZHd09PVGZ5Vk1qeitFTUdiUk9rUEJWb2VCN3VkK3NUdnBQZ1EvNytPWWIwcmZMZE1pdjN3LzRGSEd1N1BlbjlvR2YrbVE1ai9vanhGc0JCbnBGUFQ3K084U3RpejQyQW55SjhpOVpIOWRJR1kvcWFPLzlvZDBxMGd2a2FyK2huMUIraFBpKy9rczlVcjRHcTAwTm45aDMrazZ2RzhSLytsL1QyR1JGRStPWEtwcHhMa0Rmckw3SkZ3S2tpSXVJL2ljSW0zOHB3Q2NCTGdmNERQRTU0Z3ZFbFRMQ00rUHFJVzRRRStJRzhoaXNDbUlWbDV2SkU2ampLblZuVWtNOXIrdDFic0NhUnJxRy9wRlhHdmpWbENYQ2tINlhqeU56Qm9kZHkwb2JGL2VWTkNZdnJzWnpGZWVKcDZhNWhHbldjcmRkTVN4cWNOVktIb3VXYkNObndzcWtSNVl6bU5McTQ3TFB3cVU1ZWdHdnk4dkxyMkdxSEs1dG42cG4xdHJNc3VVVERmWkFmWGZyQjFaN3RMdnZDQUFBIn0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["journal_title"],"name":[1],"type":["chr"],"align":["left"]},{"label":["issue"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["volume"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["cited_medium"],"name":[4],"type":["chr"],"align":["left"]},{"label":["article_id"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["time_id"],"name":[6],"type":["int"],"align":["right"]}],"data":[{"1":"HSS journal : the musculoskeletal journal of Hospital for Special Surgery","2":"2","3":"8","4":"Print","5":"1","6":"1"},{"1":"Psychosomatics","2":"2","3":"54","4":"Internet","5":"2","6":"2"},{"1":"Stroke; a journal of cerebral circulation","2":"11","3":"43","4":"Internet","5":"3","6":"3"},{"1":"Regional anesthesia and pain medicine","2":"1","3":"37","4":"Internet","5":"4","6":"4"},{"1":"Regional anesthesia and pain medicine","2":"6","3":"37","4":"Internet","5":"4","6":"3"},{"1":"Seizure : the journal of the British Epilepsy Association","2":"1","3":"22","4":"Internet","5":"5","6":"5"},{"1":"Clinical orthopaedics and related research","2":"1","3":"471","4":"Internet","5":"6","6":"5"},{"1":"The Journal of arthroplasty","2":"6","3":"27","4":"Internet","5":"7","6":"6"},{"1":"The Journal of arthroplasty","2":"10","3":"27","4":"Internet","5":"7","6":"7"},{"1":"Anesthesiology","2":"1","3":"117","4":"Internet","5":"8","6":"1"},{"1":"Pediatric radiology","2":"8","3":"42","4":"Internet","5":"9","6":"8"},{"1":"Diseases of the colon and rectum","2":"4","3":"55","4":"Internet","5":"10","6":"9"},{"1":"Journal of clinical anesthesia","2":"2","3":"24","4":"Internet","5":"11","6":"10"},{"1":"PloS one","2":"1","3":"7","4":"Internet","5":"12","6":"4"},{"1":"Regional anesthesia and pain medicine","2":"1","3":"37","4":"Internet","5":"13","6":"4"},{"1":"Regional anesthesia and pain medicine","2":"6","3":"37","4":"Internet","5":"13","6":"3"},{"1":"The Journal of arthroplasty","2":"6","3":"27","4":"Internet","5":"14","6":"6"},{"1":"The Journal of arthroplasty","2":"10","3":"27","4":"Internet","5":"14","6":"7"},{"1":"Spine","2":"3","3":"37","4":"Internet","5":"15","6":"11"},{"1":"Spine","2":"11","3":"37","4":"Internet","5":"15","6":"12"},{"1":"Cancer","2":"12","3":"118","4":"Internet","5":"16","6":"6"},{"1":"BJU international","2":"5","3":"109","4":"Internet","5":"17","6":"10"},{"1":"Journal of intensive care medicine","2":"5","3":"27","4":"Internet","5":"18","6":"13"},{"1":"Spine","2":"3","3":"37","4":"Internet","5":"19","6":"11"},{"1":"Spine","2":"11","3":"37","4":"Internet","5":"19","6":"12"}],"options":{"columns":{"min":{},"max":[10],"total":{}},"rows":{"min":[10],"max":[10],"total":{}},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>##Summary Fact Table ###Number of Articles by time by author by journal</p>
@@ -1188,35 +1391,29 @@ WHERE quarter = 0;</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5JTlNFUlQgSU5UTyBzdGFyc2NoZW1hLmJ5Sm91cm5hbChqb3VybmFsX2lkLCBqb3VybmFsX3RpdGxlKVxuU0VMRUNUIEpvdXJuYWxEaW1lbnNpb24uam91cm5hbF9pZCBBUyBqb3VybmFsX2lkLFxuSm91cm5hbERpbWVuc2lvbi5qb3VybmFsX3RpdGxlXG4gIEZST00gc3RhcnNjaGVtYS5Kb3VybmFsRGltZW5zaW9uO1xuYGBgIn0= -->
-<pre class="sql"><code>INSERT INTO starschema.byJournal(journal_id, journal_title)
-SELECT JournalDimension.journal_id AS journal_id,
-JournalDimension.journal_title
-  FROM starschema.JournalDimension;</code></pre>
-<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gLmxvY2FsKGNvbm4sIHN0YXRlbWVudCwgLi4uKSA6IFxuICBjb3VsZCBub3QgcnVuIHN0YXRlbWVudDogVW5rbm93biBjb2x1bW4gJ2pvdXJuYWxfdGl0bGUnIGluICdmaWVsZCBsaXN0J1xuRmFpbGVkIHRvIGV4ZWN1dGUgU1FMIGNodW5rXG4ifQ== -->
+<pre><code>Error in .local(conn, statement, ...) : 
+  could not run statement: Unknown column &#39;journal_title&#39; in &#39;field list&#39;
+Failed to execute SQL chunk</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5JTlNFUlQgSU5UTyBzdGFyc2NoZW1hLmJ5QXV0aG9yKGF1dGhvcl9pZCwgYXV0aG9yX2ZpcnN0LCBhdXRob3JfbGFzdClcblNFTEVDVCBBdXRob3JEaW1lbnNpb24uYXV0aG9yX2lkIEFTIGF1dGhvcl9pZCxcbkF1dGhvckRpbWVuc2lvbi5maXJzdF9uYW1lIEFTIGF1dGhvcl9maXJzdCxcbkF1dGhvckRpbWVuc2lvbi5sYXN0X25hbWUgQVMgYXV0aG9yX2xhc3RcbiAgRlJPTSBzdGFyc2NoZW1hLkF1dGhvckRpbWVuc2lvbjtcbmBgYCJ9 -->
-<pre class="sql"><code>INSERT INTO starschema.byAuthor(author_id, author_first, author_last)
-SELECT AuthorDimension.author_id AS author_id,
-AuthorDimension.first_name AS author_first,
-AuthorDimension.last_name AS author_last
-  FROM starschema.AuthorDimension;</code></pre>
-<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gLmxvY2FsKGNvbm4sIHN0YXRlbWVudCwgLi4uKSA6IFxuICBjb3VsZCBub3QgcnVuIHN0YXRlbWVudDogVW5rbm93biBjb2x1bW4gJ2F1dGhvcl9maXJzdCcgaW4gJ2ZpZWxkIGxpc3QnXG5GYWlsZWQgdG8gZXhlY3V0ZSBTUUwgY2h1bmtcbiJ9 -->
+<pre><code>Error in .local(conn, statement, ...) : 
+  could not run statement: Unknown column &#39;author_first&#39; in &#39;field list&#39;
+Failed to execute SQL chunk</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5JTlNFUlQgSU5UTyBzdGFyc2NoZW1hLmJ5VGltZSh0aW1lX2lkLCB5ZWFyLCBtb250aCwgcXVhcnRlcilcblNFTEVDVCBUaW1lRGltZW5zaW9uLnRpbWVfaWQgQVMgdGltZV9pZCxcblRpbWVEaW1lbnNpb24ueWVhciBBUyB5ZWFyLFxuVGltZURpbWVuc2lvbi5tb250aCBBUyBtb250aCxcblRpbWVEaW1lbnNpb24gcXVhcnRlciBBUyBxdWFydGVyXG4gIEZST00gc3RhcnNjaGVtYS5UaW1lRGltZW5zaW9uO1xuYGBgIn0= -->
-<pre class="sql"><code>INSERT INTO starschema.byTime(time_id, year, month, quarter)
-SELECT TimeDimension.time_id AS time_id,
-TimeDimension.year AS year,
-TimeDimension.month AS month,
-TimeDimension quarter AS quarter
-  FROM starschema.TimeDimension;</code></pre>
-<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gKGZ1bmN0aW9uIChzcWwsIG91dHB1dEZpbGUsIG9wdGlvbnMpICA6IFxuICBUaGUgJ2Nvbm5lY3Rpb24nIG9wdGlvbiAoREJJIGNvbm5lY3Rpb24pIGlzIHJlcXVpcmVkIGZvciBzcWwgY2h1bmtzLlxuRmFpbGVkIHRvIGV4ZWN1dGUgU1FMIGNodW5rXG4ifQ== -->
+<pre><code>Error in (function (sql, outputFile, options)  : 
+  The &#39;connection&#39; option (DBI connection) is required for sql chunks.
+Failed to execute SQL chunk</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1224,6 +1421,9 @@ TimeDimension quarter AS quarter
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGJEaXNjb25uZWN0KG15ZGIpXG5gYGAifQ== -->
 <pre class="r"><code>dbDisconnect(mydb)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFRSVUVcbiJ9 -->
+<pre><code>[1] TRUE</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
