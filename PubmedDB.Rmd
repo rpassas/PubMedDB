@@ -721,7 +721,16 @@ SELECT Article.article_id, Article.article_title, Journal.journal_title
 ```
 
 ```{sql connection=mydb}
-SELECT * from starschema.ArticleFactTable;
+SELECT STR_TO_DATE(pub_date, '%Y-%m-%d') from starschema.JournalDimension;
+```
+
+```{sql connection=mydb}
+CREATE TABLE starschema.TimeDimension (
+  time_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  year INT NOT NULL,
+  month INT NOT NULL,
+  quarter INT NOT NULL
+);
 ```
 
 
