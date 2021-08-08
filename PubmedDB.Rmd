@@ -777,24 +777,8 @@ SELECT * FROM starschema.JournalDimension
 
 
 
-
-
-
-```{sql connection=mydb}
-CREATE TABLE IF NOT EXISTS starschema.QuarterlySummary(
-  summary_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  journal_title TEXT NOT NULL,
-  first_name TEXT NOT NULL,
-  last_name TEXT NOT NULL,
-  article_count INT NOT NULL,
-  year INT NOT NULL,
-  quarter INT NOT NULL
-);
-```
-
-
-
-
+##Summary Fact Table 
+###Number of Articles by time by author by journal
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.ArticlesSummary(
   num_articles INT NOT NULL,
