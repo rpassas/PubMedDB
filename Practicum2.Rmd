@@ -632,11 +632,6 @@ dbWriteTable(mydb, "JournalIssue", Issue.df, overwrite = T, row.names = F)
 dbWriteTable(mydb, "Journal", Journal.df, overwrite = T, row.names = F)
 ```
 
-```{sql connection=mydb}
-ALTER TABLE JournalIssue
-ADD pubDate DATE;
-```
-
 
 
 ```{sql connection=mydb}
