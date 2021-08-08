@@ -711,7 +711,7 @@ CREATE TABLE IF NOT EXISTS starschema.HistoryDimension
 
 #creates the fact table
 ```{sql connection=mydb}
-CREATE TABLE starschema.ArticleFactTable (
+CREATE TABLE IF NOT EXISTS starschema.ArticleFactTable (
   article_id INT NOT NULL PRIMARY KEY,
   article_title TEXT NOT NULL,
   journal_title VARCHAR(255) NOT NULL
@@ -727,7 +727,7 @@ SELECT Article.article_id, Article.article_title, Journal.journal_title
 ```
 
 ```{sql connection=mydb}
-CREATE TABLE starschema.TimeDimension (
+CREATE TABLE IF NOT EXISTS starschema.TimeDimension (
   time_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   year INT NOT NULL,
   month INT NOT NULL,
@@ -757,7 +757,7 @@ WHERE quarter = 0;
 
 
 
-```{sql connection=mydb number of articles per period}
+```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.QuarterlySummary(
   summary_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   journal_title TEXT NOT NULL,
@@ -770,32 +770,64 @@ CREATE TABLE IF NOT EXISTS starschema.QuarterlySummary(
 ```
 
 
+
+
 ```{sql connection=mydb}
-INSERT INTO starschema.QuarterlySummary(journal_title, author_first, author_last,
-article_count, year, quarter)
-SELECT Journal.journal_title, Author.first_name AS author_first, 
-  Author.last_name AS author_last,
-  count(Article.ArticleTitle) AS article_count, 
-  CAST(SUBSTRING(JournalIssue.pub_date,1,4) AS UNSIGNED) AS year,
-  0 AS quarter
-  FROM dbpracticum2.Article 
-  JOIN dbpracticum2.AuthorJoin USING(article.id);
-  JOIN dbpracticum2.Author USING(author.id);
-  --JOIN dbpracticum2.Journal USING(journal_title);
-  JOIN dbpracticum2.JournalIssue USING(journal_title);
+CREATE TABLE IF NOT EXISTS starschema.ArticlesSummary(
+  num_articles INT NOT NULL,
+  time_id INT NOT NULL,
+  journal_id INT NOT NULL,
+  author_id INT NOT NULL
+);
 ```
 
 ```{sql connection=mydb}
-UPDATE starschema.QuarterlySummary SET quarter = 
-  CASE
-    WHEN quarter <= 3 THEN 1
-    WHEN quarter <= 6 THEN 2
-    WHEN quarter <= 9 THEN 3
-    ELSE 4
-  END
-WHERE quarter = 0;
+CREATE TABLE IF NOT EXISTS starschema.byAuthor(
+  author_id INT PRIMARY KEY,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL
+);
 ```
 
+```{sql connection=mydb}
+CREATE TABLE IF NOT EXISTS starschema.byTime(
+  time_id INT PRIMARY KEY,
+  year INT NOT NULL,
+  month INT NOT NULL,
+  quarter INT NOT NULL
+);
+```
+
+```{sql connection=mydb}
+CREATE TABLE IF NOT EXISTS starschema.byJournal(
+  journal_id INT PRIMARY KEY,
+  journtal_title TEXT NOT NULL
+);
+```
+
+```{sql connection=mydb}
+INSERT INTO starschema.byJournal(journal_id, journal_title)
+SELECT JournalDimension.journal_id AS journal_id,
+JournalDimension.journal_title
+  FROM starschema.JournalDimension;
+```
+
+```{sql connection=mydb}
+INSERT INTO starschema.byAuthor(author_id, author_first, author_last)
+SELECT AuthorDimension.author_id AS author_id,
+AuthorDimension.first_name AS author_first,
+AuthorDimension.last_name AS author_last
+  FROM starschema.AuthorDimension;
+```
+
+```{sql}
+INSERT INTO starschema.byTime(time_id, year, month, quarter)
+SELECT TimeDimension.time_id AS time_id,
+TimeDimension.year AS year,
+TimeDimension.month AS month,
+TimeDimension quarter AS quarter
+  FROM starschema.TimeDimension;
+```
 
 
 ```{r}
