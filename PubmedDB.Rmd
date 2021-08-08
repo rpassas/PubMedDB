@@ -49,18 +49,19 @@ mydb <-  dbConnect(MySQL(), user = db_user2, password = db_password2,
 
 
 ```{r jordans path}
-if(FALSE){
+#if(FALSE){
 path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
-}
+#}
 ```
 
 ```{r bobs path}
+if(FALSE){
 path <-"/Users/robert/Documents/CS5200/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
-
+}
 ```
 
 ```{r}
@@ -670,13 +671,69 @@ SELECT * FROM Journal LIMIT 5;
 ```{sql connection=mydb}
 SELECT * FROM JournalIssue LIMIT 5;
 ```
-
+#creates a new schema to use
 ```{sql connection=mydb}
 CREATE SCHEMA IF NOT EXISTS starschema;
 ```
 
+#Creates the Author dimension table
+```{sql connection=mydb}
+CREATE TABLE IF NOT EXISTS starschema.AuthorDimension 
+  AS SELECT Author.author_id as AuthorDim_id, 
+            Author.first_name, 
+            Author.last_name, 
+            Article.article_id
+  FROM dbpracticum2.Author
+  JOIN dbpracticum2.AuthorJoin USING(author_id)
+  JOIN dbpracticum2.Article USING(article_id);
+```
 
+#Creates the Journal dimension table
+```{sql connection=mydb}
+CREATE TABLE IF NOT EXISTS starschema.JournalDimension 
+  AS SELECT Journal.journal_title,
+            JournalIssue.issue,
+            JournalIssue.volume,
+            JournalIssue.pub_date,
+            JournalIssue.cited_medium,
+            Article.article_id
+  FROM dbpracticum2.JournalIssue
+  JOIN dbpracticum2.Journal USING(journal_title)
+  JOIN dbpracticum2.Article USING(journal_title);
+```
 
+#Creates the HIstory dimension table
+```{sql connection=mydb}
+CREATE TABLE IF NOT EXISTS starschema.HistoryDimension 
+  AS SELECT HistoryStatus.status_id as history_id,
+            HistoryStatus.status_date,
+            HistoryStatus.pub_status,
+            Article.article_id
+  FROM dbpracticum2.HistoryStatus
+  JOIN dbpracticum2.History USING(status_id)
+  JOIN dbpracticum2.Article USING(article_id);
+```
+
+#creates the fact table
+```{sql connection=mydb}
+CREATE TABLE starschema.ArticleFactTable (
+  article_id INT NOT NULL PRIMARY KEY,
+  article_title TEXT NOT NULL,
+  journal_title VARCHAR(255) NOT NULL
+);
+```
+
+#inserts into the fact table
+```{sql connection=mydb}
+INSERT INTO starschema.ArticleFactTable(article_id, article_title, journal_title)
+SELECT Article.article_id, Article.article_title, Journal.journal_title
+  FROM dbpracticum2.Journal 
+  JOIN dbpracticum2.Article USING(journal_title);
+```
+
+```{sql connection=mydb}
+SELECT * from starschema.ArticleFactTable;
+```
 
 
 
