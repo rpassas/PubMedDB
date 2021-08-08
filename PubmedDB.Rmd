@@ -57,11 +57,10 @@ fpn = paste0(path, fn)
 ```
 
 ```{r bobs path}
-if(FALSE){
 path <-"/Users/robert/Documents/CS5200/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
-}
+
 ```
 
 ```{r}
@@ -634,6 +633,13 @@ dbWriteTable(mydb, "Journal", Journal.df, overwrite = T, row.names = F)
 ```
 
 ```{sql connection=mydb}
+ALTER TABLE JournalIssue
+ADD pubDate DATE;
+```
+
+
+
+```{sql connection=mydb}
 SELECT * FROM Article LIMIT 5;
 ```
 
@@ -734,3 +740,6 @@ SELECT * from starschema.ArticleFactTable;
 ```{r}
 dbDisconnect(mydb)
 ```
+
+
+
