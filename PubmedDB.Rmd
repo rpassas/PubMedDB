@@ -721,16 +721,31 @@ SELECT Article.article_id, Article.article_title, Journal.journal_title
 ```
 
 ```{sql connection=mydb}
-SELECT STR_TO_DATE(pub_date, '%Y-%m-%d') from starschema.JournalDimension;
-```
-
-```{sql connection=mydb}
 CREATE TABLE starschema.TimeDimension (
   time_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   year INT NOT NULL,
   month INT NOT NULL,
   quarter INT NOT NULL
 );
+```
+
+```{sql connection=mydb}
+INSERT INTO starschema.TimeDimension (year, month, quarter)
+  SELECT CAST(SUBSTRING(pub_date, 1,4) AS UNSIGNED) as year, 
+  CAST(SUBSTRING(pub_date, 6,2) AS UNSIGNED) as month,
+  0 as quarter
+  from starschema.JournalDimension;
+```
+
+```{sql connection=mydb}
+UPDATE starschema.TimeDimension SET quarter = 
+  CASE
+    WHEN month <= 3 THEN 1
+    WHEN month <= 6 THEN 2
+    WHEN month <= 9 THEN 3
+    ELSE 4
+  END
+WHERE quarter = 0;
 ```
 
 
