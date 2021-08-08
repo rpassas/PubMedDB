@@ -49,9 +49,11 @@ mydb <-  dbConnect(MySQL(), user = db_user2, password = db_password2,
 
 
 ```{r jordans path}
+if(FALSE){
 path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
+}
 ```
 
 ```{r bobs path}
@@ -101,7 +103,7 @@ HistoryStatus.df <- data.frame (status_id = integer(),
 
 ```{sql createTableJournal, connection=mydb}
 CREATE TABLE IF NOT EXISTS Journal (
-  journal_title TEXT PRIMARY KEY
+  journal_title VARCHAR(100) PRIMARY KEY
 );
 ```
 
@@ -113,7 +115,7 @@ Journal.df <- data.frame (journal_title = character(),
 ```{sql createTableIssue, connection=mydb}
 CREATE TABLE IF NOT EXISTS JournalIssue (
   issue_id INT PRIMARY KEY,
-  journal_title TEXT NOT NULL,
+  journal_title VARCHAR(100) NOT NULL,
   cited_medium TEXT NOT NULL,
   volume INT NOT NULL,
   issue INT NOT NULL,
@@ -138,7 +140,7 @@ Issue.df <- data.frame (issue_id = integer(),
 ```{sql createTableArticle, connection=mydb}
 CREATE TABLE IF NOT EXISTS Article (
   article_id INT NOT NULL PRIMARY KEY,
-  journal_title TEXT NOT NULL,
+  journal_title VARCHAR(100) NOT NULL,
   article_title TEXT NOT NULL,
   FOREIGN KEY (journal_title) REFERENCES Journal(journal_title)
   ON DELETE CASCADE
@@ -218,7 +220,7 @@ parseAuthors <- function (anAuthorListNode)
 ```{r ParseJournals}
 parseJournals <- function (anArticle)
 {
-  newJournal.df <- Journal.df <- data.frame (journal_title = character(),
+  newJournal.df <- Journal.df <- data.frame(journal_title = character(),
                           stringsAsFactors = F)
 
   #Getting Title
@@ -227,6 +229,7 @@ parseJournals <- function (anArticle)
   title <- xmlValue(tempTitle)
 
   newJournal.df[1,1] <- title
+  
   
   return(newJournal.df)
 }
@@ -253,13 +256,13 @@ parseIssues <- function (anArticle)
   volexp <-"./MedlineCitation/Article/Journal/JournalIssue/Volume"
   tempVolume <- xpathSApply(anArticle,volexp)
   volume <- xmlValue(tempVolume)
-  volume <- strtoi(volume)
+  #volume <- strtoi(volume)
   
   # #Getting Issue
   issueexp <-"./MedlineCitation/Article/Journal/JournalIssue/Issue"
   tempIssue <- xpathSApply(anArticle,issueexp)
   issue <- xmlValue(tempIssue)
-  issue <- strtoi(issue)
+  #issue <- strtoi(issue)
   
   #Getting PubDate information
   pubdateexp <- "./MedlineCitation/Article/Journal/JournalIssue/PubDate"
@@ -343,6 +346,7 @@ for (i in 1:numArticles) #should be numArticles not 3
   journalNode <-"./MedlineCitation/Article/Journal"
   xjourn <- xpathSApply(anArticle,journalNode)
   
+  #get the title for later
   journalTitleNode <-"./MedlineCitation/Article/Journal/Title"
   tempTitle <- xpathSApply(anArticle,journalTitleNode)
   journal_title <- xmlValue(tempTitle)
@@ -356,8 +360,7 @@ for (i in 1:numArticles) #should be numArticles not 3
   
   #Adding the issues to the issue.df
   tempIssue <-Issue.df
-  Issue.df <- rbind.data.frame(tempIssue,newIssue.df)
-  print(Issue.df)
+  Issue.df <- rbind(tempIssue,newIssue.df)
   
   #Parse History Status
   historyStatusNode <-"./PubmedData/History/PubMedPubDate"
@@ -384,6 +387,10 @@ for (i in 1:numArticles) #should be numArticles not 3
 #Delete Journal Duplicates
 duplicateJournals <- Journal.df
 Journal.df <- duplicateJournals[!duplicated(duplicateJournals),]
+jc <- Journal.df
+jdf <- as.data.frame(matrix(jc, ncol=1, byrow=TRUE), stringsAsFactors=FALSE)
+names(jdf) <- c("journal_title")
+Journal.df <- jdf
 
 #Delete Issue Duplicates
 duplicateIssues <- Issue.df
@@ -501,8 +508,6 @@ for(i in 1:num.issue){
 
 Issue.df$pub_date <- as.Date(Issue.df$pub_date,
                                format = "%Y-%m-%d")
-print(Issue.df)
-
 
 
 ```
@@ -614,6 +619,19 @@ print(HistoryStatus.df)
 print(Journal.df)
 print(Issue.df)
 ```
+```{r}
+if(FALSE){
+#data.frame(as.list(Journal.df))
+jc <- Journal.df
+jdf <- as.data.frame(matrix(jc, ncol=1, byrow=TRUE), stringsAsFactors=FALSE)
+names(jdf) <- c("journal_title")
+class(Journal.df)
+class(jdf)
+print(jdf)
+}
+```
+
+
 
 ```{r}
 dbWriteTable(mydb, "Article", Article.df, overwrite = T, row.names = F)
@@ -621,8 +639,8 @@ dbWriteTable(mydb, "AuthorJoin", AuthorJoin.df, overwrite = T, row.names = F)
 dbWriteTable(mydb, "Author", Author.df, overwrite = T, row.names = F)
 dbWriteTable(mydb, "History", History.df, overwrite = T, row.names = F)
 dbWriteTable(mydb, "HistoryStatus", HistoryStatus.df, overwrite = T, row.names = F)
-dbWriteTable(mydb, "Journal", Journal.df, overwrite = T, row.names = F)
 dbWriteTable(mydb, "JournalIssue", Issue.df, overwrite = T, row.names = F)
+dbWriteTable(mydb, "Journal", Journal.df, overwrite = T, row.names = F)
 ```
 
 ```{sql connection=mydb}
