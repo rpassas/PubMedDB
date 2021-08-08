@@ -57,11 +57,10 @@ fpn = paste0(path, fn)
 ```
 
 ```{r bobs path}
-if(FALSE){
 path <-"/Users/robert/Documents/CS5200/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
-}
+
 ```
 
 ```{r}
@@ -634,6 +633,13 @@ dbWriteTable(mydb, "Journal", Journal.df, overwrite = T, row.names = F)
 ```
 
 ```{sql connection=mydb}
+ALTER TABLE JournalIssue
+ADD pubDate DATE;
+```
+
+
+
+```{sql connection=mydb}
 SELECT * FROM Article LIMIT 5;
 ```
 
@@ -774,10 +780,50 @@ SELECT * FROM starschema.JournalDimension
 
 
 
+```{sql connection=mydb number of articles per period}
+CREATE TABLE IF NOT EXISTS starschema.QuarterlySummary(
+  summary_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  journal_title TEXT NOT NULL,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  article_count INT NOT NULL,
+  year INT NOT NULL,
+  quarter INT NOT NULL
+);
+```
 
+
+```{sql connection=mydb}
+INSERT INTO starschema.QuarterlySummary(journal_title, author_first, author_last,
+article_count, year, quarter)
+SELECT Journal.journal_title, Author.first_name AS author_first, 
+  Author.last_name AS author_last,
+  count(Article.ArticleTitle) AS article_count, 
+  CAST(SUBSTRING(JournalIssue.pub_date,1,4) AS UNSIGNED) AS year,
+  0 AS quarter
+  FROM dbpracticum2.Article 
+  JOIN dbpracticum2.AuthorJoin USING(article.id);
+  JOIN dbpracticum2.Author USING(author.id);
+  --JOIN dbpracticum2.Journal USING(journal_title);
+  JOIN dbpracticum2.JournalIssue USING(journal_title);
+```
+
+```{sql connection=mydb}
+UPDATE starschema.QuarterlySummary SET quarter = 
+  CASE
+    WHEN quarter <= 3 THEN 1
+    WHEN quarter <= 6 THEN 2
+    WHEN quarter <= 9 THEN 3
+    ELSE 4
+  END
+WHERE quarter = 0;
+```
 
 
 
 ```{r}
 dbDisconnect(mydb)
 ```
+
+
+
