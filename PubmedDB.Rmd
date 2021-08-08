@@ -492,7 +492,7 @@ for (r in 1:num.issue){
   }else if( m == 'Dec'){
     m <- "12"
   }else{
-    m <- "6"
+    m <- "1"
   }
   month <- c(month, m)
 }
@@ -619,17 +619,6 @@ print(History.df)
 print(HistoryStatus.df)
 print(Journal.df)
 print(Issue.df)
-```
-```{r}
-if(FALSE){
-#data.frame(as.list(Journal.df))
-jc <- Journal.df
-jdf <- as.data.frame(matrix(jc, ncol=1, byrow=TRUE), stringsAsFactors=FALSE)
-names(jdf) <- c("journal_title")
-class(Journal.df)
-class(jdf)
-print(jdf)
-}
 ```
 
 
