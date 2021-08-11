@@ -57,9 +57,9 @@ fpn = paste0(path, fn)
 ```
 
 ```{r bobs path}
-path <-"/Users/robert/Documents/CS5200/Practicum2/"
-fn <- "pubmed_sample.xml"
-fpn = paste0(path, fn)
+#path <-"/Users/robert/Documents/CS5200/Practicum2/"
+#fn <- "pubmed_sample.xml"
+#fpn = paste0(path, fn)
 
 ```
 
@@ -140,9 +140,9 @@ Issue.df <- data.frame (issue_id = integer(),
 ```{sql createTableArticle, connection=mydb}
 CREATE TABLE IF NOT EXISTS Article (
   article_id INT NOT NULL PRIMARY KEY,
-  journal_title VARCHAR(100) NOT NULL,
+  issue_id INT NOT NULL,
   article_title TEXT NOT NULL,
-  FOREIGN KEY (journal_title) REFERENCES Journal(journal_title)
+  FOREIGN KEY (issue_id) REFERENCES JournalIssue(issue_id)
   ON DELETE CASCADE
 );
 ```
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS Article (
 numArticles <- xmlSize(r) 
 
 Article.df <- data.frame (article_id = integer(),
-                          journal_title = character(),
+                          issue_id = integer(),
                           article_title = character(),
                           stringsAsFactors = F)
 ```
@@ -901,6 +901,38 @@ TimeDimension.quarter AS quarter
   FROM starschema.TimeDimension;
 ```
 
+# Stareted new stuff here
+```{sql connection=mydb}
+select * from Journal
+```
+```{sql connection=mydb}
+select * from JournalIssue
+```
+
+```{sql connection=mydb}
+select * from Article
+JOIN Journal using(journal_title)
+```
+
+```{sql connection=mydb}
+select * from Article
+JOIN Journal using(journal_title)
+order by journal_title
+```
+
+```{sql connection=mydb}
+select * from JournalIssue
+JOIN Journal using(journal_title)
+order by journal_title
+```
+
+```{sql connection=mydb}
+select * from JournalIssue
+JOIN Article using(journal_title)
+order by journal_title
+```
+
+#delete to here
 ```{sql connection=mydb}
 INSERT INTO starschema.ArticlesSummary(num_articles, time_id, journal_id, author_id)
 SELECT COUNT(*) AS num_articles, TimeDimension.time_id as time_id, 
