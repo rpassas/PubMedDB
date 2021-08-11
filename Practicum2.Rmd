@@ -467,7 +467,6 @@ for(i in 1:num.issue){
 Issue.df$pub_date <- as.Date(Issue.df$pub_date,
                                format = "%Y-%m-%d")
 
-print(Article.df)
 
 ```
 
