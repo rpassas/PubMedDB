@@ -471,10 +471,61 @@ Issue.df$pub_date <- as.Date(Issue.df$pub_date,
 
 ```
 
+
+
 ```{r delete old issue columns}
 Issue.df$pub_date_month <- NULL
 Issue.df$pub_date_year <- NULL
 print(Issue.df)
+```
+
+
+```{r match article and journal_issue by issue_id}
+#New root
+root <- xmlRoot(xmlDOM)
+
+#go through each article
+for ( i in 1:numArticles){
+  
+  #Gets an article
+  anArticle <- root[[i]]
+  
+  #Getting Volume
+  volexp <-"./MedlineCitation/Article/Journal/JournalIssue/Volume"
+  tempVolume <- xpathSApply(anArticle,volexp)
+  volume <- xmlValue(tempVolume)
+  
+  #Getting Issue
+  issueexp <-"./MedlineCitation/Article/Journal/JournalIssue/Issue"
+  tempIssue <- xpathSApply(anArticle,issueexp)
+  issue <- xmlValue(tempIssue)
+  
+  #Getting Title
+  titleeexp <-"./MedlineCitation/Article/Journal/Title"
+  tempTitle <- xpathSApply(anArticle,titleeexp)
+  title <- xmlValue(tempTitle)
+  
+  #Getting article title Node
+  titleNode <-"./MedlineCitation/Article/ArticleTitle"
+  xtitle <- xpathSApply(anArticle,titleNode)
+  artTitle <- as.character(xmlValue(xtitle[1]))
+  
+  #Where article title corresponds to issue, volume, and journal add an id
+  for(i in 1:nrow(Article.df)){
+    if(Article.df$article_title[i] == artTitle){
+      for(j in 1:nrow(Issue.df)){
+        if(Issue.df$journal_title == title && Issue.df$issue == issue 
+           && Issue.df$volume == volume ){
+          Article.df$issue_id[i] = Issue.df$issue_id[j]
+        }
+      }
+    }
+  }
+  
+}
+
+print(Issue.df)
+print(Article.df)
 ```
 
 
@@ -568,15 +619,6 @@ for ( i in 1:numArticles){
   }
 }
 ```
-
-
-###match article and journal_issue by issue_id's
-```{r}
-
-```
-
-
-
 
 
 ```{r}
