@@ -49,17 +49,17 @@ mydb <-  dbConnect(MySQL(), user = db_user2, password = db_password2,
 
 
 ```{r jordans path}
-if(FALSE){
+#if(FALSE){
 path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
-}
+#}
 ```
 
 ```{r bobs path}
-path <-"/Users/robert/Documents/CS5200/Practicum2/"
-fn <- "pubmed_sample.xml"
-fpn = paste0(path, fn)
+#path <-"/Users/robert/Documents/CS5200/Practicum2/"
+#fn <- "pubmed_sample.xml"
+#fpn = paste0(path, fn)
 
 ```
 
@@ -527,8 +527,6 @@ print(Article.df)
 ```
 
 
-
-
 ```{r Make AuthorJoin}
 #New root
 root <- xmlRoot(xmlDOM)
@@ -625,7 +623,6 @@ print(AuthorJoin.df)
 print(Author.df)
 print(History.df)
 print(HistoryStatus.df)
-print(Journal.df)
 print(Issue.df)
 ```
 
