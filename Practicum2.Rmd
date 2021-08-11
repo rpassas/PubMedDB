@@ -347,7 +347,6 @@ for (i in 1:numArticles) #should be numArticles not 3
   
   #Adding article title and article_id to data frame
   Article.df[i,3] <- artTitle
-  Article.df[i,2] <- journal_title
   Article.df[i,1] <- i
 }
 
@@ -468,6 +467,7 @@ for(i in 1:num.issue){
 Issue.df$pub_date <- as.Date(Issue.df$pub_date,
                                format = "%Y-%m-%d")
 
+print(Article.df)
 
 ```
 
