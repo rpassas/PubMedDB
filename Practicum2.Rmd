@@ -103,31 +103,33 @@ HistoryStatus.df <- data.frame (status_id = integer(),
 
 ```{sql createTableJournal, connection=mydb}
 CREATE TABLE IF NOT EXISTS Journal (
-  journal_title VARCHAR(100) PRIMARY KEY
+  journal_id INT PRIMARY KEY,
+  journal_title VARCHAR(200) NOT NULL
 );
 ```
 
 ```{r}
-Journal.df <- data.frame (journal_title = character(),
+Journal.df <- data.frame (journal_id = integer(),
+                          journal_title = character(),
                           stringsAsFactors = F)
 ```
 
 ```{sql createTableIssue, connection=mydb}
 CREATE TABLE IF NOT EXISTS JournalIssue (
   issue_id INT PRIMARY KEY,
-  journal_title VARCHAR(100) NOT NULL,
+  journal_id INT NOT NULL,
   cited_medium TEXT NOT NULL,
   volume INT NOT NULL,
   issue INT NOT NULL,
   pub_date DATE NOT NULL,
-  FOREIGN KEY (journal_title) REFERENCES Journal(journal_title)
+  FOREIGN KEY (journal_id) REFERENCES Journal(journal_id)
   ON DELETE CASCADE
 );
 ```
 
 ```{r}
 Issue.df <- data.frame (issue_id = integer(),
-                        journal_title = character(),
+                        journal_d = integer(),
                           cited_medium = character(),
                           volume = integer(),
                           issue = integer(),
@@ -661,6 +663,12 @@ SELECT * FROM Journal LIMIT 5;
 ```{sql connection=mydb}
 SELECT * FROM JournalIssue LIMIT 5;
 ```
+
+```{sql connection=mydb}
+SELECT * 
+FROM JournalIssue
+```
+
 
 ```{sql connection=mydb}
 DROP SCHEMA IF EXISTS starschema
