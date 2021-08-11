@@ -10,8 +10,6 @@ title: "Practicum 2"
 output: html_notebook
 ---
 
-###TESTING 
-
 ```{r}
 # 1. Library
 library(RMySQL)
@@ -717,8 +715,7 @@ SELECT Journal.journal_title,
             JournalIssue.cited_medium,
             Article.article_id
   FROM dbpracticum2.JournalIssue
-  JOIN dbpracticum2.Journal USING(journal_title)
-  JOIN dbpracticum2.Article USING(journal_title);
+  JOIN dbpracticum2.Article USING(issue_id);
 ```
 
 #Creates the HIstory dimension table
@@ -738,16 +735,16 @@ CREATE TABLE IF NOT EXISTS starschema.HistoryDimension
 CREATE TABLE IF NOT EXISTS starschema.ArticleFactTable (
   article_id INT NOT NULL PRIMARY KEY,
   article_title TEXT NOT NULL,
-  journal_title VARCHAR(255) NOT NULL
+  issue_id INT NOT NULL
 );
 ```
 
 #inserts into the fact table
 ```{sql connection=mydb}
-INSERT INTO starschema.ArticleFactTable(article_id, article_title, journal_title)
-SELECT Article.article_id, Article.article_title, Journal.journal_title
-  FROM dbpracticum2.Journal 
-  JOIN dbpracticum2.Article USING(journal_title);
+INSERT INTO starschema.ArticleFactTable(article_id, article_title, issue_id)
+SELECT Article.article_id, Article.article_title, JournalIssue.issue_id
+  FROM dbpracticum2.JournalIssue 
+  JOIN dbpracticum2.Article USING(issue_id);
 ```
 
 #Creates the time dimension table
@@ -876,38 +873,6 @@ TimeDimension.quarter AS quarter
   FROM starschema.TimeDimension;
 ```
 
-# Stareted new stuff here
-```{sql connection=mydb}
-select * from Journal
-```
-```{sql connection=mydb}
-select * from JournalIssue
-```
-
-```{sql connection=mydb}
-select * from Article
-JOIN Journal using(journal_title)
-```
-
-```{sql connection=mydb}
-select * from Article
-JOIN Journal using(journal_title)
-order by journal_title
-```
-
-```{sql connection=mydb}
-select * from JournalIssue
-JOIN Journal using(journal_title)
-order by journal_title
-```
-
-```{sql connection=mydb}
-select * from JournalIssue
-JOIN Article using(journal_title)
-order by journal_title
-```
-
-#delete to here
 ```{sql connection=mydb}
 INSERT INTO starschema.ArticlesSummary(num_articles, time_id, journal_id, author_id)
 SELECT COUNT(*) AS num_articles, TimeDimension.time_id as time_id, 
