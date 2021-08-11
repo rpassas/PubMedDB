@@ -493,12 +493,12 @@ for ( i in 1:numArticles){
   #Getting Volume
   volexp <-"./MedlineCitation/Article/Journal/JournalIssue/Volume"
   tempVolume <- xpathSApply(anArticle,volexp)
-  volume <- xmlValue(tempVolume)
+  volume <- strtoi(xmlValue(tempVolume))
   
   #Getting Issue
   issueexp <-"./MedlineCitation/Article/Journal/JournalIssue/Issue"
   tempIssue <- xpathSApply(anArticle,issueexp)
-  issue <- xmlValue(tempIssue)
+  issue <- strtoi(xmlValue(tempIssue))
   
   #Getting Title
   titleeexp <-"./MedlineCitation/Article/Journal/Title"
@@ -510,12 +510,13 @@ for ( i in 1:numArticles){
   xtitle <- xpathSApply(anArticle,titleNode)
   artTitle <- as.character(xmlValue(xtitle[1]))
   
+
   #Where article title corresponds to issue, volume, and journal add an id
   for(i in 1:nrow(Article.df)){
     if(Article.df$article_title[i] == artTitle){
       for(j in 1:nrow(Issue.df)){
-        if(Issue.df$journal_title == title && Issue.df$issue == issue 
-           && Issue.df$volume == volume ){
+        if(Issue.df$journal_title[j] == title && Issue.df$issue[j] == issue 
+           && Issue.df$volume[j] == volume ){
           Article.df$issue_id[i] = Issue.df$issue_id[j]
         }
       }
@@ -523,6 +524,7 @@ for ( i in 1:numArticles){
   }
   
 }
+
 
 print(Issue.df)
 print(Article.df)
