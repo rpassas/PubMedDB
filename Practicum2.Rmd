@@ -749,7 +749,7 @@ CREATE TABLE IF NOT EXISTS starschema.JournalDimension (
 
 ```{sql connection=mydb}
 INSERT INTO starschema.JournalDimension (journal_title, issue, volume, pub_date, cited_medium, article_id)
-SELECT Journal.journal_title,
+SELECT JournalIssue.journal_title,
             JournalIssue.issue,
             JournalIssue.volume,
             JournalIssue.pub_date,
