@@ -881,18 +881,18 @@ CREATE TABLE IF NOT EXISTS starschema.byTime(
 #Creates the byJournal table
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.byJournal(
-  journal_id INT PRIMARY KEY,
+  journal_id INT AUTO_INCREMENT PRIMARY KEY,
   journal_title TEXT NOT NULL
 );
 ```
 
 #inserts into the byJournal table
 ```{sql connection=mydb}
-INSERT INTO starschema.byJournal(journal_id, journal_title)
-SELECT JournalDimension.journal_id AS journal_id,
-JournalDimension.journal_title
+INSERT INTO starschema.byJournal(journal_title)
+SELECT DISTINCT JournalDimension.journal_title
   FROM starschema.JournalDimension;
 ```
+
 
 #Inserts into the byAuthor table
 ```{sql connection=mydb}
@@ -922,8 +922,19 @@ JOIN starschema.JournalDimension USING(time_id)
 JOIN starschema.ArticleFactTable USING(journal_id)
 JOIN starschema.AuthorDimension USING(article_id)
 GROUP BY journal_id, author_id;
-
 ```
+#By author
+```{sql connection=mydb}
+SELECT  TimeDimension.time_id as time_id, 
+  JournalDimension.journal_id, AuthorDimension.author_id
+FROM starschema.TimeDimension
+JOIN starschema.JournalDimension USING(time_id)
+JOIN starschema.ArticleFactTable USING(journal_id)
+JOIN starschema.AuthorDimension USING(article_id)
+GROUP BY journal_id, author_id;
+```
+
+
 
 
 
