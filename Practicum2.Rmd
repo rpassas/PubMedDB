@@ -49,17 +49,17 @@ mydb <-  dbConnect(MySQL(), user = db_user2, password = db_password2,
 
 
 ```{r jordans path}
-#if(FALSE){
+if(FALSE){
 path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
-#}
+}
 ```
 
 ```{r bobs path}
-#path <-"/Users/robert/Documents/CS5200/Practicum2/"
-#fn <- "pubmed_sample.xml"
-#fpn = paste0(path, fn)
+path <-"/Users/robert/Documents/CS5200/Practicum2/"
+fn <- "pubmed_sample.xml"
+fpn = paste0(path, fn)
 
 ```
 
@@ -101,23 +101,11 @@ HistoryStatus.df <- data.frame (status_id = integer(),
                           stringsAsFactors = F)
 ```
 
-```{sql createTableJournal, connection=mydb}
-CREATE TABLE IF NOT EXISTS Journal (
-  journal_id INT PRIMARY KEY,
-  journal_title VARCHAR(200) NOT NULL
-);
-```
-
-```{r}
-Journal.df <- data.frame (journal_id = integer(),
-                          journal_title = character(),
-                          stringsAsFactors = F)
-```
 
 ```{sql createTableIssue, connection=mydb}
 CREATE TABLE IF NOT EXISTS JournalIssue (
   issue_id INT PRIMARY KEY,
-  journal_id INT NOT NULL,
+  journal_title VARCHAR(200) NOT NULL,
   cited_medium TEXT NOT NULL,
   volume INT NOT NULL,
   issue INT NOT NULL,
@@ -128,8 +116,8 @@ CREATE TABLE IF NOT EXISTS JournalIssue (
 ```
 
 ```{r}
-Issue.df <- data.frame (issue_id = integer(),
-                        journal_d = integer(),
+Issue.df <- data.frame (pub_id = integer(),
+                        journal_title = character(),
                           cited_medium = character(),
                           volume = integer(),
                           issue = integer(),
@@ -219,24 +207,6 @@ parseAuthors <- function (anAuthorListNode)
 ```
 
 
-```{r ParseJournals}
-parseJournals <- function (anArticle)
-{
-  newJournal.df <- Journal.df <- data.frame(journal_title = character(),
-                          stringsAsFactors = F)
-
-  #Getting Title
-  titleeexp <-"./MedlineCitation/Article/Journal/Title"
-  tempTitle <- xpathSApply(anArticle,titleeexp)
-  title <- xmlValue(tempTitle)
-
-  newJournal.df[1,1] <- title
-  
-  
-  return(newJournal.df)
-}
-```
-
 ```{r Parse JournalIssue}
 parseIssues <- function (anArticle)
 {
@@ -266,6 +236,11 @@ parseIssues <- function (anArticle)
   issue <- xmlValue(tempIssue)
   #issue <- strtoi(issue)
   
+  #Getting Title
+  titleeexp <-"./MedlineCitation/Article/Journal/Title"
+  tempTitle <- xpathSApply(anArticle,titleeexp)
+  title <- xmlValue(tempTitle)
+  
   #Getting PubDate information
   pubdateexp <- "./MedlineCitation/Article/Journal/JournalIssue/PubDate"
   tempPubDate <- xpathSApply(anArticle,pubdateexp)
@@ -275,12 +250,7 @@ parseIssues <- function (anArticle)
   year <- xmlValue(childnodes[1])
   month <- xmlValue(childnodes[2])
 
-  #Getting Title
-  titleeexp <-"./MedlineCitation/Article/Journal/Title"
-  tempTitle <- xpathSApply(anArticle,titleeexp)
-  title <- xmlValue(tempTitle)
-
-  newIssue.df[1,2] <- title
+  newIssue.df[1,2] <- journal_title
   newIssue.df[1,3] <- cited_medium
   newIssue.df[1,4] <- volume
   newIssue.df[1,5] <- issue
@@ -342,11 +312,6 @@ for (i in 1:numArticles) #should be numArticles not 3
   #Adding the Authors to the Author.df
   tempAuthors <- Author.df
   Author.df <- rbind(tempAuthors, newAuthor.df)
-  
-  #Parse the journal node
-  newJournal.df <- parseJournals(anArticle)
-  journalNode <-"./MedlineCitation/Article/Journal"
-  xjourn <- xpathSApply(anArticle,journalNode)
   
   #get the title for later
   journalTitleNode <-"./MedlineCitation/Article/Journal/Title"
@@ -419,16 +384,6 @@ for (r in 1:num.authors){
 }
 ```
 
-```{r Adding journal_id}
-if(FALSE){
-num.journals <- nrow(Journal.df)
-
-for (r in 1:num.journals){
-  Journal.df$journal_id[r] <- r
-}
-print(Journal.df)
-}
-```
 
 ```{r Adding status_id}
 num.historystatus <- nrow(HistoryStatus.df)
@@ -611,6 +566,16 @@ for ( i in 1:numArticles){
   }
 }
 ```
+
+
+###match article and journal_issue by issue_id's
+```{r}
+
+```
+
+
+
+
 
 ```{r}
 print(Article.df)
