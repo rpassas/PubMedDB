@@ -10,6 +10,8 @@ title: "Practicum 2"
 output: html_notebook
 ---
 
+###TESTING 
+
 ```{r}
 # 1. Library
 library(RMySQL)
