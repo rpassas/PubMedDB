@@ -736,7 +736,7 @@ CREATE TABLE IF NOT EXISTS starschema.AuthorDimension
 #Creates the Journal dimension table
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.JournalDimension (
-    journal_id INT AUTO_INCREMENT PRIMARY KEY,
+    issue_id INT PRIMARY KEY,
     journal_title TEXT NOT NULL,
     issue INT NOT NULL,
     volume INT NOT NULL,
@@ -747,8 +747,9 @@ CREATE TABLE IF NOT EXISTS starschema.JournalDimension (
 ```
 
 ```{sql connection=mydb}
-INSERT INTO starschema.JournalDimension (journal_title, issue, volume, pub_date, cited_medium, article_id)
-SELECT JournalIssue.journal_title,
+INSERT INTO starschema.JournalDimension (issue_id, journal_title, issue, volume, pub_date, cited_medium, article_id)
+SELECT JournalIssue.issue_id,
+            JournalIssue.journal_title,
             JournalIssue.issue,
             JournalIssue.volume,
             JournalIssue.pub_date,
@@ -923,16 +924,13 @@ JOIN starschema.ArticleFactTable USING(journal_id)
 JOIN starschema.AuthorDimension USING(article_id)
 GROUP BY journal_id, author_id;
 ```
-#By author
+
 ```{sql connection=mydb}
-SELECT  TimeDimension.time_id as time_id, 
-  JournalDimension.journal_id, AuthorDimension.author_id
-FROM starschema.TimeDimension
-JOIN starschema.JournalDimension USING(time_id)
-JOIN starschema.ArticleFactTable USING(journal_id)
-JOIN starschema.AuthorDimension USING(article_id)
-GROUP BY journal_id, author_id;
+SELECT starschema.TimeDimension.time_id, starschema.JournalDimension.journal_title
+  FROM starschema.TimeDimension
+  JOIN starschema.JournalDimension USING(time_id);
 ```
+
 
 
 
