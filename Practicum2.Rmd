@@ -1,6 +1,8 @@
 ---
 title: "PubmedDB"
-output: html_notebook
+output:
+  pdf_document: default
+  html_notebook: default
 ---
 
 #PubMedDB
@@ -594,12 +596,12 @@ for ( i in 1:numArticles){
 
 
 ```{r}
-print(Article.df)
-print(AuthorJoin.df)
-print(Author.df)
-print(History.df)
-print(HistoryStatus.df)
-print(Issue.df)
+head(Article.df, 5)
+head(AuthorJoin.df, 5)
+head(Author.df, 5)
+head(History.df, 5)
+head(HistoryStatus.df, 5)
+head(Issue.df, 5)
 ```
 
 
@@ -933,7 +935,7 @@ select quarter, count(distinct article_id) from starschema.ArticlesSummary
 ```
 
 ###Article publication by month
-Let's break it down further by year.
+Let's break it down further.
 ```{sql connection=mydb}
 select month, count(distinct article_id) as articles 
   from starschema.ArticlesSummary 
@@ -941,6 +943,17 @@ select month, count(distinct article_id) as articles
   GROUP BY month
   order by month
 ```
+
+###Most productive year
+When did people publish?
+```{sql connection=mydb}
+select year, count(distinct article_id) as 'Articles_Published' 
+  from starschema.ArticlesSummary 
+  JOIN starschema.byTime USING(time_id)
+  GROUP BY year
+  order by Articles_Published DESC
+```
+
 
 ###Collaboration by quarter
 How many authors per article in each quarter?
@@ -963,16 +976,6 @@ select first_name, last_name, count(distinct article_id) as 'Articles_Published'
   LIMIT 5
 ```
 
-###Most published authors by year
-Who did the best?
-```{sql connection=mydb}
-select first_name, last_name, year, count(distinct article_id) as 'Articles_Published' from starschema.ArticlesSummary 
-  JOIN starschema.byAuthor USING(author_id)
-  JOIN starschema.byTime USING(time_id)
-  GROUP BY year
-  order by Articles_Published DESC
-  LIMIT 1
-```
 
 #Top 5 most published authors by quarter
 Let's explore top publishers.
