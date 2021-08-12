@@ -318,10 +318,6 @@ for (i in 1:numArticles) #should be numArticles not 3
   tempTitle <- xpathSApply(anArticle,journalTitleNode)
   journal_title <- xmlValue(tempTitle)
   
-  #Adding the journals to the journal.df
-  tempJournal <-Journal.df
-  Journal.df <- rbind(tempJournal,newJournal.df)
-  
   #Parse the issue node
   newIssue.df <- parseIssues(anArticle)
   
@@ -347,16 +343,6 @@ for (i in 1:numArticles) #should be numArticles not 3
   Article.df[i,3] <- artTitle
   Article.df[i,1] <- i
 }
-
-
-
-#Delete Journal Duplicates
-duplicateJournals <- Journal.df
-Journal.df <- duplicateJournals[!duplicated(duplicateJournals),]
-jc <- Journal.df
-jdf <- as.data.frame(matrix(jc, ncol=1, byrow=TRUE), stringsAsFactors=FALSE)
-names(jdf) <- c("journal_title")
-Journal.df <- jdf
 
 #Delete Issue Duplicates
 duplicateIssues <- Issue.df
@@ -636,7 +622,6 @@ dbWriteTable(mydb, "Author", Author.df, overwrite = T, row.names = F)
 dbWriteTable(mydb, "History", History.df, overwrite = T, row.names = F)
 dbWriteTable(mydb, "HistoryStatus", HistoryStatus.df, overwrite = T, row.names = F)
 dbWriteTable(mydb, "JournalIssue", Issue.df, overwrite = T, row.names = F)
-dbWriteTable(mydb, "Journal", Journal.df, overwrite = T, row.names = F)
 ```
 
 
@@ -947,9 +932,12 @@ UPDATE starschema.ArticlesSummary
 ALTER TABLE starschema.ArticlesSummary
   DROP COLUMN journal_title;
 ```
-
+#Grouping by qarter, seems to be more articles published in the winter. 
 ```{sql connection=mydb}
-select * from starschema.ArticlesSummary
+select quarter, count(num_articles) from starschema.ArticlesSummary 
+  JOIN starschema.byTime USING(time_id)
+  GROUP BY quarter
+  order by quarter
 ```
 
 
