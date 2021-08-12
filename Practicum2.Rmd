@@ -855,7 +855,7 @@ SELECT * FROM starschema.ArticleFactTable
 CREATE TABLE IF NOT EXISTS starschema.ArticlesSummary(
   num_articles INT NOT NULL,
   time_id INT NOT NULL,
-  journal_id INT NOT NULL,
+  journal_title TEXT NOT NULL,
   author_id INT NOT NULL
 );
 ```
@@ -915,21 +915,43 @@ TimeDimension.quarter AS quarter
 ```
 
 ```{sql connection=mydb}
-INSERT INTO starschema.ArticlesSummary(num_articles, time_id, journal_id, author_id)
-SELECT COUNT(*) AS num_articles, TimeDimension.time_id as time_id, 
-  JournalDimension.journal_id, AuthorDimension.author_id
-FROM starschema.TimeDimension
-JOIN starschema.JournalDimension USING(time_id)
-JOIN starschema.ArticleFactTable USING(journal_id)
-JOIN starschema.AuthorDimension USING(article_id)
-GROUP BY journal_id, author_id;
+INSERT INTO starschema.ArticlesSummary(num_articles, time_id, journal_title, author_id)
+SELECT count(starschema.ArticleFactTable.article_id) as num_articles, 
+  starschema.TimeDimension.time_id, 
+  starschema.JournalDimension.journal_title,
+  starschema.AuthorDimension.AuthorDim_id
+  FROM starschema.TimeDimension
+  JOIN starschema.JournalDimension USING(time_id)
+  JOIN starschema.ArticleFactTable USING(issue_id)
+  JOIN starschema.AuthorDimension ON starschema.AuthorDimension.article_id = starschema.ArticleFactTable.article_id
+  GROUP BY time_id, journal_title,AuthorDim_id;
 ```
 
 ```{sql connection=mydb}
-SELECT starschema.TimeDimension.time_id, starschema.JournalDimension.journal_title
-  FROM starschema.TimeDimension
-  JOIN starschema.JournalDimension USING(time_id);
+select * from starschema.ArticlesSummary
 ```
+#Adds time_id to journal dimension table
+```{sql connection=mydb}
+ALTER TABLE starschema.ArticlesSummary
+  ADD journal_id INT;
+```
+
+#sets the time_id from journal dimension to the time dimension equivalent 
+```{sql connection=mydb}
+UPDATE starschema.ArticlesSummary
+  SET journal_id = (Select journal_id from starschema.byJournal WHERE starschema.ArticlesSummary.journal_title = starschema.byJournal.journal_title)
+```
+
+#Drops old pub_date column
+```{sql connection=mydb}
+ALTER TABLE starschema.ArticlesSummary
+  DROP COLUMN journal_title;
+```
+
+```{sql connection=mydb}
+select * from starschema.ArticlesSummary
+```
+
 
 
 
