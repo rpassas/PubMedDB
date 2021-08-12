@@ -36,17 +36,17 @@ mydb <-  dbConnect(MySQL(), user = db_user, password = db_password,
 
 #These are our file paths, they should be false to run
 ```{r jordans path}
-#if(FALSE){
+if(FALSE){
 path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
-#}
+}
 ```
 #These are our file paths, they should be false to run
 ```{r bobs path}
-#path <-"/Users/robert/Documents/CS5200/Practicum2/"
-#fn <- "pubmed_sample.xml"
-#fpn = paste0(path, fn)
+path <-"/Users/robert/Documents/CS5200/Practicum2/"
+fn <- "pubmed_sample.xml"
+fpn = paste0(path, fn)
 
 ```
 
