@@ -34,19 +34,19 @@ mydb <-  dbConnect(MySQL(), user = db_user, password = db_password,
                  dbname = db_name, host = db_host, port = db_port)
 ```
 
-
+#These are our file paths, they should be false to run
 ```{r jordans path}
-if(FALSE){
+#if(FALSE){
 path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
-}
+#}
 ```
-
+#These are our file paths, they should be false to run
 ```{r bobs path}
-path <-"/Users/robert/Documents/CS5200/Practicum2/"
-fn <- "pubmed_sample.xml"
-fpn = paste0(path, fn)
+#path <-"/Users/robert/Documents/CS5200/Practicum2/"
+#fn <- "pubmed_sample.xml"
+#fpn = paste0(path, fn)
 
 ```
 
@@ -58,7 +58,7 @@ xmlDOM <- xmlParse(file = fpn)
 r <- xmlRoot(xmlDOM)
 ```
 
-
+###PART 1; Question 2
 ##Define the Tables and Data Frames that will hold XML
 ```{sql createTableAuthor, connection=mydb}
 CREATE TABLE IF NOT EXISTS Author (
@@ -171,8 +171,7 @@ History.df <- data.frame (status_id = integer(),
                           stringsAsFactors = F)
 ```
 
-
-
+###PART 1; Question 3
 ###Parse functions to get XML data into Data Frames
 ```{r ParseAuthors}
 parseAuthors <- function (anAuthorListNode)
@@ -288,7 +287,8 @@ parseHistoryStatus <- function (aHistoryNode, i)
 }
 ```
 
-```{r}
+#Parsing the articles
+```{r Parse Articles}
 r <- xmlRoot(xmlDOM)
 #Iterate through the number of articles
 for (i in 1:numArticles) #should be numArticles not 3
@@ -355,7 +355,7 @@ HistoryStatus.df <- duplicateHistoryStatus[!duplicated(duplicateHistoryStatus),]
 
 
 ###Clean the Data Frames
-Here we add ID's, change date formats, and make sure data matches across data frames.
+#Here we add ID's, change date formats, and make sure data matches across data frames.
 ```{r Adding author_id}
 num.authors <- nrow(Author.df)
 
@@ -543,12 +543,6 @@ for ( i in 1:numArticles){
 }
 ```
 
-```{r}
-print(Article.df)
-print(History.df)
-print(HistoryStatus.df)
-```
-
 ```{r Make History (join)}
 #New root
 root <- xmlRoot(xmlDOM)
@@ -617,7 +611,7 @@ dbWriteTable(mydb, "JournalIssue", Issue.df, overwrite = T, row.names = F)
 ```
 
 
-
+#Part 2, Question 1
 ```{sql connection=mydb}
 SELECT * FROM Article LIMIT 5;
 ```
@@ -639,19 +633,10 @@ SELECT * FROM HistoryStatus LIMIT 5;
 ```
 
 ```{sql connection=mydb}
-SELECT * FROM Journal LIMIT 5;
-```
-
-```{sql connection=mydb}
 SELECT * FROM JournalIssue LIMIT 5;
 ```
 
-```{sql connection=mydb}
-SELECT * 
-FROM JournalIssue
-```
-
-
+#Drop tables for running full file
 ```{sql connection=mydb}
 DROP SCHEMA IF EXISTS starschema
 ```
@@ -824,7 +809,7 @@ SELECT * FROM starschema.ArticleFactTable
 ```
 
 
-
+##Part 2, Question 2
 ##Summary Fact Table 
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.ArticlesSummary(
@@ -903,7 +888,7 @@ SELECT starschema.ArticleFactTable.article_id,
 ```
 
 ```{sql connection=mydb}
-select * from starschema.ArticlesSummary
+select * from starschema.ArticlesSummary LIMIT 10
 ```
 ###Adds time_id to journal dimension table
 ```{sql connection=mydb}
@@ -923,7 +908,7 @@ ALTER TABLE starschema.ArticlesSummary
   DROP COLUMN journal_title;
 ```
 
-
+###Part 3 Question 1
 ##Exploring Publication patterns
 ###Grouping by quarter
 It seems that quarter 1 (jan, feb, march) is the most productive quarter.
@@ -999,7 +984,6 @@ select first_name, last_name, count(distinct journal_id) as 'Authors_by_Unique_J
   LIMIT 5
 ```
 
-
 #Journals with the most published articles
 Which journals are hot?
 ```{sql connection=mydb}
@@ -1009,8 +993,6 @@ select journal_title, count(distinct article_id) as 'Journal_Articles_Published'
   order by Journal_Articles_Published DESC
   LIMIT 5
 ```
-
-
 
 
 
