@@ -3,13 +3,14 @@ title: "PubmedDB"
 output: html_notebook
 ---
 
-##PubMedDB
+#PubMedDB
+####Jordan Harrop
+####Robert Passas
+The following is a database created to store pubmed publication data, provided
+as XML data. It concludes with queries exploring publication patterns.
 
----
-title: "Practicum 2"
-output: html_notebook
----
 
+##Connect to the Database
 ```{r}
 # 1. Library
 library(RMySQL)
@@ -29,22 +30,6 @@ db_port <- 3306
 # 3. Read data from db
 mydb <-  dbConnect(MySQL(), user = db_user, password = db_password,
                  dbname = db_name, host = db_host, port = db_port)
-```
-
-
-```{r}
-if (FALSE) {
-# 2. Settings (Bob's db)
-db_user2 <- 'CS5200'
-db_password2 <- 'db2password'
-db_name2 <- 'dbpracticum2'
-db_host2 <- 'cs5200-practicum2.chwzgwg0nlr5.us-east-1.rds.amazonaws.com'
-db_port2 <- 3306
-
-# 3. Read data from db
-mydb <-  dbConnect(MySQL(), user = db_user2, password = db_password2,
-                 dbname = db_name2, host = db_host2, port = db_port2)
-}
 ```
 
 
@@ -71,6 +56,8 @@ xmlDOM <- xmlParse(file = fpn)
 r <- xmlRoot(xmlDOM)
 ```
 
+
+##Define the Tables and Data Frames that will hold XML
 ```{sql createTableAuthor, connection=mydb}
 CREATE TABLE IF NOT EXISTS Author (
   author_id INT NOT NULL PRIMARY KEY,
@@ -182,6 +169,9 @@ History.df <- data.frame (status_id = integer(),
                           stringsAsFactors = F)
 ```
 
+
+
+###Parse functions to get XML data into Data Frames
 ```{r ParseAuthors}
 parseAuthors <- function (anAuthorListNode)
 {
@@ -361,6 +351,9 @@ duplicateHistoryStatus <- HistoryStatus.df
 HistoryStatus.df <- duplicateHistoryStatus[!duplicated(duplicateHistoryStatus),]
 ```
 
+
+###Clean the Data Frames
+Here we add ID's, change date formats, and make sure data matches across data frames.
 ```{r Adding author_id}
 num.authors <- nrow(Author.df)
 
@@ -615,6 +608,7 @@ print(Issue.df)
 
 
 
+###Write data to SQL tables
 ```{r}
 dbWriteTable(mydb, "Article", Article.df, overwrite = T, row.names = F)
 dbWriteTable(mydb, "AuthorJoin", AuthorJoin.df, overwrite = T, row.names = F)
@@ -701,12 +695,11 @@ DROP TABLE IF EXISTS starschema.ByAuthor
 ```
 
 
-#creates a new schema to use
 ```{sql connection=mydb}
 CREATE SCHEMA IF NOT EXISTS starschema
 ```
 
-#Creates the Author dimension table
+###Creates the Author dimension table
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.AuthorDimension 
   AS SELECT Author.author_id as AuthorDim_id, 
@@ -718,7 +711,7 @@ CREATE TABLE IF NOT EXISTS starschema.AuthorDimension
   JOIN dbpracticum2.Article USING(article_id);
 ```
 
-#Creates the Journal dimension table
+###Creates the Journal dimension table
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.JournalDimension (
     issue_id INT PRIMARY KEY,
@@ -744,7 +737,7 @@ SELECT JournalIssue.issue_id,
   JOIN dbpracticum2.Article USING(issue_id);
 ```
 
-#Creates the HIstory dimension table
+###Creates the History dimension table
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.HistoryDimension 
   AS SELECT HistoryStatus.status_id as history_id,
@@ -756,7 +749,7 @@ CREATE TABLE IF NOT EXISTS starschema.HistoryDimension
   JOIN dbpracticum2.Article USING(article_id);
 ```
 
-#creates the fact table
+###creates the fact table
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.ArticleFactTable (
   article_id INT NOT NULL PRIMARY KEY,
@@ -765,7 +758,7 @@ CREATE TABLE IF NOT EXISTS starschema.ArticleFactTable (
 );
 ```
 
-#inserts into the fact table
+###inserts into the fact table
 ```{sql connection=mydb}
 INSERT INTO starschema.ArticleFactTable(article_id, article_title, issue_id)
 SELECT Article.article_id, Article.article_title, JournalIssue.issue_id
@@ -773,7 +766,7 @@ SELECT Article.article_id, Article.article_title, JournalIssue.issue_id
   JOIN dbpracticum2.Article USING(issue_id);
 ```
 
-#Creates the time dimension table
+###Creates the time dimension table
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.TimeDimension (
   time_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -784,7 +777,7 @@ CREATE TABLE IF NOT EXISTS starschema.TimeDimension (
 );
 ```
 
-#Inserts into time dimension table
+###Inserts into time dimension table
 ```{sql connection=mydb}
 INSERT INTO starschema.TimeDimension (charDate, year, month, quarter)
   SELECT DISTINCT pub_date as charDate,
@@ -794,7 +787,7 @@ INSERT INTO starschema.TimeDimension (charDate, year, month, quarter)
   from starschema.JournalDimension;
 ```
 
-#Updates quarter values for time dimension table
+###Updates quarter values for time dimension table
 ```{sql connection=mydb}
 UPDATE starschema.TimeDimension SET quarter = 
   CASE
@@ -806,19 +799,19 @@ UPDATE starschema.TimeDimension SET quarter =
 WHERE quarter = 0;
 ```
 
-#Adds time_id to journal dimension table
+###Adds time_id to journal dimension table
 ```{sql connection=mydb}
 ALTER TABLE starschema.JournalDimension
   ADD time_id INT;
 ```
 
-#sets the time_id from journal dimension to the time dimension equivalent 
+###sets the time_id from journal dimension to the time dimension equivalent 
 ```{sql connection=mydb}
 UPDATE starschema.JournalDimension
   SET time_id = (Select time_id from starschema.TimeDimension WHERE JournalDimension.pub_date = TimeDimension.charDate)
 ```
 
-#Drops old pub_date column
+###Drops old pub_date column
 ```{sql connection=mydb}
 ALTER TABLE starschema.JournalDimension
   DROP COLUMN pub_date;
@@ -835,7 +828,6 @@ SELECT * FROM starschema.ArticleFactTable
 
 
 ##Summary Fact Table 
-###Number of Articles by time by author by journal
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.ArticlesSummary(
   article_id INT NOT NULL,
@@ -845,7 +837,7 @@ CREATE TABLE IF NOT EXISTS starschema.ArticlesSummary(
 );
 ```
 
-#Creates the byAuthor Table
+###Creates the byAuthor Table
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.byAuthor(
   author_id INT PRIMARY KEY,
@@ -854,7 +846,7 @@ CREATE TABLE IF NOT EXISTS starschema.byAuthor(
 );
 ```
 
-#Creates the byTime table
+###Creates the byTime table
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.byTime(
   time_id INT PRIMARY KEY,
@@ -864,7 +856,7 @@ CREATE TABLE IF NOT EXISTS starschema.byTime(
 );
 ```
 
-#Creates the byJournal table
+###Creates the byJournal table
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.byJournal(
   journal_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -872,7 +864,7 @@ CREATE TABLE IF NOT EXISTS starschema.byJournal(
 );
 ```
 
-#inserts into the byJournal table
+###Inserts into the byJournal table
 ```{sql connection=mydb}
 INSERT INTO starschema.byJournal(journal_title)
 SELECT DISTINCT JournalDimension.journal_title
@@ -880,7 +872,7 @@ SELECT DISTINCT JournalDimension.journal_title
 ```
 
 
-#Inserts into the byAuthor table
+###Inserts into the byAuthor table
 ```{sql connection=mydb}
 INSERT INTO starschema.byAuthor(author_id, first_name, last_name)
 SELECT DISTINCT(AuthorDimension.authorDim_id) AS author_id,
@@ -889,7 +881,7 @@ AuthorDimension.last_name AS author_last
 FROM starschema.AuthorDimension;
 ```
 
-#Inserts into the byTime table
+###Inserts into the byTime table
 ```{sql connection=mydb}
 INSERT INTO starschema.byTime(time_id, year, month, quarter)
 SELECT TimeDimension.time_id AS time_id,
@@ -915,42 +907,37 @@ SELECT starschema.ArticleFactTable.article_id,
 ```{sql connection=mydb}
 select * from starschema.ArticlesSummary
 ```
-#Adds time_id to journal dimension table
+###Adds time_id to journal dimension table
 ```{sql connection=mydb}
 ALTER TABLE starschema.ArticlesSummary
   ADD journal_id INT;
 ```
 
-#sets the time_id from journal dimension to the time dimension equivalent 
+###sets the time_id from journal dimension to the time dimension equivalent 
 ```{sql connection=mydb}
 UPDATE starschema.ArticlesSummary
   SET journal_id = (Select journal_id from starschema.byJournal WHERE starschema.ArticlesSummary.journal_title = starschema.byJournal.journal_title)
 ```
 
-#Drops old pub_date column
+###Drops old pub_date column
 ```{sql connection=mydb}
 ALTER TABLE starschema.ArticlesSummary
   DROP COLUMN journal_title;
 ```
-#Grouping by quarter, seems to be more articles published in the winter. 
+
+
+##Exploring Publication patterns
+###Grouping by quarter
+It seems that quarter 1 (jan, feb, march) is the most productive quarter.
 ```{sql connection=mydb}
 select quarter, count(distinct article_id) from starschema.ArticlesSummary 
   JOIN starschema.byTime USING(time_id)
   GROUP BY quarter
   order by quarter
 ```
-#Top 5 most published authors
-```{sql connection=mydb}
-select first_name, last_name, count(distinct article_id) as 'Articles_Published' from starschema.ArticlesSummary 
-  JOIN starschema.byAuthor USING(author_id)
-  GROUP BY author_id
-  order by Articles_Published DESC
-  LIMIT 5
-```
 
-<<<<<<< HEAD
 ###Article publication by month
-How many articles are published per month
+Let's break it down further by year.
 ```{sql connection=mydb}
 select month, count(distinct article_id) as articles 
   from starschema.ArticlesSummary 
@@ -970,21 +957,29 @@ select quarter, count(author_id)/count(distinct article_id) as collab
   order by quarter
 ```
 
-
-
+###Top 5 most published authors
+Who is publishing the most?
 ```{sql connection=mydb}
-select year, max(distinct author_id) as most_published_author
-  from starschema.ArticlesSummary 
-  JOIN starschema.byTime USING(time_id)
+select first_name, last_name, count(distinct article_id) as 'Articles_Published' from starschema.ArticlesSummary 
   JOIN starschema.byAuthor USING(author_id)
-  GROUP BY year
-  order by year
+  GROUP BY author_id
+  order by Articles_Published DESC
+  LIMIT 5
 ```
 
+###Most published authors by year
+Who did the best?
+```{sql connection=mydb}
+select first_name, last_name, year, count(distinct article_id) as 'Articles_Published' from starschema.ArticlesSummary 
+  JOIN starschema.byAuthor USING(author_id)
+  JOIN starschema.byTime USING(time_id)
+  GROUP BY year
+  order by Articles_Published DESC
+  LIMIT 1
+```
 
-
-=======
 #Top 5 most published authors by quarter
+Let's explore top publishers.
 ```{sql connection=mydb}
 select first_name, last_name, quarter, count(distinct article_id) as 'Articles_Published' from starschema.ArticlesSummary 
   JOIN starschema.byAuthor USING(author_id)
@@ -994,15 +989,8 @@ select first_name, last_name, quarter, count(distinct article_id) as 'Articles_P
   LIMIT 5
 ```
 
-#Journals with the most published articles
-```{sql connection=mydb}
-select journal_title, count(distinct article_id) as 'Journal_Articles_Published' from starschema.ArticlesSummary 
-  JOIN starschema.byJournal USING(journal_id)
-  GROUP BY journal_id
-  order by Journal_Articles_Published DESC
-  LIMIT 5
-```
-#Authors pushed by unique journals
+#Authors published by unique journals
+Who is publishing broadly?
 ```{sql connection=mydb}
 select first_name, last_name, count(distinct journal_id) as 'Authors_by_Unique_Journals' from starschema.ArticlesSummary 
   JOIN starschema.byJournal USING(journal_id)
@@ -1011,7 +999,19 @@ select first_name, last_name, count(distinct journal_id) as 'Authors_by_Unique_J
   order by Authors_by_Unique_Journals DESC
   LIMIT 5
 ```
->>>>>>> 9ca4f19d47dbbb60f72e40ec2e4815ca202571e3
+
+
+#Journals with the most published articles
+Which journals are hot?
+```{sql connection=mydb}
+select journal_title, count(distinct article_id) as 'Journal_Articles_Published' from starschema.ArticlesSummary 
+  JOIN starschema.byJournal USING(journal_id)
+  GROUP BY journal_id
+  order by Journal_Articles_Published DESC
+  LIMIT 5
+```
+
+
 
 
 
