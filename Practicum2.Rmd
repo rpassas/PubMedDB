@@ -838,7 +838,7 @@ SELECT * FROM starschema.ArticleFactTable
 ###Number of Articles by time by author by journal
 ```{sql connection=mydb}
 CREATE TABLE IF NOT EXISTS starschema.ArticlesSummary(
-  num_articles INT NOT NULL,
+  article_id INT NOT NULL,
   time_id INT NOT NULL,
   journal_title TEXT NOT NULL,
   author_id INT NOT NULL
@@ -900,8 +900,8 @@ TimeDimension.quarter AS quarter
 ```
 
 ```{sql connection=mydb}
-INSERT INTO starschema.ArticlesSummary(num_articles, time_id, journal_title, author_id)
-SELECT count(starschema.ArticleFactTable.article_id) as num_articles, 
+INSERT INTO starschema.ArticlesSummary(article_id, time_id, journal_title, author_id)
+SELECT starschema.ArticleFactTable.article_id, 
   starschema.TimeDimension.time_id, 
   starschema.JournalDimension.journal_title,
   starschema.AuthorDimension.AuthorDim_id
@@ -934,7 +934,7 @@ ALTER TABLE starschema.ArticlesSummary
 ```
 #Grouping by qarter, seems to be more articles published in the winter. 
 ```{sql connection=mydb}
-select quarter, count(num_articles) from starschema.ArticlesSummary 
+select quarter, count(distinct article_id) from starschema.ArticlesSummary 
   JOIN starschema.byTime USING(time_id)
   GROUP BY quarter
   order by quarter
