@@ -932,19 +932,49 @@ UPDATE starschema.ArticlesSummary
 ALTER TABLE starschema.ArticlesSummary
   DROP COLUMN journal_title;
 ```
-#Grouping by qarter, seems to be more articles published in the winter. 
+#Grouping by quarter, seems to be more articles published in the winter. 
 ```{sql connection=mydb}
 select quarter, count(distinct article_id) from starschema.ArticlesSummary 
   JOIN starschema.byTime USING(time_id)
   GROUP BY quarter
   order by quarter
 ```
+#Top 5 most published authors
+```{sql connection=mydb}
+select first_name, last_name, count(distinct article_id) as 'Articles_Published' from starschema.ArticlesSummary 
+  JOIN starschema.byAuthor USING(author_id)
+  GROUP BY author_id
+  order by Articles_Published DESC
+  LIMIT 5
+```
 
+#Top 5 most published authors by quarter
+```{sql connection=mydb}
+select first_name, last_name, quarter, count(distinct article_id) as 'Articles_Published' from starschema.ArticlesSummary 
+  JOIN starschema.byAuthor USING(author_id)
+  JOIN starschema.byTime USING(time_id)
+  GROUP BY quarter
+  order by Articles_Published DESC
+  LIMIT 5
+```
 
-
-
-
-
+#Journals with the most published articles
+```{sql connection=mydb}
+select journal_title, count(distinct article_id) as 'Journal_Articles_Published' from starschema.ArticlesSummary 
+  JOIN starschema.byJournal USING(journal_id)
+  GROUP BY journal_id
+  order by Journal_Articles_Published DESC
+  LIMIT 5
+```
+#Authors pushed by unique journals
+```{sql connection=mydb}
+select first_name, last_name, count(distinct journal_id) as 'Authors_by_Unique_Journals' from starschema.ArticlesSummary 
+  JOIN starschema.byJournal USING(journal_id)
+  JOIN starschema.byAuthor USING(author_id)
+  GROUP BY author_id
+  order by Authors_by_Unique_Journals DESC
+  LIMIT 5
+```
 
 
 
