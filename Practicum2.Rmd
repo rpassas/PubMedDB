@@ -381,7 +381,6 @@ for (r in 1:num.issue){
 cols.num <- c("volume","issue")
 Issue.df[cols.num] <- sapply(Issue.df[cols.num],as.integer)
 sapply(Issue.df, class)
-print(Issue.df)
 ```
 
 
@@ -501,9 +500,6 @@ for ( i in 1:numArticles){
   
 }
 
-
-print(Issue.df)
-print(Article.df)
 ```
 
 
