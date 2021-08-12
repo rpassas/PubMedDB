@@ -49,17 +49,17 @@ mydb <-  dbConnect(MySQL(), user = db_user2, password = db_password2,
 
 
 ```{r jordans path}
-#if(FALSE){
+if(FALSE){
 path <- "C:/Users/jorda/Documents/CS_Masters/CS5200_Databases/Homework/Practicum2/"
 fn <- "pubmed_sample.xml"
 fpn = paste0(path, fn)
-#}
+}
 ```
 
 ```{r bobs path}
-#path <-"/Users/robert/Documents/CS5200/Practicum2/"
-#fn <- "pubmed_sample.xml"
-#fpn = paste0(path, fn)
+path <-"/Users/robert/Documents/CS5200/Practicum2/"
+fn <- "pubmed_sample.xml"
+fpn = paste0(path, fn)
 
 ```
 
@@ -940,8 +940,37 @@ select quarter, count(distinct article_id) from starschema.ArticlesSummary
   order by quarter
 ```
 
+###Article publication by month
+How many articles are published per month
+```{sql connection=mydb}
+select month, count(distinct article_id) as articles 
+  from starschema.ArticlesSummary 
+  JOIN starschema.byTime USING(time_id)
+  GROUP BY month
+  order by month
+```
+
+###Collaboration by quarter
+How many authors per article in each quarter?
+```{sql connection=mydb}
+select quarter, count(author_id)/count(distinct article_id) as collab 
+  from starschema.ArticlesSummary 
+  JOIN starschema.byTime USING(time_id)
+  JOIN starschema.byAuthor USING(author_id)
+  GROUP BY quarter
+  order by quarter
+```
 
 
+
+```{sql connection=mydb}
+select year, max(distinct author_id) as most_published_author
+  from starschema.ArticlesSummary 
+  JOIN starschema.byTime USING(time_id)
+  JOIN starschema.byAuthor USING(author_id)
+  GROUP BY year
+  order by year
+```
 
 
 
